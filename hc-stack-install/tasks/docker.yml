@@ -13,6 +13,7 @@
   systemd:
     name: docker
     state: started
+    enabled: yes
 
 - name: pull envoy image
   command: docker pull envoyproxy/envoy:v1.14.2

@@ -1,0 +1,5 @@
+---
+
+- name: download script
+  get_url:
+    src: https://dl.google.com/cloudagents/add-monitoring-agent-repo.sh

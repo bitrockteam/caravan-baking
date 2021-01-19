@@ -1,5 +1,9 @@
 ---
 # vars file for hc-stack-install
+
+provider: ''
+# provider: 'gcp'
+
 extra_packages:
   - wget
   - unzip

@@ -1,13 +1,10 @@
 ---
 - name: pre requirements
-  include: pre.yml
+  include: generic.yml
 
 - name: install docker
   include: docker.yml
   when: install_docker|bool == true
-
-#- name: install docker-login
-#  include: docker_login_gcloud.yml
 
 - name: install terraform
   include: terraform.yml
