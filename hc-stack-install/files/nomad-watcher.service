@@ -1,0 +1,14 @@
+[Unit]
+Description=nomad reloader
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStartPre=/bin/sleep 60
+ExecStartPre=/usr/bin/systemctl reload nomad.service
+ExecStartPre=/bin/sleep 5
+ExecStart=/usr/bin/systemctl restart nomad.service
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,35 @@
+[Unit]
+Description="HashiCorp Vault Agent"
+Documentation=https://www.vaultproject.io/docs/
+Requires=network.target network-online.target vault.service
+After=network.target network-online.target vault.service
+ConditionFileNotEmpty=/etc/vault.d/agent.hcl
+
+[Service]
+User=vault
+Group=vault
+; Set the HOSTNAME environment variable because it is not set in systemd shell  
+EnvironmentFile=-/etc/vault.d/agent.env
+Environment=HOSTNAME=%H
+ProtectHome=read-only
+PrivateTmp=yes
+PrivateDevices=yes
+SecureBits=keep-caps
+AmbientCapabilities=CAP_IPC_LOCK
+Capabilities=CAP_IPC_LOCK+ep
+CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
+NoNewPrivileges=yes
+ExecStartPre=/usr/local/bin/pre-vault-agent-hooks
+ExecStart=/usr/local/bin/vault agent -config=/etc/vault.d/agent.hcl
+ExecReload=/bin/kill --signal HUP $MAINPID 
+KillMode=process 
+KillSignal=SIGINT 
+Restart=on-failure 
+RestartSec=20
+StartLimitInterval=0
+TimeoutStopSec=30
+LimitNOFILE=65536
+LimitMEMLOCK=infinity
+
+[Install]
+WantedBy=multi-user.target

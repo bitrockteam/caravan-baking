@@ -1,0 +1,63 @@
+---
+# TODO: support local files
+- name: install consul from remote
+  unarchive:
+    src: https://releases.hashicorp.com/consul/{{consul_version}}/consul_{{consul_version}}_linux_amd64.zip
+    dest: /usr/local/bin/
+    remote_src: yes
+    owner: root
+    group: root
+    mode: '755'
+
+- name: copy consul.service
+  copy:
+    src: consul.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+
+- name: add user consul
+  user:
+    name: consul
+    home: /var/lib/consul
+    shell: /bin/false
+    state: present
+    groups:
+      - certsreaders
+
+- name: create /etc/consul.d folder
+  file:
+    path: /etc/consul.d
+    state: directory
+    owner: vault
+    group: certsreaders
+    mode: '750'
+
+- name: copy consul.sh
+  copy:
+    src: consul.sh
+    dest: /usr/local/bin/
+    mode: +x
+    owner: root
+    group: root
+
+- name: enable consul
+  systemd:
+    name: consul
+    enabled: yes
+
+# TODO: support local files
+- name: install consul from remote
+  unarchive:
+    src: https://releases.hashicorp.com/consul-esm/{{consul_esm_version}}/consul-esm_{{consul_esm_version}}_linux_amd64.zip
+    dest: /usr/local/bin/
+    remote_src: yes
+    owner: root
+    group: root
+
+- name: copy consul-esm.service
+  copy:
+    src: consul-esm.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root

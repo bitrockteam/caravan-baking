@@ -1,0 +1,20 @@
+---
+
+- name: add dummy nic config
+  template:
+    src: dummy-nic.j2
+    dest: /etc/sysconfig/dummy-nic
+    owner: root
+    group: root
+
+- name: copy dummy-nic.service
+  copy:
+    src: dummy-nic.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+
+- name: enable dummy-nic service
+  systemd:
+    name: dummy-nic
+    enabled: yes

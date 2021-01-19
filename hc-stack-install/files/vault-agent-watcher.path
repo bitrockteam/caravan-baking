@@ -1,0 +1,5 @@
+[Path]
+PathChanged=/etc/consul.d/vault_token
+
+[Install]
+WantedBy=multi-user.target

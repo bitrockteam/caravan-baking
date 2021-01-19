@@ -1,0 +1,15 @@
+[Unit]
+Description=vault-agent restarter
+After=network.target
+ConditionPathExists=!/etc/vault.d/watched
+ConditionPathExists=/etc/consul.d/vault_token
+
+[Service]
+Type=oneshot
+ExecStartPre=/bin/sleep 30
+ExecStart=/usr/bin/systemctl restart vault-agent.service
+ExecStartPost=/bin/sh -c 'date > /etc/vault.d/watched'
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

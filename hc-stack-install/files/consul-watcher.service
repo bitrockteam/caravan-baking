@@ -1,0 +1,12 @@
+[Unit]
+Description=consul restarter
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStartPre=/bin/sleep 60
+ExecStart=/usr/bin/systemctl restart consul.service
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

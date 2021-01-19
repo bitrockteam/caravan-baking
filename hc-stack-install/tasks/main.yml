@@ -1,0 +1,37 @@
+---
+- name: pre requirements
+  include: pre.yml
+
+- name: install docker
+  include: docker.yml
+  when: install_docker|bool == true
+
+#- name: install docker-login
+#  include: docker_login_gcloud.yml
+
+- name: install terraform
+  include: terraform.yml
+  when: install_terraform|bool == true
+
+- name: install vault
+  include: vault.yml
+  when: install_vault|bool == true
+
+- name: install consul
+  include: consul.yml
+  when: install_consul|bool == true
+
+- name: install nomad
+  include: nomad.yml
+  when: install_nomad|bool == true
+
+- name: install envoy
+  include: envoy.yml
+  when: install_envoy|bool == true
+
+- name: install cni
+  include: cni.yml
+  when: install_cni|bool == true
+
+- name: install dummy-nic
+  include: dummy_nic.yml

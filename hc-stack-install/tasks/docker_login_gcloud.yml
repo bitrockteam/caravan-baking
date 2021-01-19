@@ -1,0 +1,27 @@
+---
+- name: gcloud docker login
+  shell: sudo gcloud auth configure-docker
+
+- name: stop and enable docker service
+  systemd:
+    name: docker
+    enabled: yes
+    state: stopped
+
+- name: copy docker-login.service
+  copy:
+    src: docker-login.service
+    dest: /etc/systemd/system/
+
+- name: copy docker-login.sh
+  copy:
+    src: docker-login.sh
+    dest: /usr/local/bin/
+    mode: +x
+    owner: root
+    group: root
+
+- name: enable docker-login service
+  systemd:
+    name: docker-login
+    enabled: yes

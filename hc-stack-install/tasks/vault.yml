@@ -1,0 +1,64 @@
+---
+# TODO: support local files
+- name: install vault from remote
+  unarchive:
+    src: https://releases.hashicorp.com/vault/{{vault_version}}/vault_{{vault_version}}_linux_amd64.zip
+    dest: /usr/local/bin/
+    remote_src: yes
+    owner: root
+    group: root
+    mode: '755'
+
+- name: copy pre-vault-agent-hooks
+  copy:
+    src: pre-vault-agent-hooks
+    dest: /usr/local/bin/
+    owner: root
+    group: root
+
+- name: copy vault.service
+  copy:
+    src: vault.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+
+- name: copy vault-agent.service
+  copy:
+    src: vault-agent.service
+    dest: /etc/systemd/system/
+
+- name: add user vault
+  user:
+    name: vault
+    home: /var/lib/vault
+    shell: /bin/false
+    state: present
+    groups:
+      - certsreaders
+
+- name: create /etc/vault.d folder
+  file:
+    path: /etc/vault.d
+    state: directory
+    owner: vault
+    group: vault
+    mode: '700'
+
+- name: create /var/lib/vault/storage folder
+  file:
+    path: /var/lib/vault/storage
+    state: directory
+    owner: vault
+    group: vault
+    mode: '700'
+
+- name: enable vault
+  systemd:
+    name: vault
+    enabled: yes
+
+- name: enable vault-agent
+  systemd:
+    name: vault-agent
+    enabled: yes

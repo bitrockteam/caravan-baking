@@ -1,0 +1,14 @@
+[Unit]
+Description=Dummy network interface for local traffic
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+EnvironmentFile=-/etc/sysconfig/dummy-nic
+ExecStartPre=/sbin/ip link add dummy type dummy
+ExecStartPost=/sbin/ip link set dummy up
+ExecStart=/sbin/ip addr add ${DUMMY_IP}/32 dev dummy
+
+[Install]
+WantedBy=multi-user.target

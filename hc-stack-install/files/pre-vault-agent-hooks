@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ ! -z $OCI_AUTHENTICATE_APPROLE ]; then
+    export VAULT_TOKEN=$(/usr/local/bin/vault login -token-only -no-store -method=oci auth_type=instance role=$OCI_AUTHENTICATE_APPROLE)
+    /usr/local/bin/vault read -format=json auth/approle/role/$OCI_AUTHENTICATE_APPROLE/role-id |jq -r '.data.role_id' > /etc/vault.d/role-id
+    /usr/local/bin/vault write -format=json -f auth/approle/role/pocnode/secret-id |jq -r '.data.secret_id' > /etc/vault.d/secret-id
+fi

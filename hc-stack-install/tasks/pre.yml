@@ -1,0 +1,22 @@
+---
+- name: update system packages
+  yum:
+    name: '*'
+    update_only: yes
+    state: latest
+    exclude: epel-release,grub2*,shim*,mokutil
+
+- name: install epel-release
+  yum:
+    name: epel-release
+    state: present
+
+- name: install extra packages
+  yum:
+    name: '{{ extra_packages }}'
+    state: present
+
+- name: create certsreaders group
+  group:
+    name: certsreaders
+    state: present

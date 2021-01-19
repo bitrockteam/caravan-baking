@@ -1,0 +1,5 @@
+[Path]
+PathModified=/etc/nomad.d/nomad.hcl
+
+[Install]
+WantedBy=multi-user.target

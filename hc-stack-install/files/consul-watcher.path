@@ -1,0 +1,5 @@
+[Path]
+PathModified=/etc/consul.d/consul.hcl
+
+[Install]
+WantedBy=multi-user.target
