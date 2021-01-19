@@ -1,0 +1,6 @@
+{% for nameserver in nameservers %}
+server={{nameserver}}
+{% endfor %}
+server=/consul/127.0.0.1#8600
+cache-size=0
+no-resolv

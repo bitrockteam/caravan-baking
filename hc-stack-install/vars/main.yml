@@ -34,4 +34,5 @@ docker_ce_version: 19.03.13-3
 
 dummy_ip: 192.168.0.1
 
-
+nameservers:
+  - 169.254.169.254

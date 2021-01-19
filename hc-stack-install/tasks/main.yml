@@ -32,3 +32,6 @@
 
 - name: install dummy-nic
   include: dummy_nic.yml
+
+- name: configure dnsmasq
+  include: dnsmasq.yml

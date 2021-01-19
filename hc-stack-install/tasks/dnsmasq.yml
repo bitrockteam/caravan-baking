@@ -1,0 +1,33 @@
+---
+- name: create dnsmasq.conf
+  template:
+    src: dnsmasq.conf.j2
+    dest: /etc/dnsmasq.conf
+
+- name: retrieve interface
+  command: /sbin/ip route | grep '^default' | grep -Po '(?<=dev )(.+?)(?= )'
+  register: interface
+
+- name: add PEERDNS to interface config
+  lineinfile:
+    path: '/etc/sysconfig/network-scripts/ifcfg-{{interface}}'
+    regex: ^PEERDNS=
+    line: PEERDNS=no
+
+- name: add DNS1 to interface config
+  lineinfile:
+    path: '/etc/sysconfig/network-scripts/ifcfg-{{interface}}'
+    regex: ^DNS1=
+    line: DNS1=127.0.0.1
+
+- name: enable and start dnsmasq
+  systemd:
+    name: dnsmasq
+    enabled: yes
+    state: started
+
+- name: update resolv.conf
+  file:
+    src: resolv.conf
+    dest: /etc/resolv.conf
+    attributes: +i
