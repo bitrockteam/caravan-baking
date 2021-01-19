@@ -1,0 +1,8 @@
+---
+# tasks file for hc-stack-gcp
+
+- name: docker login
+  include: docker_login.yml
+
+- name: monitoring
+  include: monitoring.yml
