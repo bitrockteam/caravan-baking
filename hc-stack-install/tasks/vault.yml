@@ -62,3 +62,27 @@
   systemd:
     name: vault-agent
     enabled: yes
+    
+- name: copy vault-agent-watcher.service
+  copy:
+    src: vault-agent-watcher.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+
+- name: copy vault-agent-watcher.path
+  copy:
+    src: vault-agent-watcher.path
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+
+- name: start and enable vault-agent-watcher.path
+  systemd:
+    name: vault-agent-watcher.path
+    enabled: yes
+
+- name: start and enable vault-agent-watcher.service
+  systemd:
+    name: vault-agent-watcher.service
+    enabled: yes

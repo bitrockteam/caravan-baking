@@ -38,3 +38,29 @@
   systemd:
     name: nomad
     enabled: yes
+
+- name: copy nomad-watcher.service
+  copy:
+    src: nomad-watcher.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+
+- name: copy nomad-watcher.path
+  copy:
+    src: nomad-watcher.path
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+
+#- name: start and enable nomad-watcher.path
+#  systemd:
+#    name: nomad-watcher.path
+#    enabled: yes
+#    state: started
+#
+#- name: start and enable nomad-watcher.service
+#  systemd:
+#    name: nomad-watcher.service
+#    enabled: yes
+#    state: started

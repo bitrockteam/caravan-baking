@@ -1,6 +1,6 @@
 ---
 - name: pre requirements
-  include: generic.yml
+  include: prerequisites.yml
 
 - name: install docker
   include: docker.yml

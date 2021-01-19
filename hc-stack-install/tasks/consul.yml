@@ -61,3 +61,29 @@
     dest: /etc/systemd/system/
     owner: root
     group: root
+
+- name: copy consul-watcher.service
+  copy:
+    src: consul-watcher.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+
+- name: copy consul-watcher.path
+  copy:
+    src: consul-watcher.path
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+
+- name: start and enable consul-watcher.path
+  systemd:
+    name: consul-watcher.path
+    enabled: yes
+    state: started
+
+- name: start and enable consul-watcher.service
+  systemd:
+    name: consul-watcher.service
+    enabled: yes
+    state: started
