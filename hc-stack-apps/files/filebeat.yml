@@ -1,0 +1,20 @@
+output.file.enabled: false
+logging.to_files: false
+logging.level: info
+filebeat.registry.flush: 5s
+
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/*.log
+      - /var/lib/nomad/alloc/*/alloc/logs/*.std*.[0-9]*
+
+output.elasticsearch:
+  hosts: ["elastic-internal.service.consul"]
+
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~

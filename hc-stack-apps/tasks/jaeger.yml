@@ -1,0 +1,74 @@
+---
+- name: create jaeger user
+  user: 
+    name: jaeger
+    shell: /bin/false
+    create_home: no
+    
+- name: create /etc/jaeger
+  file:
+    path: /etc/jaeger
+    state: directory
+    owner: jaeger
+    group: jaeger
+    
+- name: create /var/lib/jaeger
+  file:
+    path: /var/lib/jaeger
+    state: directory
+    owner: jaeger
+    group: jaeger
+
+- name: get jaeger
+  unarchive: 
+    src: https://github.com/jaegertracing/jaeger/releases/download/v{{jaeger_version}}/jaeger-{{jaeger_version}}-linux-amd64.tar.gz
+    dest: /tmp/
+    remote_src: yes
+    
+- name: copy jaeger-agent
+  copy: 
+    src: /tmp/jaeger-{{jaeger_version}}-linux-amd64/jaeger-agent
+    dest: /usr/local/bin/
+    remote_src: yes
+    owner: jaeger
+    group: jaeger
+    mode: +x
+    
+- name: copy jaeger-collector
+  copy:
+    src: /tmp/jaeger-{{jaeger_version}}-linux-amd64/jaeger-collector
+    dest: /usr/local/bin/
+    remote_src: yes
+    owner: jaeger
+    group: jaeger
+    mode: +x
+    
+- name: copy jaeger-query
+  copy:
+    src: /tmp/jaeger-{{jaeger_version}}-linux-amd64/jaeger-query
+    dest: /usr/local/bin/
+    remote_src: yes
+    owner: jaeger
+    group: jaeger
+    mode: +x
+    
+- name: copy jaeger-all-in-one
+  copy:
+    src: /tmp/jaeger-{{jaeger_version}}-linux-amd64/jaeger-all-in-one
+    dest: /usr/local/bin/
+    remote_src: yes
+    owner: jaeger
+    group: jaeger
+    mode: +x
+    
+- name: get jaeger lib
+  get_url: 
+    url: https://github.com/jaegertracing/jaeger-client-cpp/releases/download/{{jaeger_cpp_version}}/libjaegertracing_plugin.linux_amd64.so
+    dest: /usr/local/lib/libjaegertracing_plugin.so
+    owner: root
+    group: root
+
+- name: cleanup
+  file:
+    path: /tmp/jaeger-{{jaeger_version}}-linux-amd64
+    state: absent

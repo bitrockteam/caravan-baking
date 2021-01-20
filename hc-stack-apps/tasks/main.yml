@@ -1,0 +1,17 @@
+---
+# tasks file for hc-stack-apps
+
+- name: install prometheus
+  include: prometheus.yml
+
+- name: install jaeger
+  include: jaeger.yml
+
+- name: install grafana
+  include: grafana.yml
+
+- name: install elastic stack
+  include: elastic.yml
+
+- name: intall jenkins
+  include: jenkins.yml

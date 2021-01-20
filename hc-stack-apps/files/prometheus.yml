@@ -1,0 +1,85 @@
+global:
+  scrape_interval: 10s
+
+scrape_configs:
+  - job_name: 'prometheus_master'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'nomad'
+    scheme: http
+    tls_config:
+      insecure_skip_verify: true
+    consul_sd_configs:
+      - server: 'http://consul.service.consul:8500'
+        services: ['nomad']
+
+    relabel_configs:
+      - source_labels: ['__meta_consul_tags']
+        regex: '(.*)http(.*)'
+        action: keep
+
+    scrape_interval: 10s
+    metrics_path: /v1/metrics
+    params:
+      format: ['prometheus']
+  - job_name: 'nomad-client'
+    scheme: http
+    tls_config:
+      insecure_skip_verify: true
+    consul_sd_configs:
+      - server: 'http://consul.service.consul:8500'
+        services: ['nomad-client']
+
+    relabel_configs:
+      - source_labels: ['__meta_consul_tags']
+        regex: '(.*)http(.*)'
+        action: keep
+
+    scrape_interval: 10s
+    metrics_path: /v1/metrics
+    params:
+      format: ['prometheus']
+  - job_name: 'springboot'
+    scheme: http
+    tls_config:
+      insecure_skip_verify: true
+    consul_sd_configs:
+      - server: 'http://consul.service.consul:8500'
+      - tags:
+          - "springboot"
+          - "actuator"
+    relabel_configs:
+      - source_labels: ['__meta_consul_tags']
+        regex: '(.*)actuator(.*)'
+        action: keep
+      - source_labels: ['__meta_consul_service']
+        regex: '(.*)sidecar-proxy'
+        action: drop
+      - source_labels: ['__meta_consul_service']
+        target_label: job
+    scrape_interval: 10s
+    metrics_path: /actuator/prometheus
+  - job_name: envoy-proxies
+    metrics_path: "/metrics"
+    consul_sd_configs:
+      - server: 'http://consul.service.consul:8500'
+
+    relabel_configs:
+      # Filter in only proxy services
+      # - source_labels: ['__meta_consul_service']
+      #   regex: '(.*)sidecar-proxy'
+      #   action: keep
+      - source_labels: ['__meta_consul_tags']
+        regex: '(.*)envoy,prometheus,(.*)'
+        action: keep
+      # Use the Consul's service name as the job name
+      - source_labels: ['__meta_consul_service']
+        target_label: job
+      # Replace the service's ports with the proxy's prometheus exposed port
+      # - source_labels: ['__address__', '__meta_consul_tags']
+      #   separator:     ';'
+      #   regex:         '(.*):.*;.*,ProxyPromPort:(.*),.*'
+      #   target_label:  '__address__'
+      #   replacement:   '${1}:${2}'
