@@ -33,7 +33,7 @@
   "provisioners": [
     {
       "type": "ansible",
-      "playbook": "../ansible/centos-gcp.yml",
+      "playbook_file": "../ansible/centos-gcp.yml",
       "groups": ["centos-gcp"]
     },
     {

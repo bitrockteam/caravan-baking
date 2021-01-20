@@ -4,8 +4,11 @@
   become: yes
   tasks:
     - name: "Include hc-stack-install"
-      include_role: "hc-stack-install"
+      include_role:
+        name: "hc-stack-install"
     - name: "Include hc-stack-gcp"
-      include_role: "hc-stack-gcp"
+      include_role:
+        name: "hc-stack-gcp"
     - name: "Include hc-stack-app"
-      include_role: "hc-stack-app"
+      include_role:
+        name: "hc-stack-app"

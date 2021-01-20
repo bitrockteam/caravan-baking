@@ -13,3 +13,4 @@ crash.log
 *.box
 
 # End of https://www.toptal.com/developers/gitignore/api/packer
+hcpoc-terraform-admin.json
