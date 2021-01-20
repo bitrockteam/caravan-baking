@@ -1,0 +1,6 @@
+build_on_google             = true
+build_image_name            = "hashicorp-centos-image"
+google_project_id           = "hashicorp-1067952256"
+google_account_file         = "../hashicorp-terraform-gcp/hashicorp-key.json"
+google_network_name         = "hashicorp-gcp-vpc"
+google_subnetwork_name      = "hashicorp-gcp-subnet"
