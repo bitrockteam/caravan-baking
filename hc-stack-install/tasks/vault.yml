@@ -15,6 +15,7 @@
     dest: /usr/local/bin/
     owner: root
     group: root
+    mode: +x
 
 - name: copy vault.service
   copy:
