@@ -1,10 +1,10 @@
 ---
 - name: get interface
-  command: /sbin/ip route | grep '^default' | grep -Po '(?<=dev )(.+?)(?= )'
+  command: /bin/bash -c "/sbin/ip route | grep '^default' | grep -Po '(?<=dev )(.+?)(?= )'"
   register: interface
 
 - name: firewall-cmd --zone=trusted --change-interface
-  command: firewall-cmd --zone=trusted --change-interface={{interface}}
+  command: 'firewall-cmd --zone=trusted --change-interface={{interface.stdout}}'
 
 - name: firewall-cmd --set-default-zone=trusted
   command: firewall-cmd --set-default-zone=trusted

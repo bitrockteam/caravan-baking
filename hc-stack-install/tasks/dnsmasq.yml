@@ -5,18 +5,18 @@
     dest: /etc/dnsmasq.conf
 
 - name: retrieve interface
-  command: /sbin/ip route | grep '^default' | grep -Po '(?<=dev )(.+?)(?= )'
+  command: /bin/bash -c "/sbin/ip route | grep '^default' | grep -Po '(?<=dev )(.+?)(?= )'"
   register: interface
 
 - name: add PEERDNS to interface config
   lineinfile:
-    path: '/etc/sysconfig/network-scripts/ifcfg-{{interface}}'
+    path: '/etc/sysconfig/network-scripts/ifcfg-{{interface.stdout}}'
     regex: ^PEERDNS=
     line: PEERDNS=no
 
 - name: add DNS1 to interface config
   lineinfile:
-    path: '/etc/sysconfig/network-scripts/ifcfg-{{interface}}'
+    path: '/etc/sysconfig/network-scripts/ifcfg-{{interface.stdout}}'
     regex: ^DNS1=
     line: DNS1=127.0.0.1
 
@@ -27,7 +27,7 @@
     state: started
 
 - name: update resolv.conf
-  file:
+  copy:
     src: resolv.conf
     dest: /etc/resolv.conf
     attributes: +i

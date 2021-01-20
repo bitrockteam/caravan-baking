@@ -8,5 +8,7 @@ platforms:
     box: bento/centos-7.9
 provisioner:
   name: ansible
+  playbook:
+    prepare: prepare.yml
 verifier:
   name: ansible

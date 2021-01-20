@@ -1,0 +1,9 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: start firewalld
+      systemd:
+        name: firewalld
+        state: started
+      become: yes
