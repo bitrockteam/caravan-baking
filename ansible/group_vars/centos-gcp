@@ -1,0 +1,12 @@
+install_terraform: {{ lookup('env', 'INSTALL_TERRAFORM')|bool | default(true) }}
+install_vault: {{ lookup('env', 'INSTALL_VAULT')|bool | default(true) }}
+install_consul: {{ lookup('env', 'INSTALL_CONSUL')|bool | default(true) }}
+install_nomad: {{ lookup('env', 'INSTALL_NOMAD')|bool | default(true) }}
+install_envoy: {{ lookup('env', 'INSTALL_ENVOY')|bool | default(true) }}
+install_cni: {{ lookup('env', 'INSTALL_CNI')|bool | default(true) }}
+install_docker: {{ lookup('env', 'INSTALL_DOCKER')|bool | default(true) }}
+
+dummy_ip: 192.168.0.1
+
+nameservers:
+  - 169.254.169.254

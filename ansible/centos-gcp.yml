@@ -1,0 +1,11 @@
+---
+- name: Setup on GCP
+  hosts: all
+  become: yes
+  tasks:
+    - name: "Include hc-stack-install"
+      include_role: "hc-stack-install"
+    - name: "Include hc-stack-gcp"
+      include_role: "hc-stack-gcp"
+    - name: "Include hc-stack-app"
+      include_role: "hc-stack-app"
