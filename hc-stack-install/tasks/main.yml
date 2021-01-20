@@ -35,3 +35,6 @@
 
 - name: configure dnsmasq
   include: dnsmasq.yml
+
+- name: configure firewalld
+  include: firewalld.yml
