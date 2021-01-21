@@ -27,3 +27,9 @@
   systemd:
     name: docker-login
     enabled: yes
+
+- name: periodically restart docker-login.service
+  cron:
+    name: restart docker-login.service
+    minute: '*/15'
+    job: /usr/bin/systemctl restart docker-login.service

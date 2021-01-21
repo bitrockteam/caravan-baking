@@ -11,3 +11,8 @@
   yum:
     name: stackdriver-agent
     state: present
+
+- name: enable stackdriver-agent
+  systemd:
+    name: stackdriver-agent
+    enabled: yes
