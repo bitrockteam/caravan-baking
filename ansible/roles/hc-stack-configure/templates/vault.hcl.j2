@@ -1,0 +1,55 @@
+storage "raft" {
+  path    = "{{ vault_home }}/storage"
+  node_id = "{{ inventory_hostname }}"
+{% for host in groups['vault-server'] %}
+  {% if hostvars[host]['inventory_hostname'] != inventory_hostname %}
+  retry_join {
+    leader_api_addr = "http://{{ hostvars[host]['ansible_default_ipv4']['address'] }}:8200"
+  }
+  {% endif %}
+{% endfor %}
+}
+
+listener "tcp" {
+  address         = "0.0.0.0:8200"
+  cluster_address = "0.0.0.0:8201"
+  tls_disable     = true
+}
+
+telemetry = {
+  prometheus_retention_time = "30s"
+  disable_hostname = true
+}
+
+log_level = "Debug"
+
+ui = true
+disable_mlock = true
+cluster_addr  = "http://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:8201"
+api_addr      = "http://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:8200"
+
+{% if vault_seal_type == 'gcp' %}
+seal "gcpckms" {
+  region      = "{{ vault_gcp_unseal_region }}"
+  key_ring    = "{{ vault_gcp_unseal_keyring }}"
+  crypto_key  = "{{ vault_gcp_unseal_key }}"
+  project     = "{{ vault_gcp_project_id }}"
+}
+{% endif %}
+{% if vault_seal_type == 'oci' %}
+seal "ocikms" {
+    crypto_endpoint     = "{{ vault_oci_unseal_crypto_endpoint }}"
+    management_endpoint = "{{ vault_oci_unseal_management_endpoint }}"
+    key_id              = "{{ vault_oci_unseal_key }}"
+}
+{% endif %}
+{% if vault_seal_type == 'transit' %}
+seal "transit" {
+    token = "{{ vault_transit_unseal_vault_token }}"
+    address = "{{ vault_transit_unseal_vault_address }}"
+    disable_renewal = "false"
+    key_name = "{{ vault_transit_unseal_key }}"
+    mount_path = "{{ vault_transit_unseal_mount_path }}"
+    tls_skip_verify = "true"
+}
+{% endif %}

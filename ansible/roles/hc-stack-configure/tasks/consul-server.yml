@@ -1,0 +1,54 @@
+---
+- name: create consul.tmpl
+  template:
+    src: consul-cert.tmpl.j2
+    dest: /etc/consul.d/cert.tmpl
+
+- name: create /root/vault.vars
+  template:
+    src: vault.vars.j2
+    dest: /root/vault.vars
+
+- name: create /etc/consul.d/consul.hcl
+  template:
+    src: consul.hcl.j2
+    dest: /etc/consul.d/consul.hcl
+
+- name: create /etc/consul.d/consul.hcl.tmpl
+  template:
+    src: consul-server.hcl.tmpl.j2
+    dest: /etc/consul.d/consul.hcl.tmpl
+
+- name: create /etc/consul.d/ca.tmpl
+  copy:
+    src: consul-ca.tmpl
+    dest: /etc/consul.d/ca.tmpl
+
+- name: create /etc/consul.d/cert.tmpl
+  template:
+    src: consul-cert.tmpl
+    dest: /etc/consul.d/cert.tmpl
+
+- name: create /etc/consul.d/keyfile.tmpl
+  template:
+    src: consul-keyfile.tmpl.j2
+    dest: /etc/consul.d/keyfile.tmpl
+
+- name: copy consul_cluster_init.sh
+  copy:
+    src: consul_cluster_init.sh
+    dest: /tmp/consul_cluster_init.sh
+    mode: +x
+
+- name: execute consul_cluster_init.sh
+  command: /tmp/consul_cluster_init.sh
+
+- name: copy consul_acl_bootstrap.sh
+  copy:
+    src: consul_acl_bootstrap.sh
+    dest: /tmp/consul_acl_bootstrap.sh
+    mode: +x
+
+- name: execute consul_acl_bootstrap.sh
+  command: /tmp/consul_acl_bootstrap.sh
+  when: inventory_hostname == '{{ bootstrapper }}'

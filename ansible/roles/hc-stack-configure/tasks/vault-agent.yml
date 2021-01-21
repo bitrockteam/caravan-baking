@@ -1,0 +1,16 @@
+---
+- name: create vault-agent.hcl
+  template:
+    src: vault-agent.hcl.j2
+    dest: /etc/vault.d/agent.hcl
+
+- name: add oci agent hook
+  template:
+    src: vault-agent-oci.env.j2
+    dest: /etc/vault.d/agent.env
+  when: vault_agent_auto_auth_type == 'oci'
+
+- name: restart vault-agent
+  systemd:
+    name: vault-agent
+    state: restarted

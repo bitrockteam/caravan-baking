@@ -1,0 +1,52 @@
+---
+- name: enable and start nomad-watcher.path
+  systemd:
+    name: nomad-watcher.path
+    state: started
+    enabled: yes
+
+- name: enable and start nomad-watcher.service
+  systemd:
+    name: nomad-watcher.path
+    state: started
+    enabled: yes
+
+- name: create /etc/nomad.d/nomad.hcl.tmpl
+  template:
+    src: nomad-server.hcl.tmpl.j2
+    dest: /etc/nomad.d/nomad.hcl.tmpl
+
+- name: create /etc/nomad.d/nomad_ca.tmpl
+  copy:
+    src: nomad-ca.tmpl
+    dest: /etc/nomad.d/nomad_ca.tmpl
+
+- name: create /etc/nomad.d/nomad_cert.tmpl
+  copy:
+    src: nomad-cert.tmpl
+    dest: /etc/nomad.d/nomad_cert.tmpl
+
+- name: create /etc/nomad.d/nomad_keyfile.tmpl
+  copy:
+    src: nomad-keyfile.tmpl
+    dest: /etc/nomad.d/nomad_keyfile.tmpl
+
+- name: create /etc/nomad.d/nomad-server.hcl
+  template:
+    src: nomad-server.hcl.j2
+    dest: /etc/nomad.d/nomad-server.hcl
+
+- name: join servers
+  command: nomad server join {{ hostvars[item]['ansible_default_ipv4']['address'] }}
+  loop: "{{ groups['nomad-server'] | difference([bootstrapper]) }}"
+  when: inventory_hostname == '{{ bootstrapper }}'
+
+- name: create acl bootstrap script
+  copy:
+    src: nomad_acl_bootstrap.sh
+    dest: /tmp/nomad_acl_bootstrap.sh
+    mode: +x
+
+- name: run acl bootstrap
+  command: /tmp/nomad_acl_bootstrap.sh
+  when: inventory_hostname == '{{ bootstrapper }}'

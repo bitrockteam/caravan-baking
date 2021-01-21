@@ -1,0 +1,73 @@
+datacenter = {{ nomad_dc_name }}
+data_dir = "/var/lib/nomad"
+log_level = "DEBUG"
+server {
+  enabled = true
+  bootstrap_expect = 3
+}
+
+server_join {
+    retry_join = [
+{% for host in groups['consul-server'] %}
+  {% if hostvars[host]['inventory_hostname'] != inventory_hostname %}
+        "{{ hostvars[host]['ansible_default_ipv4']['address'] }}:4647",
+  {% endif %}
+{% endfor %}
+    ]
+}
+
+plugin "raw_exec" {
+  config {
+    enabled = true
+  }
+}
+
+consul {
+  address = "127.0.0.1:8501"
+  server_service_name = "nomad"
+  client_service_name = "nomad-client"
+  auto_advertise      = true
+  server_auto_join    = true
+  client_auto_join    = true
+
+  ca_file    = "/etc/consul.d/ca"
+  cert_file  = "/etc/consul.d/cert"
+  key_file   = "/etc/consul.d/keyfile"
+  ssl        = true
+  verify_ssl = true
+
+  token = "{{ with secret "secret/data/consul/nomad_server_token" }}{{ .Data.data.token }}{{ end }}"
+}
+
+vault {
+  enabled          = true
+  address          = "http://127.0.0.1:8200"
+  token            = "{{ file "/etc/nomad.d/vault_token" }}"
+  tls_skip_verify  = true
+  task_token_ttl = "1h"
+  create_from_role = "cluster-node"
+}
+
+acl {
+  enabled = true
+}
+
+tls {
+    http = false
+    rpc  = true
+
+    ca_file    = "/etc/nomad.d/nomad_ca"
+    cert_file  = "/etc/nomad.d/nomad_cert"
+    key_file   = "/etc/nomad.d/nomad_keyfile"
+
+    verify_https_client    = false
+    verify_server_hostname = true
+}
+
+telemetry {
+  collection_interval = "10s"
+  disable_hostname = true
+  prometheus_metrics = true
+  publish_allocation_metrics = true
+  publish_node_metrics = true
+}

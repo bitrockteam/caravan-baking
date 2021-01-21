@@ -1,0 +1,30 @@
+datacenter = "{{ consul_dc_name }}"
+data_dir = "/var/lib/consul"
+log_level = "DEBUG"
+node_name = "{{ inventory_hostname }}"
+bootstrap_expect = 3
+retry_join = [
+{% for host in groups['consul-server'] %}
+  {% if hostvars[host]['inventory_hostname'] != inventory_hostname %}
+   "{{ hostvars[host]['ansible_default_ipv4']['address'] }}:8301",
+  {% endif %}
+{% endfor %}
+]
+
+server = true
+ports {
+  grpc  = 8502
+  https = 8501
+  http  = 8500
+}
+telemetry = {
+   prometheus_retention_time = "30s"
+   disable_hostname = true
+}
+acl {
+   enabled = true
+   default_policy = "deny"
+   enable_token_persistence = true
+ }
+ui = true
+client_addr = "0.0.0.0"

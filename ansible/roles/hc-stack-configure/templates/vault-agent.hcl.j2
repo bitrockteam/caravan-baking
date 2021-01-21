@@ -1,0 +1,121 @@
+exit_after_auth = false
+pid_file = "/var/lib/vault/agent.pid"
+
+cache {
+  use_auto_auth_token = true
+}
+
+listener "tcp" {
+  address = "{{ vault_tcp_listener }}"
+  tls_disable = {{ not vault_tcp_listener_tls|bool }}
+}
+
+vault {
+  tls_disable = true
+  address     = "{{ vault_endpoint }}"
+}
+
+template {
+  source      = "/etc/consul.d/keyfile.tmpl"
+  destination = "/etc/consul.d/keyfile"
+}
+
+template {
+  source      = "/etc/consul.d/ca.tmpl"
+  destination = "/etc/consul.d/ca"
+}
+
+template {
+  source      = "/etc/consul.d/cert.tmpl"
+  destination = "/etc/consul.d/cert"
+  #command     = "sh -c 'sudo systemctl start consul && sudo systemctl reload consul'"
+}
+
+template {
+  source      = "/etc/consul.d/consul.hcl.tmpl"
+  destination = "/etc/consul.d/consul.hcl"
+}
+
+template {
+  source      = "/etc/nomad.d/nomad_keyfile.tmpl"
+  destination = "/etc/nomad.d/nomad_keyfile"
+}
+
+template {
+  source      = "/etc/nomad.d/nomad_ca.tmpl"
+  destination = "/etc/nomad.d/nomad_ca"
+}
+
+template {
+  source      = "/etc/nomad.d/nomad_cert.tmpl"
+  destination = "/etc/nomad.d/nomad_cert"
+  #command     = "sh -c 'sudo systemctl start nomad && sudo systemctl reload nomad'"
+}
+
+template {
+  source      = "/etc/nomad.d/nomad.hcl.tmpl"
+  destination = "/etc/nomad.d/nomad.hcl"
+}
+
+{% if vault_agent_auto_auth_type == 'gcp' %}
+auto_auth {
+  method "gcp" {
+    config = {
+       type="iam"
+       role="{{ vault_agent_auto_auth_gcp_node_role }}"
+       service_account="{{ vault_agent_auto_auth_gcp_service_account }}"
+       project="{{ vault_agent_auto_auth_gcp_project_id }}"
+    }
+  }
+  sink {
+    type = "file"
+    config = {
+      path = "/etc/consul.d/vault_token"
+    }
+  }
+  sink {
+    type = "file"
+    config = {
+      path = "/etc/nomad.d/vault_token"
+    }
+  }
+}
+{% endif %}
+{% if vault_agent_auto_auth_type == 'oci' %}
+auto_auth {
+  method "oci" {
+    config = {
+       auth_type="instance_principal"
+       role="{{ vault_agent_auto_auth_oci_node_role }}"
+    }
+  }
+  sink {
+    type = "file"
+    config = {
+      path = "/etc/consul.d/vault_token"
+    }
+  }
+}
+{% endif %}
+{‰ if vault_agent_auto_auth_type == 'approle' %}
+auto_auth {
+  method "approle" {
+    config = {
+       role_id_file_path="/etc/vault.d/role-id"
+       secret_id_file_path="/etc/vault.d/secret-id"
+    }
+  }
+  sink {
+    type = "file"
+    config = {
+      path = "/etc/consul.d/vault_token"
+    }
+  }
+  sink {
+    type = "file"
+    config = {
+      path = "/etc/nomad.d/vault_token"
+    }
+  }
+}
+{% endif %}

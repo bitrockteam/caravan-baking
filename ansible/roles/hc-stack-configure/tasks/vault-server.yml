@@ -1,0 +1,33 @@
+---
+- name: create vault config
+  template:
+    src: vault.hcl.j2
+    dest: /etc/vault.d/vault.hcl
+
+- name: copy init script
+  copy:
+    src: vault_cluster_node_1_init.sh
+    dest: /tmp/vault_cluster_node_1_init.sh
+    mode: +x
+
+- name: randomly pick bootstrapper
+  set_facts:
+    bootstrapper: '{{ inventory_hostname }}'
+  run_once: yes
+
+- name: execute init script
+  command: /tmp/vault_cluster_node_1_init.sh
+  when: inventory_hostname == '{{ bootstrapper }}'
+
+- name: fetch root token
+  fetch:
+    src: /root/root_token
+    dest: /hc-stack
+  when: inventory_hostname == '{{ bootstrapper }}'
+
+- name: start non boostrapper vaults
+  systemd:
+    name: vault
+    state: started
+    enabled: yes
+  when: inventory_hostname != '{{ bootstrapper }}'
