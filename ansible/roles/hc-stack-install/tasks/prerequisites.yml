@@ -1,7 +1,7 @@
 ---
 - name: update system packages
   yum:
-    name: '*'
+#    name: '*'
     update_only: yes
     state: latest
     exclude: epel-release,grub2*,shim*,mokutil
