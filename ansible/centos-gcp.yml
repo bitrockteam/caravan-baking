@@ -9,6 +9,6 @@
     - name: "Include hc-stack-gcp"
       include_role:
         name: "hc-stack-gcp"
-    - name: "Include hc-stack-app"
+    - name: "Include hc-stack-apps"
       include_role:
-        name: "hc-stack-app"
+        name: "hc-stack-apps"
