@@ -5,6 +5,7 @@ driver:
   name: vagrant
 platforms:
   - name: instance
+    box: bento/centos-7.9
 provisioner:
   name: ansible
 verifier:

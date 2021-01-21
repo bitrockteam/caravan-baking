@@ -1,8 +1,8 @@
 ---
 - name: download script
   get_url:
-    src: https://dl.google.com/cloudagents/add-monitoring-agent-repo.sh
-    dst: /tmp/add-monitoring-agent-repo.sh
+    url: https://dl.google.com/cloudagents/add-monitoring-agent-repo.sh
+    dest: /tmp/add-monitoring-agent-repo.sh
 
 - name: run script
   command: bash /tmp/add-monitoring-agent-repo.sh

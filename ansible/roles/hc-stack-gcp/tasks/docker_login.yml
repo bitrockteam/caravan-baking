@@ -1,6 +1,6 @@
 ---
-- name: gcloud docker login
-  shell: gcloud auth configure-docker
+#- name: gcloud docker login
+#  command: /bin/bash -c 'which gcloud && gcloud auth configure-docker'
 
 #- name: stop and enable docker service
 #  systemd:
