@@ -37,7 +37,8 @@
     {
       "type": "ansible",
       "playbook_file": "../ansible/centos-aws.yml",
-      "groups": ["centos-aws"]
+      "groups": ["centos_aws"],
+      "inventory_directory": "../ansible"
     },
     {
       "type": "shell",

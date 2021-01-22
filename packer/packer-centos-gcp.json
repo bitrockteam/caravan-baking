@@ -34,7 +34,8 @@
     {
       "type": "ansible",
       "playbook_file": "../ansible/centos-gcp.yml",
-      "groups": ["centos-gcp"]
+      "groups": ["centos_gcp"],
+      "inventory_directory": "../ansible"
     },
     {
       "type": "shell",
