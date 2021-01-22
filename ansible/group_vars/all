@@ -22,3 +22,13 @@ extra_packages:
   - java-1.8.0-openjdk
   - bind-utils
   - tcpdump
+
+install_terraform: "{{ lookup('env', 'INSTALL_TERRAFORM')|bool | default(true) }}"
+install_vault: "{{ lookup('env', 'INSTALL_VAULT')|bool | default(true) }}"
+install_consul: "{{ lookup('env', 'INSTALL_CONSUL')|bool | default(true) }}"
+install_nomad: "{{ lookup('env', 'INSTALL_NOMAD')|bool | default(true) }}"
+install_envoy: "{{ lookup('env', 'INSTALL_ENVOY')|bool | default(true) }}"
+install_cni: "{{ lookup('env', 'INSTALL_CNI')|bool | default(true) }}"
+install_docker: "{{ lookup('env', 'INSTALL_DOCKER')|bool | default(true) }}"
+
+dummy_ip: "{{ lookup('env', 'DUMMY_IP') | default('192.168.0.1') }}"
