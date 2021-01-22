@@ -17,7 +17,7 @@
     "instance_type": "{{user `instance_type`}}",
     "source_ami_filter": {
       "filters": {
-        "virtaulization-type": "hvm",
+        "virtualization-type": "hvm",
         "product-code": "cvugziknvmxgqna9noibqnnsy"
       },
       "owners": ["aws-marketplace"],
@@ -29,7 +29,9 @@
       "volume_size": 20
     },
     "ssh_username": "centos",
-    "tags": ["ssh-allowed-node", "packer-builder"]
+    "tags": {
+      "Owner": "packer-builder-pino"
+    }
   }],
   "provisioners": [
     {

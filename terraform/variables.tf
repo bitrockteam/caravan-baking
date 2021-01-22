@@ -37,6 +37,26 @@ variable "google_firewall_name" {
   type    = string
   default = "default"
 }
+variable "build_on_aws" {
+  type    = bool
+  default = false
+}
+variable "aws_access_key" {
+  type    = string
+  default = ""
+}
+variable "aws_secret_key" {
+  type    = string
+  default = ""
+}
+variable "aws_region" {
+  type    = string
+  default = "eu-central-1"
+}
+variable "aws_instance_type" {
+  type    = string
+  default = "t3.small"
+}
 variable "build_on_oci" {
   type    = bool
   default = false
