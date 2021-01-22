@@ -1,0 +1,6 @@
+build_on_aws      = true
+build_image_name  = "hashicorp-centos-image"
+aws_access_key    = ""
+aws_secret_key    = ""
+aws_region        = "eu-central-1"
+aws_instance_type = "t3.small"

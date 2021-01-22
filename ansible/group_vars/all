@@ -1,17 +1,18 @@
-terraform_version: "{{ lookup('env', 'TERRAFORM_VERSION') | default('0.12.28') }}"
-vault_version: "{{ lookup('env', 'VAULT_VERSION') | default('1.6.1') }}"
-consul_version: "{{ lookup('env', 'CONSUL_VERSION') | default('1.9.2') }}"
-consul_esm_version: "{{ lookup('env', 'CONSUL_ESM_VERSION') | default('0.4.0') }}"
-nomad_version: "{{ lookup('env', 'NOMAD_VERSION') | default('1.0.2') }}"
-envoy_version: "{{ lookup('env', 'ENVOY_VERSION') | default('1.14.5.p0.gfa0371e-1p69.ga5345f6') }}"
-cni_version: "{{ lookup('env', 'CNI_VERSION') | default('0.9.0') }}"
-containerd_version: "{{ lookup('env', 'CONTAINERD_VERSION') | default('1.4.3-3.1') }}"
-docker_ce_version: "{{ lookup('env', 'DOCKER_CE_VERSION') | default('19.03.13-3') }}"
-prometheus_version: "{{ lookup('env', 'PROMETHEUS_VERSION') | default('2.23.0') }}"
-jaeger_version: "{{ lookup('env', 'JAEGER_VERSION') | default('1.21.0') }}"
-jaeger_cpp_version: "{{ lookup('env', 'JAEGER_CPP_VERSION') | default('v0.4.2') }}"
-grafana_version: "{{ lookup('env', 'GRAFANA_VERSION') | default('7.3.5-1') }}"
-elasticsearch_version: "{{ lookup('env', 'ELASTICSEARCH_VERSION') | default('7.10.1') }}"
+---
+terraform_version: '0.12.28'
+vault_version: '1.6.1'
+consul_version: '1.9.2'
+consul_esm_version: '0.4.0'
+nomad_version: '1.0.2'
+envoy_version: '1.14.5.p0.gfa0371e-1p69.ga5345f6'
+cni_version: '0.9.0'
+containerd_version: '1.4.3-3.1'
+docker_ce_version: '19.03.13-3'
+prometheus_version: '2.23.0'
+jaeger_version: '1.21.0'
+jaeger_cpp_version: 'v0.4.2'
+grafana_version: '7.3.5-1'
+elasticsearch_version: '7.10.1'
 
 extra_packages:
   - wget
@@ -22,3 +23,18 @@ extra_packages:
   - java-1.8.0-openjdk
   - bind-utils
   - tcpdump
+
+install_terraform: true
+install_vault: true
+install_consul: true
+install_nomad: true
+install_envoy: true
+install_cni: true
+install_docker: true
+install_prometheus: true
+install_jaeger: true
+install_elastic: true
+install_grafana: true
+install_jenkins: true
+
+dummy_ip: '192.168.0.1'

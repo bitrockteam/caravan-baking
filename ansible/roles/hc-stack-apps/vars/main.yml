@@ -1,9 +1,1 @@
 ---
-prometheus_version: 2.23.0
-jaeger_version: 1.21.0
-jaeger_cpp_version: v0.4.2
-grafana_version: 7.3.5-1
-grafana-piechart-panel: 1.6.1
-natel-discrete-panel: 0.1.0
-elasticsearch_version: 7.10.1
-install_docker: true
