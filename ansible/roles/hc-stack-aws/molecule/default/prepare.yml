@@ -1,0 +1,10 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: "Include hc-stack-install/prerequisites"
+      include_role:
+        name: "hc-stack-install"
+        tasks_from: prerequisites
+        apply:
+          become: yes

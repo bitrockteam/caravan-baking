@@ -1,0 +1,8 @@
+#! /bin/bash
+
+AWS_ACCOUNT_ID=$(/bin/curl http://169.254.169.254/latest/dynamic/instance-identity/document | /bin/jq -r ".accountId")
+REGIONS=({{ aws_ecr_login_regions | join(' ') }})
+
+for REGION in ${REGIONS[@]}; do
+    /usr/local/bin/aws ecr get-login-password --region "$REGION" | /bin/docker login --username AWS --password-stdin "${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com"
+done

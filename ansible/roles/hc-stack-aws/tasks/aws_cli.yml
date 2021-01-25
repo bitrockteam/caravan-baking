@@ -1,0 +1,14 @@
+---
+- name: get aws-cli latest
+  unarchive:
+    src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    remote_src: yes
+    dest: /tmp/
+
+- name: install aws-cli
+  command: /tmp/aws/install
+
+- name: remove aws-cli installer
+  file:
+    path: /tmp/aws
+    state: absent
