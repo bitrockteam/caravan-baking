@@ -6,9 +6,9 @@
     - name: "Include hc-stack-install"
       include_role:
         name: "hc-stack-install"
-#    - name: "Include hc-stack-aws"
-#      include_role:
-#        name: "hc-stack-aws"
+    - name: "Include hc-stack-aws"
+      include_role:
+        name: "hc-stack-aws"
     - name: "Include hc-stack-apps"
       include_role:
         name: "hc-stack-apps"

@@ -1,3 +1,6 @@
 ---
 nameservers:
   - 172.31.0.2
+
+aws_ecr_login_regions:
+  - eu-central-1
