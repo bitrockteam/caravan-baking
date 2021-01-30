@@ -1,2 +1,35 @@
 ---
-# defaults file for hc-stack-install
+# vars file for hc-stack-install
+
+extra_packages:
+  - wget
+  - unzip
+  - jq
+  - dnsmasq
+  #  - openjdk-8-jdk
+  - java-1.8.0-openjdk
+  - bind-utils
+  - tcpdump
+
+install_terraform: true
+install_vault: true
+install_consul: true
+install_nomad: true
+install_envoy: true
+install_cni: true
+install_docker: true
+
+terraform_version: 0.12.28
+vault_version: 1.6.1
+consul_version: 1.9.1
+consul_esm_version: 0.4.0
+nomad_version: 1.0.2
+envoy_version: 1.14.5.p0.gfa0371e-1p69.ga5345f6
+cni_version: 0.9.0
+containerd_version: 1.4.3-3.1
+docker_ce_version: 19.03.13-3
+
+dummy_ip: 192.168.0.1
+
+nameservers:
+  - 8.8.8.8

@@ -1,0 +1,7 @@
+---
+# tasks file for hc-stack-aws
+- name: install aws-cli
+  include: aws_cli.yml
+
+- name: enable docker-login
+  include: docker_login.yml

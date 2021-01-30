@@ -1,0 +1,11 @@
+[Unit]
+Description=login to private dokcer registry
+After=network.target nomad.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/docker-login.sh
+
+[Install]
+WantedBy=multi-user.target

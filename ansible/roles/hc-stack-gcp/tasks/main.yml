@@ -6,3 +6,6 @@
 
 - name: monitoring
   include: monitoring.yml
+
+- name: cloud-init
+  include: cloud_init.yml

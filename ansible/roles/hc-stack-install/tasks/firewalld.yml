@@ -1,16 +1,26 @@
 ---
+- name: check firewall-cmd
+  command: which firewall-cmd
+  register: firewalld_check
+  ignore_errors: yes
+
 - name: get interface
   command: /bin/bash -c "/sbin/ip route | grep '^default' | grep -Po '(?<=dev )(.+?)(?= )'"
   register: interface
+  when: firewalld_check.rc == 0
 
 - name: firewall-cmd --zone=trusted --change-interface
   command: 'firewall-cmd --zone=trusted --change-interface={{interface.stdout}}'
+  when: firewalld_check.rc == 0
 
 - name: firewall-cmd --set-default-zone=trusted
   command: firewall-cmd --set-default-zone=trusted
+  when: firewalld_check.rc == 0
 
 - name: firewall-cmd --complete-reload
   command: firewall-cmd --complete-reload
+  when: firewalld_check.rc == 0
 
 - name: firewall-cmd --get-active-zones
   command: firewall-cmd --get-active-zones
+  when: firewalld_check.rc == 0

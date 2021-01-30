@@ -1,0 +1,4 @@
+---
+# defaults file for hc-stack-aws
+aws_ecr_login_regions:
+  - eu-central-1

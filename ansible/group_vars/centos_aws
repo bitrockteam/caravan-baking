@@ -1,0 +1,6 @@
+---
+nameservers:
+  - 169.254.169.253
+
+aws_ecr_login_regions:
+  - eu-central-1

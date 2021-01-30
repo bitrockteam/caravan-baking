@@ -1,13 +1,4 @@
 ---
-#- name: gcloud docker login
-#  command: /bin/bash -c 'which gcloud && gcloud auth configure-docker'
-
-#- name: stop and enable docker service
-#  systemd:
-#    name: docker
-#    enabled: yes
-#    state: stopped
-
 - name: copy docker-login.service
   copy:
     src: docker-login.service
@@ -16,9 +7,9 @@
     group: root
 
 - name: copy docker-login.sh
-  copy:
-    src: docker-login.sh
-    dest: /usr/local/bin/
+  template:
+    src: docker-login.sh.j2
+    dest: /usr/local/bin/docker-login.sh
     mode: +x
     owner: root
     group: root
