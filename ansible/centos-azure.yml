@@ -1,0 +1,14 @@
+---
+- name: Setup on AWS
+  hosts: all
+  become: yes
+  tasks:
+    - name: "Include hc-stack-install"
+      include_role:
+        name: "hc-stack-install"
+#    - name: "Include hc-stack-azure"
+#      include_role:
+#        name: "hc-stack-azure"
+    - name: "Include hc-stack-apps"
+      include_role:
+        name: "hc-stack-apps"
