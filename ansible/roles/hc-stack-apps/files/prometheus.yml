@@ -7,6 +7,14 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
+  - job_name: "gateway"
+    scheme: http
+    tls_config:
+      insecure_skip_verify: true
+    consul_sd_configs:
+      - server: 'http://consul.service.consul:8500'
+        services: ['faasd-mon']
+
   - job_name: 'nomad'
     scheme: http
     tls_config:
