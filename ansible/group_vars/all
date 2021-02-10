@@ -1,7 +1,7 @@
 ---
 terraform_version: '0.12.28'
 vault_version: '1.6.2'
-consul_version: '1.9.2'
+consul_version: '1.9.3'
 consul_esm_version: '0.4.0'
 nomad_version: '1.0.3'
 envoy_version: '1.14.5.p0.gfa0371e-1p69.ga5345f6'
@@ -36,5 +36,6 @@ install_jaeger: true
 install_elastic: true
 install_grafana: true
 install_jenkins: true
+install_faasd: true
 
 dummy_ip: '192.168.0.1'

@@ -20,3 +20,7 @@
 - name: intall jenkins
   include: jenkins.yml
   when: install_jenkins|bool == true
+
+- name: intall faasd
+  include: faasd.yml
+  when: install_faasd|bool == true

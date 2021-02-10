@@ -4,8 +4,16 @@
     name: https://tetrate.bintray.com/getenvoy-rpm/centos/7/x86_64/stable/Packages/getenvoy-envoy-{{envoy_version}}.x86_64.rpm
     state: present
 
+- name: rm envoy binary
+  ansible.builtin.file:
+    path: /usr/bin/envoy
+    state: absent
+
 - name: copy envoy binary
   copy:
     src: /opt/getenvoy/bin/envoy
     dest: /usr/bin/envoy
     remote_src: yes
+    owner: root
+    group: root
+    mode: a+x
