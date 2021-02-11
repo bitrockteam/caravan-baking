@@ -77,6 +77,27 @@ variable "oci_artifacts_bucket" {
   type    = string
   default = "artifacts"
 }
+variable "build_on_azure" {
+  type    = bool
+  default = false
+}
+variable "azure_subscription_id" {
+  type    = string
+  default = null
+}
+variable "azure_client_id" {
+  type    = string
+  default = null
+}
+variable "azure_client_secret" {
+  type    = string
+  default = null
+}
+variable "azure_target_resource_group" {
+  type    = string
+  default = "caravan-images"
+}
+
 variable "base_image_ocid" {
   type    = string
   default = null

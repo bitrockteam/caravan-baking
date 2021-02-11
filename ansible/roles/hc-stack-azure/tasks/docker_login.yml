@@ -1,0 +1,26 @@
+---
+- name: copy docker-login.service
+  copy:
+    src: docker-login.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+
+- name: copy docker-login.sh
+  template:
+    src: docker-login.sh.j2
+    dest: /usr/local/bin/docker-login.sh
+    mode: +x
+    owner: root
+    group: root
+
+- name: enable docker-login service
+  systemd:
+    name: docker-login
+    enabled: yes
+
+- name: periodically restart docker-login.service
+  cron:
+    name: restart docker-login.service
+    minute: '*/15'
+    job: /usr/bin/systemctl restart docker-login.service

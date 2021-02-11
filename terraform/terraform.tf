@@ -3,7 +3,7 @@ terraform {
 }
 
 resource "null_resource" "run_packer_google" {
-  count = (var.build_on_google && !var.skip_packer_build) ? 1 : 0
+  count = (var.build_on_google && ! var.skip_packer_build) ? 1 : 0
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
     command     = "packer build -force packer-centos-gcp.json"
@@ -22,7 +22,7 @@ resource "null_resource" "run_packer_google" {
 }
 
 resource "null_resource" "run_packer_aws" {
-  count = (var.build_on_aws && !var.skip_packer_build) ? 1 : 0
+  count = (var.build_on_aws && ! var.skip_packer_build) ? 1 : 0
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
     command     = "packer build -force packer-centos-aws.json"
@@ -35,3 +35,22 @@ resource "null_resource" "run_packer_aws" {
     }
   }
 }
+
+resource "null_resource" "run_packer_azure" {
+  count = (var.build_on_azure && ! var.skip_packer_build) ? 1 : 0
+  provisioner "local-exec" {
+    working_dir = "${path.module}/../packer"
+    command     = "packer build -force packer-centos-azure.json"
+    environment = {
+      AZURE_SUBSCRIPTION_ID       = var.azure_subscription_id
+      AZURE_CLIENT_ID             = var.azure_client_id
+      AZURE_CLIENT_SECRET         = var.azure_client_secret
+      AZURE_IMAGE_NAME            = var.build_image_name
+      AZURE_TARGET_RESOURCE_GROUP = var.azure_target_resource_group
+      // select accordingly to the hypervisor gen
+      AZURE_VM_SIZE   = "Standard_B2s"
+      AZURE_IMAGE_SKU = "7_9-gen2"
+    }
+  }
+}
+
