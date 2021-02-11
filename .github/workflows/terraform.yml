@@ -55,9 +55,6 @@ jobs:
         uses: ansible/ansible-lint-action@master
         with:
           targets: "ansible"
-          override-deps: |
-            ansible==2.10
-            ansible-lint==4.3
 
   release:
     name: "Release"
