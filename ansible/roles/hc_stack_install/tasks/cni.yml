@@ -3,10 +3,13 @@
   file:
     path: /opt/cni/bin/
     state: directory
+    owner: root
+    group: root
+    mode: '755'
 
 - name: install cni
   unarchive:
-    src: https://github.com/containernetworking/plugins/releases/download/v{{cni_version}}/cni-plugins-linux-amd64-v{{cni_version}}.tgz
+    src: https://github.com/containernetworking/plugins/releases/download/v{{ cni_version }}/cni-plugins-linux-amd64-v{{ cni_version }}.tgz
     dest: /opt/cni/bin/
     remote_src: yes
 
@@ -14,3 +17,6 @@
   copy:
     src: bridge.conf
     dest: /etc/sysctl.d/bridge.conf
+    owner: root
+    group: root
+    mode: '644'

@@ -1,5 +1,5 @@
 ---
-# vars file for hc-stack-install
+# vars file for hc_stack_install
 
 extra_packages:
   - wget

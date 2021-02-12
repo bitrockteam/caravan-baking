@@ -1,9 +1,8 @@
 ---
 - name: update system packages
   yum:
-#    name: '*'
     update_only: yes
-    state: latest
+    state: latest # noqa 403
     exclude: epel-release,grub2*,shim*,mokutil
 
 - name: install epel-release

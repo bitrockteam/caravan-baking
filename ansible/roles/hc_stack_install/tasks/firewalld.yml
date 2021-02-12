@@ -1,6 +1,6 @@
 ---
 - name: check firewall-cmd
-  command: which firewall-cmd
+  command: "which firewall-cmd" # noqa 301
   register: firewalld_check
   ignore_errors: yes
 
@@ -8,12 +8,12 @@
   ansible.builtin.service_facts:
 
 - name: get interface
-  command: /bin/bash -c "/sbin/ip route | grep '^default' | grep -Po '(?<=dev )(.+?)(?= )'"
+  command: "/bin/bash -c \"/sbin/ip route | grep '^default' | grep -Po '(?<=dev )(.+?)(?= )'\"" # noqa 301
   register: interface
   when: firewalld_check.rc == 0 and ansible_facts.services['firewalld.service'].state == "running"
 
 - name: firewall-cmd --zone=trusted --change-interface
-  command: 'firewall-cmd --zone=trusted --change-interface={{interface.stdout}}'
+  command: 'firewall-cmd --zone=trusted --change-interface={{ interface.stdout }}'
   when: firewalld_check.rc == 0 and ansible_facts.services['firewalld.service'].state == "running"
 
 - name: firewall-cmd --set-default-zone=trusted

@@ -4,31 +4,31 @@
 
 - name: install docker
   include: docker.yml
-  when: install_docker|bool == true
+  when: install_docker|bool
 
 - name: install terraform
   include: terraform.yml
-  when: install_terraform|bool == true
+  when: install_terraform|bool
 
 - name: install vault
   include: vault.yml
-  when: install_vault|bool == true
+  when: install_vault|bool
 
 - name: install consul
   include: consul.yml
-  when: install_consul|bool == true
+  when: install_consul|bool
 
 - name: install nomad
   include: nomad.yml
-  when: install_nomad|bool == true
+  when: install_nomad|bool
 
 - name: install envoy
   include: envoy.yml
-  when: install_envoy|bool == true
+  when: install_envoy|bool
 
 - name: install cni
   include: cni.yml
-  when: install_cni|bool == true
+  when: install_cni|bool
 
 - name: install dummy-nic
   include: dummy_nic.yml

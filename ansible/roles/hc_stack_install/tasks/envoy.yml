@@ -1,7 +1,7 @@
 ---
 - name: install envoy
   yum:
-    name: https://tetrate.bintray.com/getenvoy-rpm/centos/7/x86_64/stable/Packages/getenvoy-envoy-{{envoy_version}}.x86_64.rpm
+    name: https://tetrate.bintray.com/getenvoy-rpm/centos/7/x86_64/stable/Packages/getenvoy-envoy-{{ envoy_version }}.x86_64.rpm
     state: present
 
 - name: rm envoy binary

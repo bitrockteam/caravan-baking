@@ -2,7 +2,7 @@
 # TODO: support local files
 - name: install consul from remote
   unarchive:
-    src: https://releases.hashicorp.com/consul/{{consul_version}}/consul_{{consul_version}}_linux_amd64.zip
+    src: https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip
     dest: /usr/local/bin/
     remote_src: yes
     owner: root
@@ -15,6 +15,7 @@
     dest: /etc/systemd/system/
     owner: root
     group: root
+    mode: '644'
 
 - name: add user consul
   user:
@@ -49,11 +50,12 @@
 # TODO: support local files
 - name: install consul from remote
   unarchive:
-    src: https://releases.hashicorp.com/consul-esm/{{consul_esm_version}}/consul-esm_{{consul_esm_version}}_linux_amd64.zip
+    src: https://releases.hashicorp.com/consul-esm/{{ consul_esm_version }}/consul-esm_{{ consul_esm_version }}_linux_amd64.zip
     dest: /usr/local/bin/
     remote_src: yes
     owner: root
     group: root
+    mode: '755'
 
 - name: copy consul-esm.service
   copy:
@@ -61,6 +63,7 @@
     dest: /etc/systemd/system/
     owner: root
     group: root
+    mode: '644'
 
 - name: copy consul-watcher.service
   copy:
@@ -68,6 +71,7 @@
     dest: /etc/systemd/system/
     owner: root
     group: root
+    mode: '644'
 
 - name: copy consul-watcher.path
   copy:
@@ -75,6 +79,7 @@
     dest: /etc/systemd/system/
     owner: root
     group: root
+    mode: '644'
 
 - name: start and enable consul-watcher.path
   systemd:

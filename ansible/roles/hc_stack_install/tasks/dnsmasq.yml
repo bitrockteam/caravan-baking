@@ -3,20 +3,23 @@
   template:
     src: dnsmasq.conf.j2
     dest: /etc/dnsmasq.conf
+    owner: root
+    group: root
+    mode: '644'
 
 - name: retrieve interface
-  command: /bin/bash -c "/sbin/ip route | grep '^default' | grep -Po '(?<=dev )(.+?)(?= )'"
+  command: "/bin/bash -c \"/sbin/ip route | grep '^default' | grep -Po '(?<=dev )(.+?)(?= )'\"" # noqa 301
   register: interface
 
 - name: add PEERDNS to interface config
   lineinfile:
-    path: '/etc/sysconfig/network-scripts/ifcfg-{{interface.stdout}}'
+    path: '/etc/sysconfig/network-scripts/ifcfg-{{ interface.stdout }}'
     regex: ^PEERDNS=
     line: PEERDNS=no
 
 - name: add DNS1 to interface config
   lineinfile:
-    path: '/etc/sysconfig/network-scripts/ifcfg-{{interface.stdout}}'
+    path: '/etc/sysconfig/network-scripts/ifcfg-{{ interface.stdout }}'
     regex: ^DNS1=
     line: DNS1=127.0.0.1
 
@@ -31,3 +34,6 @@
     src: resolv.conf
     dest: /etc/resolv.conf
     attributes: +i
+    mode: '644'
+    owner: root
+    group: root
