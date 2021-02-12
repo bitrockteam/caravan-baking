@@ -1,0 +1,8 @@
+#! /bin/bash
+
+az login --identity
+
+CONTAINER_REGISTRIES=({{ azure_container_registries | join(' ') }})
+for CR in ${CONTAINER_REGISTRIES[@]}; do
+    az acr login --name "${CR}"
+done
