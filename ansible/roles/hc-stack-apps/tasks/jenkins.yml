@@ -1,4 +1,0 @@
----
-- name: get jenkins docker image
-  command: docker pull jenkins/jenkins:lts
-  when: install_docker|bool == true

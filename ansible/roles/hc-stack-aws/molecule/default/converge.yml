@@ -1,8 +1,0 @@
----
-- name: Converge
-  hosts: all
-  become: yes
-  tasks:
-    - name: "Include hc-stack-aws"
-      include_role:
-        name: "hc-stack-aws"

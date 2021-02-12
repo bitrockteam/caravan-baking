@@ -1,7 +1,0 @@
----
-# tasks file for hc-stack-aws
-- name: install az-cli
-  include: az_cli.yml
-
-- name: enable docker-login
-  include: docker_login.yml

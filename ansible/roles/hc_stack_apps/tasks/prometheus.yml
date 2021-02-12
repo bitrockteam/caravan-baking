@@ -1,0 +1,91 @@
+---
+- name: add user prometheus
+  user:
+    name: prometheus
+    shell: /bin/false
+    create_home: no
+
+- name: create /etc/prometheus
+  file:
+    path: /etc/prometheus
+    state: directory
+    owner: prometheus
+    group: prometheus
+    mode: '755'
+
+- name: create /var/lib/prometheus
+  file:
+    path: /var/lib/prometheus
+    state: directory
+    owner: prometheus
+    group: prometheus
+    mode: '755'
+
+- name: get prometheus
+  unarchive:
+    src: https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz
+    dest: /tmp/
+    remote_src: yes
+    mode: '755'
+
+- name: copy prometheus
+  copy:
+    src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/prometheus
+    dest: /usr/local/bin/
+    remote_src: yes
+    owner: prometheus
+    group: prometheus
+    mode: +x
+
+- name: copy promtool
+  copy:
+    src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/promtool
+    dest: /usr/local/bin/
+    remote_src: yes
+    owner: prometheus
+    group: prometheus
+    mode: +x
+
+- name: copy consoles
+  copy:
+    src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/consoles
+    dest: /etc/prometheus/
+    remote_src: yes
+    owner: prometheus
+    group: prometheus
+    mode: '644'
+
+- name: copy console_libraries
+  copy:
+    src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/console_libraries
+    dest: /etc/prometheus/
+    remote_src: yes
+    owner: prometheus
+    group: prometheus
+    mode: '644'
+
+- name: copy prometheus.yml
+  copy:
+    src: prometheus.yml
+    dest: /etc/prometheus/prometheus.yml
+    owner: prometheus
+    group: prometheus
+    mode: '644'
+
+- name: copy prometheus.service
+  copy:
+    src: prometheus.service
+    dest: /etc/systemd/system/prometheus.service
+    owner: root
+    group: root
+    mode: '644'
+
+- name: enable prometheus
+  systemd:
+    name: prometheus
+    enabled: yes
+
+- name: cleanup prometheus package
+  file:
+    path: /tmp/prometheus-{{ prometheus_version }}.linux-amd64
+    state: absent
