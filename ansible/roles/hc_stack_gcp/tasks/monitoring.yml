@@ -1,0 +1,18 @@
+---
+- name: download script
+  get_url:
+    url: https://dl.google.com/cloudagents/add-monitoring-agent-repo.sh
+    dest: /tmp/add-monitoring-agent-repo.sh
+
+- name: run script
+  command: "bash /tmp/add-monitoring-agent-repo.sh" # noqa 301
+
+- name: install stackdriver-agent
+  yum:
+    name: stackdriver-agent
+    state: present
+
+- name: enable stackdriver-agent
+  systemd:
+    name: stackdriver-agent
+    enabled: yes

@@ -1,0 +1,12 @@
+galaxy_info:
+  author: DevOps Team
+  description: install Caravan GCP dependencies
+  company: Bitrock SRL
+  license: TO_BE_PICKED
+  min_ansible_version: 2.1
+  platforms:
+    - name: Centos
+      versions:
+        - 7
+  galaxy_tags: []
+dependencies: []

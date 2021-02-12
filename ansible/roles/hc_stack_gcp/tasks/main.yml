@@ -1,0 +1,11 @@
+---
+# tasks file for hc_stack_gcp
+
+- name: docker login
+  include: docker_login.yml
+
+- name: monitoring
+  include: monitoring.yml
+
+- name: cloud-init
+  include: cloud_init.yml
