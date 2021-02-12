@@ -2,15 +2,15 @@
 - name: Prepare
   hosts: all
   tasks:
-    - name: "Include hc-stack-install/prerequisites"
+    - name: "Include hc_stack_install/prerequisites"
       include_role:
-        name: "hc-stack-install"
+        name: "hc_stack_install"
         tasks_from: prerequisites
         apply:
           become: yes
-    - name: "Include hc-stack-install/docker"
+    - name: "Include hc_stack_install/docker"
       include_role:
-        name: "hc-stack-install"
+        name: "hc_stack_install"
         tasks_from: docker
         apply:
           become: yes
