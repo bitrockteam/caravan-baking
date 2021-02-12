@@ -4,6 +4,11 @@ terraform {
 
 resource "null_resource" "run_packer_google" {
   count = (var.build_on_google && ! var.skip_packer_build) ? 1 : 0
+  triggers = {
+    "changes-in-playbook" : filemd5("${path.module}/../ansible/centos-gcp.yml")
+    "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")
+    "changes-in-groupvars-gcp" : filemd5("${path.module}/../ansible/group_vars/centos_gcp")
+  }
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
     command     = "packer build -force packer-centos-gcp.json"
@@ -23,6 +28,11 @@ resource "null_resource" "run_packer_google" {
 
 resource "null_resource" "run_packer_aws" {
   count = (var.build_on_aws && ! var.skip_packer_build) ? 1 : 0
+  triggers = {
+    "changes-in-playbook" : filemd5("${path.module}/../ansible/centos-aws.yml")
+    "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")
+    "changes-in-groupvars-aws" : filemd5("${path.module}/../ansible/group_vars/centos_aws")
+  }
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
     command     = "packer build -force packer-centos-aws.json"
@@ -38,6 +48,11 @@ resource "null_resource" "run_packer_aws" {
 
 resource "null_resource" "run_packer_azure" {
   count = (var.build_on_azure && ! var.skip_packer_build) ? 1 : 0
+  triggers = {
+    "changes-in-playbook" : filemd5("${path.module}/../ansible/centos-azure.yml")
+    "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")
+    "changes-in-groupvars-azure" : filemd5("${path.module}/../ansible/group_vars/centos_azure")
+  }
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
     command     = "packer build -force packer-centos-azure.json"
