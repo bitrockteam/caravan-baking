@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  tasks:
+    - name: "Include hc_stack_gcp"
+      include_role:
+        name: "hc_stack_gcp"

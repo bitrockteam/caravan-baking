@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include hc_stack_install"
+      include_role:
+        name: "hc_stack_install"
+        apply:
+          become: yes

@@ -1,0 +1,57 @@
+---
+# TODO: support local files
+- name: install nomad from remote
+  unarchive:
+    src: https://releases.hashicorp.com/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_linux_amd64.zip
+    dest: /usr/local/bin/
+    remote_src: yes
+    owner: root
+    group: root
+    mode: '755'
+
+- name: copy nomad.service
+  copy:
+    src: nomad.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+    mode: '644'
+
+- name: add user nomad
+  user:
+    name: nomad
+    home: /var/lib/nomad
+    shell: /bin/false
+    state: present
+    groups:
+      - docker
+      - certsreaders
+
+- name: create /etc/nomad.d folder
+  file:
+    path: /etc/nomad.d
+    state: directory
+    owner: vault
+    group: certsreaders
+    mode: '750'
+
+- name: enable nomad
+  systemd:
+    name: nomad
+    enabled: yes
+
+- name: copy nomad-watcher.service
+  copy:
+    src: nomad-watcher.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+    mode: '644'
+
+- name: copy nomad-watcher.path
+  copy:
+    src: nomad-watcher.path
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+    mode: '644'

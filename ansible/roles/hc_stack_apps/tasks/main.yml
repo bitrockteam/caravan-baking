@@ -1,0 +1,26 @@
+---
+# tasks file for hc_stack_apps
+
+- name: install prometheus
+  include: prometheus.yml
+  when: install_prometheus|bool
+
+- name: install jaeger
+  include: jaeger.yml
+  when: install_jaeger|bool
+
+- name: install grafana
+  include: grafana.yml
+  when: install_grafana|bool
+
+- name: install elastic stack
+  include: elastic.yml
+  when: install_elastic|bool
+
+- name: intall jenkins
+  include: jenkins.yml
+  when: install_jenkins|bool
+
+- name: intall faasd
+  include: faasd.yml
+  when: install_faasd|bool

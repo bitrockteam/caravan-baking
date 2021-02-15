@@ -1,0 +1,19 @@
+---
+# TODO: support local install
+
+- name: install containerd, docker and docker-cli
+  yum:
+    name:
+      - https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-{{ containerd_version }}.el7.x86_64.rpm
+      - https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-{{ docker_ce_version }}.el7.x86_64.rpm
+      - https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-cli-{{ docker_ce_version }}.el7.x86_64.rpm
+    state: present
+
+- name: start docker
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: pull envoy image
+  command: "docker pull envoyproxy/envoy:v1.16.2" # noqa 301

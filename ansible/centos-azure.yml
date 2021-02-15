@@ -3,12 +3,12 @@
   hosts: all
   become: yes
   tasks:
-    - name: "Include hc-stack-install"
+    - name: "Include hc_stack_install"
       include_role:
-        name: "hc-stack-install"
-    - name: "Include hc-stack-azure"
+        name: "hc_stack_install"
+    - name: "Include hc_stack_azure"
       include_role:
-        name: "hc-stack-azure"
-    - name: "Include hc-stack-apps"
+        name: "hc_stack_azure"
+    - name: "Include hc_stack_apps"
       include_role:
-        name: "hc-stack-apps"
+        name: "hc_stack_apps"
