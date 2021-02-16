@@ -9,6 +9,22 @@
       - https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-cli-{{ docker_ce_version }}.el7.x86_64.rpm
     state: present
 
+- name: create docker folder
+  file:
+    state: directory
+    path: /root/.docker
+    owner: root
+    group: docker
+    mode: '770'
+
+- name: create docker credentials file
+  file:
+    state: touch
+    path: /root/.docker/config.json
+    owner: root
+    group: docker
+    mode: '660'
+
 - name: start docker
   systemd:
     name: docker
