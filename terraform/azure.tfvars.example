@@ -1,0 +1,6 @@
+build_on_azure              = true
+build_image_name            = "caravan-centos-image"
+azure_subscription_id       = "YOUR-SUBSCRIPTION-ID"
+azure_target_resource_group = "YOUR-RESOURCE-GROUP"
+azure_client_id             = "YOUR-AZURE-CLIENT-ID"
+azure_client_secret         = "YOUR-AZURE-CLIENT-SECRET"

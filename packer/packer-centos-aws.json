@@ -30,7 +30,7 @@
     }],
     "ssh_username": "centos",
     "tags": {
-      "Owner": "packer-builder-pino"
+      "Owner": "packer-builder-caravan"
     }
   }],
   "provisioners": [
