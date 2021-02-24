@@ -53,7 +53,7 @@
     remote_src: yes
     owner: prometheus
     group: prometheus
-    mode: '644'
+    mode: '755'
 
 - name: copy console_libraries
   copy:
@@ -62,7 +62,7 @@
     remote_src: yes
     owner: prometheus
     group: prometheus
-    mode: '644'
+    mode: '755'
 
 - name: copy prometheus.yml
   copy:
