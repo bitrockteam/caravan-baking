@@ -1,9 +1,9 @@
 ---
 # tasks file for hc_stack_apps
 
-- name: install node-exporter
-  include_role:
-    name: "cloudalchemy.node-exporter"
+- name: install node_exporter
+  include: node_exporter.yml
+  when: install_prometheus|bool
 
 - name: install prometheus
   include: prometheus.yml
