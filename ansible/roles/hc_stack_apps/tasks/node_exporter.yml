@@ -1,0 +1,12 @@
+
+- name: install node_exporter
+  include_role:
+    name: "cloudalchemy.node-exporter"
+
+- name: copy prometheus.service
+  copy:
+    src: node_exporter-service.json
+    dest: /etc/consul.d/node_exporter-service.json
+    owner: consul
+    group: consul
+    mode: '644'
