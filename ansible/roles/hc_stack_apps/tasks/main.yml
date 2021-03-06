@@ -24,7 +24,3 @@
 - name: intall jenkins
   include: jenkins.yml
   when: install_jenkins|bool
-
-- name: intall faasd
-  include: faasd.yml
-  when: install_faasd|bool
