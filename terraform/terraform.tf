@@ -5,7 +5,7 @@ terraform {
 // required by cloudalchemy.node_exporter
 resource "null_resource" "mac_gnu_tar" {
   provisioner "local-exec" {
-    command     = "if [[ $OSTYPE =~ \"darwin\" ]]; then which gtar || echo Missing dependency: \"brew install gnu-tar\" && exit 1; fi"
+    command     = "if [[ $OSTYPE =~ \"darwin\" ]]; then which gtar || (echo Missing dependency: \"brew install gnu-tar\" && exit 1); fi"
     interpreter = ["/bin/bash", "-c"]
   }
 }
