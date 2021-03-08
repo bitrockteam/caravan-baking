@@ -1,1 +1,4 @@
 ---
+consul_remote_archive_location: https://releases.hashicorp.com/consul/{{ consul_version }}{{ '+ent' if consul_enterprise|bool else '' }}/consul_{{ consul_version }}{{ '+ent' if consul_enterprise|bool else '' }}_linux_amd64.zip
+nomad_remote_archive_location: https://releases.hashicorp.com/nomad/{{ nomad_version }}{{ '+ent' if nomad_enterprise|bool else '' }}/nomad_{{ nomad_version }}{{ '+ent' if nomad_enterprise|bool else '' }}_linux_amd64.zip
+vault_remote_archive_location: https://releases.hashicorp.com/vault/{{ vault_version }}{{ '+ent' if vault_enterprise|bool else '' }}/vault_{{ vault_version }}{{ '+ent' if vault_enterprise|bool else '' }}_linux_amd64.zip

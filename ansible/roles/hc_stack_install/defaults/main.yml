@@ -19,6 +19,10 @@ install_envoy: true
 install_cni: true
 install_docker: true
 
+consul_enterprise: no
+nomad_enterprise: no
+vault_enterprise: no
+
 terraform_version: 0.13.6
 vault_version: 1.6.1
 consul_version: 1.9.1

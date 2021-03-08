@@ -2,7 +2,7 @@
 # TODO: support local files
 - name: install nomad from remote
   unarchive:
-    src: https://releases.hashicorp.com/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_linux_amd64.zip
+    src: '{{ nomad_remote_archive_location }}'
     dest: /usr/local/bin/
     remote_src: yes
     owner: root

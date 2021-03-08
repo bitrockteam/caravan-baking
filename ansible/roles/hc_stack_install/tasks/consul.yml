@@ -2,7 +2,7 @@
 # TODO: support local files
 - name: install consul from remote
   unarchive:
-    src: https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip
+    src: '{{ consul_remote_archive_location }}'
     dest: /usr/local/bin/
     remote_src: yes
     owner: root
