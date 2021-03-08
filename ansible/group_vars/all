@@ -1,6 +1,6 @@
 ---
 terraform_version: '0.13.6'
-vault_version: '1.6.2'
+vault_version: '1.6.3'
 consul_version: '1.9.4'
 consul_esm_version: '0.5.0'
 nomad_version: '1.0.4'
