@@ -83,6 +83,9 @@ build {
     playbook_file       = "../ansible/centos-azure.yml"
     inventory_directory = "../ansible"
     groups              = ["centos_azure"]
+    ansible_env_vars = [
+      "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES"
+    ]
     override = {
       enterprise = {
         groups = ["centos_azure", "enterprise"]

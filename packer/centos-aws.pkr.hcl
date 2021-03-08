@@ -80,6 +80,9 @@ build {
     playbook_file       = "../ansible/centos-aws.yml"
     inventory_directory = "../ansible"
     groups              = ["centos_aws"]
+    ansible_env_vars = [
+      "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES"
+    ]
     override = {
       enterprise = {
         groups = ["centos_aws", "enterprise"]

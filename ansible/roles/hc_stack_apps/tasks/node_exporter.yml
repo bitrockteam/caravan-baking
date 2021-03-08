@@ -1,7 +1,7 @@
 
 - name: install node_exporter
   include_role:
-    name: "cloudalchemy.node-exporter"
+    name: "cloudalchemy.node_exporter"
 
 - name: copy prometheus.service
   copy:

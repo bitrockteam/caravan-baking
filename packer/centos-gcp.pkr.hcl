@@ -95,6 +95,9 @@ build {
     playbook_file       = "../ansible/centos-gcp.yml"
     inventory_directory = "../ansible"
     groups              = ["centos_gcp"]
+    ansible_env_vars = [
+      "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES"
+    ]
     override = {
       enterprise = {
         groups = ["centos_gcp", "enterprise"]
