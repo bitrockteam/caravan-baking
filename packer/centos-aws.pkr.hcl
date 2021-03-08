@@ -26,7 +26,7 @@ variable "instance_type" {
 }
 
 locals {
-  full_image_name            = "${var.image_name}-{{timestamp}}"
+  full_image_name            = "${var.image_name}-os-{{timestamp}}"
   full_image_name_enterprise = "${var.image_name}-ent-{{timestamp}}"
 }
 

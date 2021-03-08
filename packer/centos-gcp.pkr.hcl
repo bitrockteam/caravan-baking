@@ -49,7 +49,7 @@ variable "firewall_name" {
 }
 
 locals {
-  image_family               = var.image_name
+  image_family               = "${var.image_name}-os"
   image_family_enterprise    = "${var.image_name}-ent"
   full_image_name            = "${local.image_family}-{{timestamp}}"
   full_image_name_enterprise = "${local.image_family_enterprise}-{{timestamp}}"
