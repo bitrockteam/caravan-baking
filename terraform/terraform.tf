@@ -35,13 +35,13 @@ resource "null_resource" "run_packer_aws" {
   }
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
-    command     = "packer build -force packer-centos-aws.json"
+    command     = "packer build -force -only=${join(",", var.builds)} centos-aws.pkr.hcl"
     environment = {
-      AWS_ACCESS_KEY    = var.aws_access_key
-      AWS_SECRET_KEY    = var.aws_secret_key
-      AWS_REGION        = var.aws_region
-      AWS_IMAGE_NAME    = var.build_image_name
-      AWS_INSTANCE_TYPE = var.aws_instance_type
+      PKR_VAR_access_key    = var.aws_access_key
+      PKR_VAR_secret_key    = var.aws_secret_key
+      PKR_VAR_region        = var.aws_region
+      PKR_VAR_image_name    = var.build_image_name
+      PKR_VAR_instance_type = var.aws_instance_type
     }
   }
 }
@@ -55,16 +55,16 @@ resource "null_resource" "run_packer_azure" {
   }
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
-    command     = "packer build -force packer-centos-azure.json"
+    command     = "packer build -force -only=${join(",", var.builds)} centos-azure.pkr.hcl"
     environment = {
-      AZURE_SUBSCRIPTION_ID       = var.azure_subscription_id
-      AZURE_CLIENT_ID             = var.azure_client_id
-      AZURE_CLIENT_SECRET         = var.azure_client_secret
-      AZURE_IMAGE_NAME            = var.build_image_name
-      AZURE_TARGET_RESOURCE_GROUP = var.azure_target_resource_group
+      PKR_VAR_subscription_id       = var.azure_subscription_id
+      PKR_VAR_client_id             = var.azure_client_id
+      PKR_VAR_client_secret         = var.azure_client_secret
+      PKR_VAR_image_name            = var.build_image_name
+      PKR_VAR_target_resource_group = var.azure_target_resource_group
       // select accordingly to the hypervisor gen
-      AZURE_VM_SIZE   = "Standard_B2s"
-      AZURE_IMAGE_SKU = "7_9-gen2"
+      PKR_VAR_vm_size   = "Standard_B2s"
+      PKR_VAR_image_sku = "7_9-gen2"
     }
   }
 }
