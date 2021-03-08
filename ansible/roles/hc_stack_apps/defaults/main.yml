@@ -6,7 +6,6 @@ grafana_version: 7.4.2-1
 grafana-piechart-panel: 1.6.1
 natel-discrete-panel: 0.1.0
 elasticsearch_version: 7.10.2
-faasd_version: 0.10.2
 node_exporter_version: 1.1.1
 
 install_docker: true
@@ -15,4 +14,3 @@ install_jaeger: true
 install_elastic: true
 install_grafana: true
 install_jenkins: true
-install_faasd: true
