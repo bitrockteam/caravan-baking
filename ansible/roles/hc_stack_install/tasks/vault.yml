@@ -2,7 +2,7 @@
 # TODO: support local files
 - name: install vault from remote
   unarchive:
-    src: https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_amd64.zip
+    src: '{{ vault_remote_archive_location }}'
     dest: /usr/local/bin/
     remote_src: yes
     owner: root

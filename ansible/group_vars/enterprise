@@ -1,0 +1,4 @@
+---
+consul_enterprise: yes
+nomad_enterprise: yes
+vault_enterprise: yes
