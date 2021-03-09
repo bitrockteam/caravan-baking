@@ -80,6 +80,7 @@ build {
   source "source.googlecompute.centos_7" {
     name              = "opensource"
     instance_name     = local.full_image_name
+    image_name        = local.full_image_name
     image_family      = local.image_family
     image_description = "Caravan Centos7"
   }
@@ -87,6 +88,7 @@ build {
   source "source.googlecompute.centos_7" {
     name              = "enterprise"
     instance_name     = local.full_image_name_enterprise
+    image_name        = local.full_image_name_enterprise
     image_family      = local.image_family_enterprise
     image_description = "Caravan Centos7 - Enterprise"
   }
