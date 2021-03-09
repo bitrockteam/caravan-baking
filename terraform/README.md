@@ -47,6 +47,7 @@ No Modules.
 | build\_on\_oci | n/a | `bool` | `false` | no |
 | build\_region | n/a | `string` | `"us-central1"` | no |
 | build\_zone | n/a | `string` | `"us-central1-a"` | no |
+| builds | Which packer build artefacts to produce | `list(string)` | <pre>[<br>  "caravan.*.enterprise",<br>  "caravan.*.opensource"<br>]</pre> | no |
 | dummy\_ip | n/a | `string` | `"192.168.0.1"` | no |
 | google\_account\_file | n/a | `string` | `"builder-account.json"` | no |
 | google\_firewall\_name | n/a | `string` | `"default"` | no |

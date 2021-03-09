@@ -152,3 +152,8 @@ variable "nameservers" {
   type    = list(string)
   default = ["169.254.169.254"]
 }
+variable "builds" {
+  type        = list(string)
+  default     = ["caravan.*.enterprise", "caravan.*.opensource"]
+  description = "Which packer build artefacts to produce"
+}
