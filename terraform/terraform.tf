@@ -33,7 +33,7 @@ resource "null_resource" "run_packer_google" {
   }
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
-    command     = "packer build -force packer-centos-gcp.json"
+    command     = "packer build -force -only=${join(",", var.builds)} centos-gcp.pkr.hcl"
     environment = {
       PKR_VAR_image_name      = var.build_image_name
       PKR_VAR_machine_type    = var.build_machine_type
