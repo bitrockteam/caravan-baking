@@ -80,11 +80,6 @@
     group: root
     mode: '644'
 
-- name: enable prometheus
-  systemd:
-    name: prometheus
-    enabled: yes
-
 - name: cleanup prometheus package
   file:
     path: /tmp/prometheus-{{ prometheus_version }}.linux-amd64
