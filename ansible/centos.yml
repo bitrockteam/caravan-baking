@@ -1,0 +1,11 @@
+---
+- name: Setup
+  hosts: all
+  become: yes
+  tasks:
+    - name: "Include hc_stack_install"
+      include_role:
+        name: "hc_stack_install"
+    - name: "Include hc_stack_apps"
+      include_role:
+        name: "hc_stack_apps"
