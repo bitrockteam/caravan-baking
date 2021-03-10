@@ -5,7 +5,7 @@
 
 | Name | Version |
 |------|---------|
-| terraform | ~> 0.13.1 |
+| terraform | ~> 0.14 |
 
 ## Providers
 
