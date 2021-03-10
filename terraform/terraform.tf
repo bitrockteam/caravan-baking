@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 0.13.1"
+  required_version = "~> 0.14"
 }
 
 // required by cloudalchemy.node_exporter
@@ -22,7 +22,7 @@ resource "null_resource" "ansible_galaxy_deps" {
 }
 
 resource "null_resource" "run_packer_google" {
-  count = (var.build_on_google && ! var.skip_packer_build) ? 1 : 0
+  count = (var.build_on_google && !var.skip_packer_build) ? 1 : 0
   depends_on = [
     null_resource.ansible_galaxy_deps
   ]
@@ -49,7 +49,7 @@ resource "null_resource" "run_packer_google" {
 }
 
 resource "null_resource" "run_packer_aws" {
-  count = (var.build_on_aws && ! var.skip_packer_build) ? 1 : 0
+  count = (var.build_on_aws && !var.skip_packer_build) ? 1 : 0
   depends_on = [
     null_resource.ansible_galaxy_deps
   ]
@@ -72,7 +72,7 @@ resource "null_resource" "run_packer_aws" {
 }
 
 resource "null_resource" "run_packer_azure" {
-  count = (var.build_on_azure && ! var.skip_packer_build) ? 1 : 0
+  count = (var.build_on_azure && !var.skip_packer_build) ? 1 : 0
   depends_on = [
     null_resource.ansible_galaxy_deps
   ]
