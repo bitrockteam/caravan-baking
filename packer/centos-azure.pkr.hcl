@@ -37,6 +37,7 @@ variable "vm_size" {
 locals {
   full_image_name            = "${var.image_name}-os-{{timestamp}}"
   full_image_name_enterprise = "${var.image_name}-ent-{{timestamp}}"
+  ssh_username               = "centos"
 }
 
 source "azure-arm" "centos_7" {
@@ -61,7 +62,7 @@ source "azure-arm" "centos_7" {
   os_type         = "Linux"
   os_disk_size_gb = 30
 
-  ssh_username = "centos"
+  ssh_username = local.ssh_username
 
   vm_size = var.vm_size
 }
@@ -82,6 +83,7 @@ build {
   provisioner "ansible" {
     playbook_file       = "../ansible/centos-azure.yml"
     inventory_directory = "../ansible"
+    user                = local.ssh_username
     groups              = ["centos_azure"]
     ansible_env_vars = [
       "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES"

@@ -53,6 +53,7 @@ locals {
   image_family_enterprise    = "${var.image_name}-ent"
   full_image_name            = "${local.image_family}-{{timestamp}}"
   full_image_name_enterprise = "${local.image_family_enterprise}-{{timestamp}}"
+  ssh_username               = "centos"
 }
 
 source "googlecompute" "centos_7" {
@@ -69,7 +70,7 @@ source "googlecompute" "centos_7" {
   disk_size = 20
   disk_type = "pd-ssd"
 
-  ssh_username = "centos"
+  ssh_username = local.ssh_username
 
   tags = ["ssh-allowed-node", "packer-builder"]
 }
@@ -96,6 +97,7 @@ build {
   provisioner "ansible" {
     playbook_file       = "../ansible/centos-gcp.yml"
     inventory_directory = "../ansible"
+    user                = local.ssh_username
     groups              = ["centos_gcp"]
     ansible_env_vars = [
       "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES"
