@@ -28,6 +28,7 @@ variable "instance_type" {
 locals {
   full_image_name            = "${var.image_name}-os-{{timestamp}}"
   full_image_name_enterprise = "${var.image_name}-ent-{{timestamp}}"
+  ssh_username               = "centos"
 }
 
 source "amazon-ebs" "centos_7" {
@@ -38,7 +39,7 @@ source "amazon-ebs" "centos_7" {
 
   ami_regions = [var.region]
 
-  ssh_username = "centos"
+  ssh_username = local.ssh_username
   tags = {
     Owner = "packer-builder-caravan"
   }
@@ -79,6 +80,7 @@ build {
   provisioner "ansible" {
     playbook_file       = "../ansible/centos-aws.yml"
     inventory_directory = "../ansible"
+    user                = local.ssh_username
     groups              = ["centos_aws"]
     ansible_env_vars = [
       "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES"
