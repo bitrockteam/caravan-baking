@@ -30,6 +30,7 @@ resource "null_resource" "run_packer_google" {
     "changes-in-playbook" : filemd5("${path.module}/../ansible/centos-gcp.yml")
     "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")
     "changes-in-groupvars-gcp" : filemd5("${path.module}/../ansible/group_vars/centos_gcp")
+    "changes-in-packer" : filemd5("${path.module}/../packer/centos-gcp.pkr.hcl")
   }
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
@@ -57,6 +58,7 @@ resource "null_resource" "run_packer_aws" {
     "changes-in-playbook" : filemd5("${path.module}/../ansible/centos-aws.yml")
     "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")
     "changes-in-groupvars-aws" : filemd5("${path.module}/../ansible/group_vars/centos_aws")
+    "changes-in-packer" : filemd5("${path.module}/../packer/centos-aws.pkr.hcl")
   }
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
@@ -80,6 +82,7 @@ resource "null_resource" "run_packer_azure" {
     "changes-in-playbook" : filemd5("${path.module}/../ansible/centos-azure.yml")
     "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")
     "changes-in-groupvars-azure" : filemd5("${path.module}/../ansible/group_vars/centos_azure")
+    "changes-in-packer" : filemd5("${path.module}/../packer/centos-azure.pkr.hcl")
   }
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
