@@ -2,7 +2,7 @@ galaxy_info:
   author: DevOps Team
   description: install Caravan Azure dependencies
   company: Bitrock SRL
-  license: TO_BE_PICKED
+  license: MPL-2.0
   min_ansible_version: 2.1
   platforms:
     - name: Centos
