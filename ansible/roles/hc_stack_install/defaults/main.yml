@@ -23,15 +23,16 @@ consul_enterprise: no
 nomad_enterprise: no
 vault_enterprise: no
 
-terraform_version: 0.13.6
-vault_version: 1.6.1
-consul_version: 1.9.1
+terraform_version: 0.15.4
+vault_version: 1.7.1
+consul_version: 1.9.5
 consul_esm_version: 0.5.0
-nomad_version: 1.0.4
-envoy_version: 1.14.5.p0.gfa0371e-1p69.ga5345f6
+nomad_version: 1.0.6
+envoy_version: 1.16.2.p0.ge98e41a-1p71.gbe6132a
 cni_version: 0.9.1
-containerd_version: 1.4.3-3.1
-docker_ce_version: 20.10.3-3
+containerd_version: 1.4.4-3.1
+docker_ce_version: 20.10.6-3
+docker_scan_version: 0.7.0-3
 
 dummy_ip: 192.168.0.1
 
