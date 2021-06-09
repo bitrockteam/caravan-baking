@@ -1,0 +1,24 @@
+---
+- name: copy 70-ec2-nvme-devices.rules
+  copy:
+    src: 70-ec2-nvme-devices.rules
+    dest: /etc/udev/rules.d/
+    owner: root
+    group: root
+    mode: '644'
+
+- name: copy ebsnvme-id
+  copy:
+    src: ebsnvme-id
+    dest: /sbin
+    owner: root
+    group: root
+    mode: +x
+
+- name: copy ec2nvme-nsid
+  copy:
+    src: ec2nvme-nsid
+    dest: /sbin/
+    owner: root
+    group: root
+    mode: +x
