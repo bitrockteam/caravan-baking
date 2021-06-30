@@ -71,6 +71,8 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_installed_versions"></a> [installed\_versions](#output\_installed\_versions) | List of each component and version. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
