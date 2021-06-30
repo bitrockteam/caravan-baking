@@ -5,8 +5,8 @@
 
 - name: copy prometheus.service
   copy:
-    src: node_exporter-service.json
-    dest: /etc/consul.d/node_exporter-service.json
+    src: node-exporter-service.json
+    dest: /etc/consul.d/node-exporter-service.json
     owner: consul
     group: consul
     mode: '644'
