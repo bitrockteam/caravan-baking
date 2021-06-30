@@ -24,11 +24,11 @@ nomad_enterprise: no
 vault_enterprise: no
 
 terraform_version: 0.15.5
-vault_version: 1.7.2
-consul_version: 1.9.6
+vault_version: 1.7.3
+consul_version: 1.10.0
 consul_esm_version: 0.5.0
-nomad_version: 1.1.1
-envoy_version: 1.16.4.p0.gbf5d0eb-1p74.gbb8060d
+nomad_version: 1.1.2
+envoy_version: 1.18.3.p0.g98c1c9e-1p77.gb76c773
 cni_version: 0.9.1
 containerd_version: 1.4.6-3.1
 docker_ce_version: 20.10.7-3
