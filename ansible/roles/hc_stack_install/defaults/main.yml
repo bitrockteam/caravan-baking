@@ -28,7 +28,7 @@ vault_version: 1.7.3
 consul_version: 1.10.0
 consul_esm_version: 0.5.0
 nomad_version: 1.1.2
-envoy_version: 1.18.3.p0.g98c1c9e-1p77.gb76c773
+envoy_version: 1.18.2.p0.gd362e79-1p75.g76c310e
 cni_version: 0.9.1
 containerd_version: 1.4.6-3.1
 docker_ce_version: 20.10.7-3
