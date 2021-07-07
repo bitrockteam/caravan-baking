@@ -48,12 +48,23 @@ variable "firewall_name" {
   default = ""
 }
 
+variable "apps_bin_versions" {
+  type    = string
+  default = "../ansible/roles/hc_stack_apps/defaults/main.yml"
+}
+
+variable "hc_bin_versions" {
+  type    = string
+  default = "../ansible/roles/hc_stack_install/defaults/main.yml"
+}
+
 locals {
   image_family               = "${var.image_name}-os"
   image_family_enterprise    = "${var.image_name}-ent"
   full_image_name            = "${local.image_family}-{{timestamp}}"
   full_image_name_enterprise = "${local.image_family_enterprise}-{{timestamp}}"
   ssh_username               = "centos"
+  image_labels               = merge({ for k, v in yamldecode(file(var.apps_bin_versions)) : k => replace(v, ".", "_") if length(regexall(".*_version", k)) > 0 }, { for k, v in yamldecode(file(var.hc_bin_versions)) : k => replace(v, ".", "_") if length(regexall(".*_version", k)) > 0 })
 }
 
 source "googlecompute" "centos_7" {
@@ -72,7 +83,8 @@ source "googlecompute" "centos_7" {
 
   ssh_username = local.ssh_username
 
-  tags = ["ssh-allowed-node", "packer-builder"]
+  tags         = ["ssh-allowed-node", "packer-builder"]
+  image_labels = local.image_labels
 }
 
 build {

@@ -157,3 +157,12 @@ variable "builds" {
   default     = ["caravan.*.enterprise", "caravan.*.opensource"]
   description = "Which packer build artefacts to produce"
 }
+variable "apps_bin_versions" {
+  type    = string
+  default = "../ansible/roles/hc_stack_apps/defaults/main.yml"
+}
+
+variable "hc_bin_versions" {
+  type    = string
+  default = "../ansible/roles/hc_stack_install/defaults/main.yml"
+}

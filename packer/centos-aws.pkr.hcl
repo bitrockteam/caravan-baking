@@ -25,10 +25,21 @@ variable "instance_type" {
   default = "t3.small"
 }
 
+variable "apps_bin_versions" {
+  type    = string
+  default = "../ansible/roles/hc_stack_apps/defaults/main.yml"
+}
+
+variable "hc_bin_versions" {
+  type    = string
+  default = "../ansible/roles/hc_stack_install/defaults/main.yml"
+}
+
 locals {
   full_image_name            = "${var.image_name}-os-{{timestamp}}"
   full_image_name_enterprise = "${var.image_name}-ent-{{timestamp}}"
   ssh_username               = "centos"
+  version_tags               = merge({ for k, v in yamldecode(file(var.apps_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 }, { for k, v in yamldecode(file(var.hc_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 })
 }
 
 source "amazon-ebs" "centos_7" {
@@ -40,9 +51,9 @@ source "amazon-ebs" "centos_7" {
   ami_regions = [var.region]
 
   ssh_username = local.ssh_username
-  tags = {
+  tags = merge({
     Owner = "packer-builder-caravan"
-  }
+  }, local.version_tags)
 
   source_ami_filter {
     filters = {
