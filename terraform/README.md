@@ -32,6 +32,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_build_image_name"></a> [build\_image\_name](#input\_build\_image\_name) | n/a | `string` | n/a | yes |
+| <a name="input_apps_bin_versions"></a> [apps\_bin\_versions](#input\_apps\_bin\_versions) | n/a | `string` | `"../ansible/roles/hc_stack_apps/defaults/main.yml"` | no |
 | <a name="input_aws_access_key"></a> [aws\_access\_key](#input\_aws\_access\_key) | n/a | `string` | `""` | no |
 | <a name="input_aws_instance_type"></a> [aws\_instance\_type](#input\_aws\_instance\_type) | n/a | `string` | `"t3.small"` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | n/a | `string` | `"eu-central-1"` | no |
@@ -58,6 +59,7 @@ No modules.
 | <a name="input_google_network_name"></a> [google\_network\_name](#input\_google\_network\_name) | n/a | `string` | `null` | no |
 | <a name="input_google_project_id"></a> [google\_project\_id](#input\_google\_project\_id) | n/a | `string` | `""` | no |
 | <a name="input_google_subnetwork_name"></a> [google\_subnetwork\_name](#input\_google\_subnetwork\_name) | n/a | `string` | `null` | no |
+| <a name="input_hc_bin_versions"></a> [hc\_bin\_versions](#input\_hc\_bin\_versions) | n/a | `string` | `"../ansible/roles/hc_stack_install/defaults/main.yml"` | no |
 | <a name="input_nameservers"></a> [nameservers](#input\_nameservers) | n/a | `list(string)` | <pre>[<br>  "169.254.169.254"<br>]</pre> | no |
 | <a name="input_oci_artifacts_bucket"></a> [oci\_artifacts\_bucket](#input\_oci\_artifacts\_bucket) | n/a | `string` | `"artifacts"` | no |
 | <a name="input_oci_compartment_ocid"></a> [oci\_compartment\_ocid](#input\_oci\_compartment\_ocid) | n/a | `string` | `null` | no |

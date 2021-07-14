@@ -34,10 +34,21 @@ variable "vm_size" {
   default = "Standard_B2s"
 }
 
+variable "apps_bin_versions" {
+  type    = string
+  default = "../ansible/roles/hc_stack_apps/defaults/main.yml"
+}
+
+variable "hc_bin_versions" {
+  type    = string
+  default = "../ansible/roles/hc_stack_install/defaults/main.yml"
+}
+
 locals {
   full_image_name            = "${var.image_name}-os-{{timestamp}}"
   full_image_name_enterprise = "${var.image_name}-ent-{{timestamp}}"
   ssh_username               = "centos"
+  version_tags               = { for k, v in yamldecode(file(var.hc_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 }
 }
 
 source "azure-arm" "centos_7" {
@@ -53,11 +64,11 @@ source "azure-arm" "centos_7" {
 
   managed_image_resource_group_name = var.target_resource_group
 
-  azure_tags = {
+  azure_tags = merge({
     owner     = "caravan-backing"
     managedBy = "packer"
     repo      = "github.com/bitrockteam/caravan-baking"
-  }
+  }, local.version_tags)
 
   os_type         = "Linux"
   os_disk_size_gb = 30
