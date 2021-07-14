@@ -1,1 +1,2 @@
-- src: cloudalchemy.node_exporter
+- name: cloudalchemy.node_exporter
+  version: 2.0.0

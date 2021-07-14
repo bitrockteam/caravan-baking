@@ -80,17 +80,24 @@ build {
     managed_image_name = local.full_image_name_enterprise
   }
 
-  provisioner "ansible" {
-    playbook_file       = "../ansible/centos-azure.yml"
-    inventory_directory = "../ansible"
-    user                = local.ssh_username
-    groups              = ["centos_azure"]
-    ansible_env_vars = [
-      "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES"
+  provisioner "shell" {
+    inline = [
+      "curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py",
+      "python get-pip.py",
+      "python -m pip install --user ansible==2.10.7"
     ]
+  }
+
+  provisioner "ansible-local" {
+    playbook_file       = "../ansible/centos-azure.yml"
+    playbook_dir        = "../ansible/"
+    galaxy_file         = "../ansible/requirements.yml"
+    inventory_groups    = ["centos_azure"]
+    command             = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 /home/centos/.local/bin/ansible-playbook"
+    galaxy_command      = "/home/centos/.local/bin/ansible-galaxy"
     override = {
       enterprise = {
-        groups = ["centos_azure", "enterprise"]
+        inventory_groups = ["centos_azure", "enterprise"]
       }
     }
   }
