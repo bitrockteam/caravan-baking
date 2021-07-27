@@ -103,6 +103,6 @@ scrape_configs:
       insecure_skip_verify: true
     consul_sd_configs:
       - server: 'http://consul.service.consul:8500'
-        services: ['node_exporter']
+        services: ['node-exporter']
     scrape_interval: 10s
     metrics_path: /metrics
