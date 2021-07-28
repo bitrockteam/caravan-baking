@@ -13,6 +13,11 @@ variable "image_name" {
   default = "caravan-centos-image"
 }
 
+variable "install_nomad" {
+  type    = bool
+  default = true
+}
+
 locals {
   full_image_name            = "${var.image_name}-os-{{timestamp}}"
   full_image_name_enterprise = "${var.image_name}-ent-{{timestamp}}"
@@ -56,6 +61,9 @@ build {
         inventory_groups = ["enterprise"]
       }
     }
+    extra_arguments = [
+      "--extra-vars", "install_nomad=${var.install_nomad}"
+    ]
   }
 
   provisioner "shell" {

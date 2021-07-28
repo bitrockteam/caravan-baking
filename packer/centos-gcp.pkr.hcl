@@ -58,6 +58,11 @@ variable "hc_bin_versions" {
   default = "../ansible/roles/hc_stack_install/defaults/main.yml"
 }
 
+variable "install_nomad" {
+  type    = bool
+  default = true
+}
+
 locals {
   image_family               = "${var.image_name}-os"
   image_family_enterprise    = "${var.image_name}-ent"
@@ -65,6 +70,7 @@ locals {
   full_image_name_enterprise = "${local.image_family_enterprise}-{{timestamp}}"
   ssh_username               = "centos"
   image_labels               = merge({ for k, v in yamldecode(file(var.apps_bin_versions)) : k => replace(v, ".", "_") if length(regexall(".*_version", k)) > 0 }, { for k, v in yamldecode(file(var.hc_bin_versions)) : k => replace(v, ".", "_") if length(regexall(".*_version", k)) > 0 })
+  tags                       = var.install_nomad ? local.image_labels : merge(local.image_labels, { "nomad_version": "none" })
 }
 
 source "googlecompute" "centos_7" {
@@ -84,7 +90,7 @@ source "googlecompute" "centos_7" {
   ssh_username = local.ssh_username
 
   tags         = ["ssh-allowed-node", "packer-builder"]
-  image_labels = local.image_labels
+  image_labels = local.tags
 }
 
 build {
@@ -115,7 +121,7 @@ build {
   }
 
   provisioner "ansible-local" {
-    playbook_file       = "../ansible/centos-gcp.yml"
+    playbook_file       = "../ansible/centos.yml"
     playbook_dir        = "../ansible/"
     galaxy_file         = "../ansible/requirements.yml"
     inventory_groups    = ["centos_gcp"]
@@ -126,6 +132,9 @@ build {
         inventory_groups = ["centos_gcp", "enterprise"]
       }
     }
+    extra_arguments = [
+      "--extra-vars", "install_nomad=${var.install_nomad}"
+    ]
   }
 
   provisioner "shell" {

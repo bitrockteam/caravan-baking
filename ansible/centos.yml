@@ -1,11 +1,40 @@
 ---
-- name: Setup
+- name: Setup baseline
   hosts: all
   become: yes
   tasks:
     - name: "Include hc_stack_install"
       include_role:
         name: "hc_stack_install"
+
+- name: Setup AWS only resources
+  hosts: centos_aws
+  become: yes
+  tasks:
+    - name: "Include hc_stack_aws"
+      include_role:
+        name: "hc_stack_aws"
+
+- name: Setup AZURE only resources
+  hosts: centos_azure
+  become: yes
+  tasks:
+    - name: "Include hc_stack_azure"
+      include_role:
+        name: "hc_stack_azure"
+
+- name: Setup GCP only resources
+  hosts: centos_gcp
+  become: yes
+  tasks:
+    - name: "Include hc_stack_gcp"
+      include_role:
+        name: "hc_stack_gcp"
+
+- name: Setup apps component
+  hosts: all
+  become: yes
+  tasks:
     - name: "Include hc_stack_apps"
       include_role:
         name: "hc_stack_apps"

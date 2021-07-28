@@ -44,11 +44,17 @@ variable "hc_bin_versions" {
   default = "../ansible/roles/hc_stack_install/defaults/main.yml"
 }
 
+variable "install_nomad" {
+  type    = bool
+  default = true
+}
+
 locals {
   full_image_name            = "${var.image_name}-os-{{timestamp}}"
   full_image_name_enterprise = "${var.image_name}-ent-{{timestamp}}"
   ssh_username               = "centos"
   version_tags               = { for k, v in yamldecode(file(var.hc_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 }
+  tags                       = var.install_nomad ? local.version_tags : merge(local.version_tags, { "nomad_version": "none" })
 }
 
 source "azure-arm" "centos_7" {
@@ -68,7 +74,7 @@ source "azure-arm" "centos_7" {
     owner     = "caravan-backing"
     managedBy = "packer"
     repo      = "github.com/bitrockteam/caravan-baking"
-  }, local.version_tags)
+  }, local.tags)
 
   os_type         = "Linux"
   os_disk_size_gb = 30
@@ -100,7 +106,7 @@ build {
   }
 
   provisioner "ansible-local" {
-    playbook_file       = "../ansible/centos-azure.yml"
+    playbook_file       = "../ansible/centos.yml"
     playbook_dir        = "../ansible/"
     galaxy_file         = "../ansible/requirements.yml"
     inventory_groups    = ["centos_azure"]
@@ -111,6 +117,9 @@ build {
         inventory_groups = ["centos_azure", "enterprise"]
       }
     }
+    extra_arguments = [
+      "--extra-vars", "install_nomad=${var.install_nomad}"
+    ]
   }
 
   provisioner "shell" {
