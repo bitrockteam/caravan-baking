@@ -35,11 +35,17 @@ variable "hc_bin_versions" {
   default = "../ansible/roles/hc_stack_install/defaults/main.yml"
 }
 
+variable "install_nomad" {
+  type    = bool
+  default = true
+}
+
 locals {
   full_image_name            = "${var.image_name}-os-{{timestamp}}"
   full_image_name_enterprise = "${var.image_name}-ent-{{timestamp}}"
   ssh_username               = "centos"
   version_tags               = merge({ for k, v in yamldecode(file(var.apps_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 }, { for k, v in yamldecode(file(var.hc_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 })
+  tags                       = var.install_nomad ? local.version_tags : merge(local.version_tags, { "nomad_version": "none" })
 }
 
 source "amazon-ebs" "centos_7" {
@@ -53,7 +59,7 @@ source "amazon-ebs" "centos_7" {
   ssh_username = local.ssh_username
   tags = merge({
     Owner = "packer-builder-caravan"
-  }, local.version_tags)
+  }, local.tags)
 
   source_ami_filter {
     filters = {
@@ -97,7 +103,7 @@ build {
   }
 
   provisioner "ansible-local" {
-    playbook_file       = "../ansible/centos-aws.yml"
+    playbook_file       = "../ansible/centos.yml"
     playbook_dir        = "../ansible/"
     galaxy_file         = "../ansible/requirements.yml"
     inventory_groups    = ["centos_aws"]
@@ -108,6 +114,9 @@ build {
         inventory_groups = ["centos_aws", "enterprise"]
       }
     }
+    extra_arguments = [
+      "--extra-vars", "install_nomad=${var.install_nomad}"
+    ]
   }
 
   provisioner "shell" {

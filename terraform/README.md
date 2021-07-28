@@ -60,6 +60,7 @@ No modules.
 | <a name="input_google_project_id"></a> [google\_project\_id](#input\_google\_project\_id) | n/a | `string` | `""` | no |
 | <a name="input_google_subnetwork_name"></a> [google\_subnetwork\_name](#input\_google\_subnetwork\_name) | n/a | `string` | `null` | no |
 | <a name="input_hc_bin_versions"></a> [hc\_bin\_versions](#input\_hc\_bin\_versions) | n/a | `string` | `"../ansible/roles/hc_stack_install/defaults/main.yml"` | no |
+| <a name="input_install_nomad"></a> [install\_nomad](#input\_install\_nomad) | n/a | `bool` | `true` | no |
 | <a name="input_nameservers"></a> [nameservers](#input\_nameservers) | n/a | `list(string)` | <pre>[<br>  "169.254.169.254"<br>]</pre> | no |
 | <a name="input_oci_artifacts_bucket"></a> [oci\_artifacts\_bucket](#input\_oci\_artifacts\_bucket) | n/a | `string` | `"artifacts"` | no |
 | <a name="input_oci_compartment_ocid"></a> [oci\_compartment\_ocid](#input\_oci\_compartment\_ocid) | n/a | `string` | `null` | no |

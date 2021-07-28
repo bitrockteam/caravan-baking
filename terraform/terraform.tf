@@ -2,6 +2,12 @@ terraform {
   required_version = "~> 0.15"
 }
 
+locals {
+  common_vars = {
+    PKR_VAR_install_nomad = var.install_nomad
+  }
+}
+
 // required by cloudalchemy.node_exporter
 resource "null_resource" "mac_gnu_tar" {
   provisioner "local-exec" {
@@ -27,7 +33,7 @@ resource "null_resource" "run_packer_google" {
     null_resource.ansible_galaxy_deps
   ]
   triggers = {
-    "changes-in-playbook" : filemd5("${path.module}/../ansible/centos-gcp.yml")
+    "changes-in-playbook" : filemd5("${path.module}/../ansible/centos.yml")
     "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")
     "changes-in-install-defaults" : filemd5("${path.module}/../ansible/roles/hc_stack_install/defaults/main.yml")
     "changes-in-apps-defaults" : filemd5("${path.module}/../ansible/roles/hc_stack_apps/defaults/main.yml")
@@ -37,7 +43,7 @@ resource "null_resource" "run_packer_google" {
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
     command     = "packer build -force -only=${join(",", var.builds)} centos-gcp.pkr.hcl"
-    environment = {
+    environment = merge({
       PKR_VAR_image_name      = var.build_image_name
       PKR_VAR_machine_type    = var.build_machine_type
       PKR_VAR_region          = var.build_region
@@ -47,7 +53,7 @@ resource "null_resource" "run_packer_google" {
       PKR_VAR_network_name    = var.google_network_name
       PKR_VAR_subnetwork_name = var.google_subnetwork_name
       PKR_VAR_firewall_name   = var.google_firewall_name
-    }
+    }, local.common_vars)
   }
 }
 
@@ -57,7 +63,7 @@ resource "null_resource" "run_packer_aws" {
     null_resource.ansible_galaxy_deps
   ]
   triggers = {
-    "changes-in-playbook" : filemd5("${path.module}/../ansible/centos-aws.yml")
+    "changes-in-playbook" : filemd5("${path.module}/../ansible/centos.yml")
     "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")
     "changes-in-install-defaults" : filemd5("${path.module}/../ansible/roles/hc_stack_install/defaults/main.yml")
     "changes-in-apps-defaults" : filemd5("${path.module}/../ansible/roles/hc_stack_apps/defaults/main.yml")
@@ -67,13 +73,13 @@ resource "null_resource" "run_packer_aws" {
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
     command     = "packer build -force -only=${join(",", var.builds)} centos-aws.pkr.hcl"
-    environment = {
+    environment = merge({
       PKR_VAR_access_key    = var.aws_access_key
       PKR_VAR_secret_key    = var.aws_secret_key
       PKR_VAR_region        = var.aws_region
       PKR_VAR_image_name    = var.build_image_name
       PKR_VAR_instance_type = var.aws_instance_type
-    }
+    }, local.common_vars)
   }
 }
 
@@ -83,7 +89,7 @@ resource "null_resource" "run_packer_azure" {
     null_resource.ansible_galaxy_deps
   ]
   triggers = {
-    "changes-in-playbook" : filemd5("${path.module}/../ansible/centos-azure.yml")
+    "changes-in-playbook" : filemd5("${path.module}/../ansible/centos.yml")
     "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")
     "changes-in-install-defaults" : filemd5("${path.module}/../ansible/roles/hc_stack_install/defaults/main.yml")
     "changes-in-apps-defaults" : filemd5("${path.module}/../ansible/roles/hc_stack_apps/defaults/main.yml")
@@ -93,7 +99,7 @@ resource "null_resource" "run_packer_azure" {
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
     command     = "packer build -force -only=${join(",", var.builds)} centos-azure.pkr.hcl"
-    environment = {
+    environment = merge({
       PKR_VAR_subscription_id       = var.azure_subscription_id
       PKR_VAR_client_id             = var.azure_client_id
       PKR_VAR_client_secret         = var.azure_client_secret
@@ -102,7 +108,7 @@ resource "null_resource" "run_packer_azure" {
       // select accordingly to the hypervisor gen
       PKR_VAR_vm_size   = "Standard_B2s"
       PKR_VAR_image_sku = "7_9-gen2"
-    }
+    }, local.common_vars)
   }
 }
 

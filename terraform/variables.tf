@@ -166,3 +166,8 @@ variable "hc_bin_versions" {
   type    = string
   default = "../ansible/roles/hc_stack_install/defaults/main.yml"
 }
+
+variable "install_nomad" {
+  type    = bool
+  default = true
+}
