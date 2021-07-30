@@ -51,11 +51,11 @@ build {
   }
 
   provisioner "ansible-local" {
-    playbook_file       = "../ansible/centos.yml"
-    playbook_dir        = "../ansible/"
-    galaxy_file         = "../ansible/requirements.yml"
-    command             = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 /home/centos/.local/bin/ansible-playbook"
-    galaxy_command      = "/home/centos/.local/bin/ansible-galaxy"
+    playbook_file  = "../ansible/centos.yml"
+    playbook_dir   = "../ansible/"
+    galaxy_file    = "../ansible/requirements.yml"
+    command        = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 /home/centos/.local/bin/ansible-playbook"
+    galaxy_command = "/home/centos/.local/bin/ansible-galaxy"
     override = {
       enterprise = {
         inventory_groups = ["enterprise"]

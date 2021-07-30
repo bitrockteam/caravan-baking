@@ -70,7 +70,7 @@ locals {
   full_image_name_enterprise = "${local.image_family_enterprise}-{{timestamp}}"
   ssh_username               = "centos"
   image_labels               = merge({ for k, v in yamldecode(file(var.apps_bin_versions)) : k => replace(v, ".", "_") if length(regexall(".*_version", k)) > 0 }, { for k, v in yamldecode(file(var.hc_bin_versions)) : k => replace(v, ".", "_") if length(regexall(".*_version", k)) > 0 })
-  tags                       = var.install_nomad ? local.image_labels : merge(local.image_labels, { "nomad_version": "none" })
+  tags                       = var.install_nomad ? local.image_labels : merge(local.image_labels, { "nomad_version" : "none" })
 }
 
 source "googlecompute" "centos_7" {
@@ -121,12 +121,12 @@ build {
   }
 
   provisioner "ansible-local" {
-    playbook_file       = "../ansible/centos.yml"
-    playbook_dir        = "../ansible/"
-    galaxy_file         = "../ansible/requirements.yml"
-    inventory_groups    = ["centos_gcp"]
-    command             = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 /home/centos/.local/bin/ansible-playbook"
-    galaxy_command      = "/home/centos/.local/bin/ansible-galaxy"
+    playbook_file    = "../ansible/centos.yml"
+    playbook_dir     = "../ansible/"
+    galaxy_file      = "../ansible/requirements.yml"
+    inventory_groups = ["centos_gcp"]
+    command          = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 /home/centos/.local/bin/ansible-playbook"
+    galaxy_command   = "/home/centos/.local/bin/ansible-galaxy"
     override = {
       enterprise = {
         inventory_groups = ["centos_gcp", "enterprise"]
