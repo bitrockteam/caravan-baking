@@ -45,14 +45,15 @@ locals {
   full_image_name_enterprise = "${var.image_name}-ent-{{timestamp}}"
   ssh_username               = "centos"
   version_tags               = merge({ for k, v in yamldecode(file(var.apps_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 }, { for k, v in yamldecode(file(var.hc_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 })
-  tags                       = var.install_nomad ? local.version_tags : merge(local.version_tags, { "nomad_version": "none" })
+  tags                       = var.install_nomad ? local.version_tags : merge(local.version_tags, { "nomad_version" : "none" })
 }
 
 source "amazon-ebs" "centos_7" {
-  access_key    = var.access_key
-  secret_key    = var.secret_key
-  region        = var.region
-  instance_type = var.instance_type
+  access_key            = var.access_key
+  secret_key            = var.secret_key
+  region                = var.region
+  instance_type         = var.instance_type
+  delete_on_termination = true
 
   ami_regions = [var.region]
 
@@ -103,12 +104,12 @@ build {
   }
 
   provisioner "ansible-local" {
-    playbook_file       = "../ansible/centos.yml"
-    playbook_dir        = "../ansible/"
-    galaxy_file         = "../ansible/requirements.yml"
-    inventory_groups    = ["centos_aws"]
-    command             = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 /home/centos/.local/bin/ansible-playbook"
-    galaxy_command      = "/home/centos/.local/bin/ansible-galaxy"
+    playbook_file    = "../ansible/centos.yml"
+    playbook_dir     = "../ansible/"
+    galaxy_file      = "../ansible/requirements.yml"
+    inventory_groups = ["centos_aws"]
+    command          = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 /home/centos/.local/bin/ansible-playbook"
+    galaxy_command   = "/home/centos/.local/bin/ansible-galaxy"
     override = {
       enterprise = {
         inventory_groups = ["centos_aws", "enterprise"]
