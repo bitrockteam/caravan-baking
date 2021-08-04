@@ -8,30 +8,8 @@ locals {
   }
 }
 
-// required by cloudalchemy.node_exporter
-resource "null_resource" "mac_gnu_tar" {
-  provisioner "local-exec" {
-    command     = "if [[ $OSTYPE =~ \"darwin\" ]]; then which gtar || (echo Missing dependency: \"brew install gnu-tar\" && exit 1); fi"
-    interpreter = ["/bin/bash", "-c"]
-  }
-}
-
-resource "null_resource" "ansible_galaxy_deps" {
-  depends_on = [null_resource.mac_gnu_tar]
-  triggers = {
-    "changes-in-dependencies" : filemd5("${path.module}/../ansible/requirements.yml")
-  }
-  provisioner "local-exec" {
-    working_dir = "${path.module}/../ansible"
-    command     = "ansible-galaxy install -r requirements.yml"
-  }
-}
-
 resource "null_resource" "run_packer_google" {
   count = (var.build_on_google && !var.skip_packer_build) ? 1 : 0
-  depends_on = [
-    null_resource.ansible_galaxy_deps
-  ]
   triggers = {
     "changes-in-playbook" : filemd5("${path.module}/../ansible/centos.yml")
     "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")
@@ -59,9 +37,6 @@ resource "null_resource" "run_packer_google" {
 
 resource "null_resource" "run_packer_aws" {
   count = (var.build_on_aws && !var.skip_packer_build) ? 1 : 0
-  depends_on = [
-    null_resource.ansible_galaxy_deps
-  ]
   triggers = {
     "changes-in-playbook" : filemd5("${path.module}/../ansible/centos.yml")
     "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")
@@ -85,9 +60,6 @@ resource "null_resource" "run_packer_aws" {
 
 resource "null_resource" "run_packer_azure" {
   count = (var.build_on_azure && !var.skip_packer_build) ? 1 : 0
-  depends_on = [
-    null_resource.ansible_galaxy_deps
-  ]
   triggers = {
     "changes-in-playbook" : filemd5("${path.module}/../ansible/centos.yml")
     "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")

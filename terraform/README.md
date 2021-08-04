@@ -21,8 +21,6 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [null_resource.ansible_galaxy_deps](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [null_resource.mac_gnu_tar](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [null_resource.run_packer_aws](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [null_resource.run_packer_azure](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [null_resource.run_packer_google](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
