@@ -47,7 +47,7 @@ resource "null_resource" "run_packer_aws" {
   }
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
-    command     = "packer build -force -only=${join(",", var.builds)} centos-aws.pkr.hcl"
+    command     = "env && packer build -force -only=${join(",", var.builds)} centos-aws.pkr.hcl"
     environment = merge({
       PKR_VAR_access_key    = var.aws_access_key
       PKR_VAR_secret_key    = var.aws_secret_key
