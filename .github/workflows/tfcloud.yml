@@ -5,14 +5,13 @@ on:
     branches:
       - main
 
-strategy:
-  matrix:
-    cloud: ["aws", "gcp", "azure"]
-
 jobs:
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        cloud: [ "aws", "gcp", "azure" ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
