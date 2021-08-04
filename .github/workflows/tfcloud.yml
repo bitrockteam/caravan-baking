@@ -23,6 +23,11 @@ jobs:
           terraform_version: 0.15.4
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
+      - name: Setup Packer
+        uses: hashicorp-contrib/setup-packer@v1
+        with:
+          packer-version: 1.7.4
+
       - name: Terraform Format
         id: fmt
         run: cd terraform && terraform fmt -check
