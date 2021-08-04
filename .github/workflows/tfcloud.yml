@@ -10,6 +10,7 @@ jobs:
     name: "Terraform"
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         cloud: [ "aws", "gcp", "azure" ]
     steps:
@@ -28,6 +29,8 @@ jobs:
 
       - name: Terraform Backend
         shell: bash
+        env:
+          CLOUD: ${{ matrix.cloud }}
         run: |
           cat > terraform/backend.tf << EOF
           terraform {
@@ -35,7 +38,7 @@ jobs:
               hostname     = "app.terraform.io"
               organization = "bitrock"
               workspaces {
-                name = "caravan-baking"
+                name = "caravan-baking-${CLOUD}"
               }
             }
           }
