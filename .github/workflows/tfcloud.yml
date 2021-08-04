@@ -56,6 +56,6 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: cd terraform && terraform apply -auto-approve
         env:
-          TF_VAR_build_on_google: ${ matrix.cloud == "gcp" }
-          TF_VAR_build_on_aws: ${ matrix.cloud == "aws" }
-          TF_VAR_build_on_azure: ${ matrix.cloud == "azure" }
+          TF_VAR_build_on_google: ${{ matrix.cloud == "gcp" }}
+          TF_VAR_build_on_aws: ${{ matrix.cloud == "aws" }}
+          TF_VAR_build_on_azure: ${{ matrix.cloud == "azure" }}
