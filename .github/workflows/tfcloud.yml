@@ -56,7 +56,9 @@ jobs:
       - name: Terraform Validate
         id: validate
         run: cd terraform && terraform validate -no-color
-
+      - name: Test packer
+        id: packertest
+        run: env && packer --version
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: cd terraform && terraform apply -auto-approve
