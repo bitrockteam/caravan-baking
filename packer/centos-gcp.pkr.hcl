@@ -30,7 +30,7 @@ variable "network_name" {
 
 variable "account_file" {
   type    = string
-  default = ""
+  default = null
 }
 
 variable "network_project_id" {

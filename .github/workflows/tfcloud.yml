@@ -28,6 +28,14 @@ jobs:
         with:
           packer-version: 1.7.4
 
+      - name: Set up GCP Cloud SDK
+        if: ${{ matrix.cloud == 'gcp' }}
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
       - name: Terraform Format
         id: fmt
         run: cd terraform && terraform fmt -check
@@ -61,9 +69,14 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: cd terraform && terraform apply -auto-approve
         env:
-          TF_VAR_build_on_aws: ${{ matrix.cloud == 'aws' }}
-          # TF_VAR_build_on_google: ${{ matrix.cloud == 'gcp' }}
-          # TF_VAR_build_on_azure: ${{ matrix.cloud == 'azure' }}
           TF_VAR_build_image_name: 'caravan-centos-image'
+          TF_VAR_build_on_aws: ${{ matrix.cloud == 'aws' }}
           TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          TF_VAR_build_on_azure: ${{ matrix.cloud == 'azure' }}
+          TF_VAR_azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          TF_VAR_azure_target_resource_group: 'caravan-admin'
+          TF_VAR_azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+          TF_VAR_azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          TF_VAR_build_on_google: ${{ matrix.cloud == 'gcp' }}
+          TF_VAR_google_project_id: ${{ secrets.GCP_PROJECT_ID }}

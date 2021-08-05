@@ -52,11 +52,11 @@ No modules.
 | <a name="input_build_zone"></a> [build\_zone](#input\_build\_zone) | n/a | `string` | `"us-central1-a"` | no |
 | <a name="input_builds"></a> [builds](#input\_builds) | Which packer build artefacts to produce | `list(string)` | <pre>[<br>  "caravan.*.enterprise",<br>  "caravan.*.opensource"<br>]</pre> | no |
 | <a name="input_dummy_ip"></a> [dummy\_ip](#input\_dummy\_ip) | n/a | `string` | `"192.168.0.1"` | no |
-| <a name="input_google_account_file"></a> [google\_account\_file](#input\_google\_account\_file) | n/a | `string` | `"builder-account.json"` | no |
+| <a name="input_google_account_file"></a> [google\_account\_file](#input\_google\_account\_file) | n/a | `string` | `null` | no |
 | <a name="input_google_firewall_name"></a> [google\_firewall\_name](#input\_google\_firewall\_name) | n/a | `string` | `"default"` | no |
-| <a name="input_google_network_name"></a> [google\_network\_name](#input\_google\_network\_name) | n/a | `string` | `null` | no |
+| <a name="input_google_network_name"></a> [google\_network\_name](#input\_google\_network\_name) | n/a | `string` | `"default"` | no |
 | <a name="input_google_project_id"></a> [google\_project\_id](#input\_google\_project\_id) | n/a | `string` | `""` | no |
-| <a name="input_google_subnetwork_name"></a> [google\_subnetwork\_name](#input\_google\_subnetwork\_name) | n/a | `string` | `null` | no |
+| <a name="input_google_subnetwork_name"></a> [google\_subnetwork\_name](#input\_google\_subnetwork\_name) | n/a | `string` | `"default"` | no |
 | <a name="input_hc_bin_versions"></a> [hc\_bin\_versions](#input\_hc\_bin\_versions) | n/a | `string` | `"../ansible/roles/hc_stack_install/defaults/main.yml"` | no |
 | <a name="input_install_nomad"></a> [install\_nomad](#input\_install\_nomad) | n/a | `bool` | `true` | no |
 | <a name="input_nameservers"></a> [nameservers](#input\_nameservers) | n/a | `list(string)` | <pre>[<br>  "169.254.169.254"<br>]</pre> | no |

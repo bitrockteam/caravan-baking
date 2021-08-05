@@ -23,15 +23,15 @@ variable "google_project_id" {
 }
 variable "google_account_file" {
   type    = string
-  default = "builder-account.json"
+  default = null
 }
 variable "google_network_name" {
   type    = string
-  default = null
+  default = "default"
 }
 variable "google_subnetwork_name" {
   type    = string
-  default = null
+  default = "default"
 }
 variable "google_firewall_name" {
   type    = string
