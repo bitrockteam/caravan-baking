@@ -53,7 +53,6 @@ source "amazon-ebs" "centos_7" {
   secret_key            = var.secret_key
   region                = var.region
   instance_type         = var.instance_type
-  delete_on_termination = true
 
   ami_regions = [var.region]
 
@@ -72,9 +71,10 @@ source "amazon-ebs" "centos_7" {
   }
 
   launch_block_device_mappings {
-    device_name = "/dev/sda1"
-    volume_type = "gp2"
-    volume_size = 20
+    delete_on_termination = true
+    device_name           = "/dev/sda1"
+    volume_type           = "gp2"
+    volume_size           = 20
   }
 }
 
