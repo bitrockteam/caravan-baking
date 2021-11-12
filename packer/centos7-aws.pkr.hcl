@@ -104,7 +104,7 @@ build {
   }
 
   provisioner "ansible-local" {
-    playbook_file    = "../ansible/centos.yml"
+    playbook_file    = "../ansible/caravan.yml"
     playbook_dir     = "../ansible/"
     galaxy_file      = "../ansible/requirements.yml"
     inventory_groups = ["centos_aws"]

@@ -1,12 +1,21 @@
 ---
 
-- name: add dummy nic config
+- name: add dummy nic config (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
   template:
     src: dummy-nic.j2
     dest: /etc/sysconfig/dummy-nic
     owner: root
     group: root
     mode: '644'
+
+- name: add dummy nic config (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  community.general.nmcli:
+    conn_name: dummy
+    ip4: "{{ dummy_ip }}"
+    state: present
+    type: dummy
 
 - name: copy dummy-nic.service
   copy:

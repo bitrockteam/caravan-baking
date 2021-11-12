@@ -1,7 +1,8 @@
 ---
 # TODO: support local install
 
-- name: install containerd, docker and docker-cli
+- name: install containerd, docker and docker-cli (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
   yum:
     name:
       - https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-{{ containerd_version }}.el7.x86_64.rpm
@@ -9,6 +10,30 @@
       - https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-cli-{{ docker_ce_version }}.el7.x86_64.rpm
       - https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-rootless-extras-{{ docker_ce_version }}.el7.x86_64.rpm
       - https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-scan-plugin-{{ docker_scan_version }}.el7.x86_64.rpm
+    state: present
+
+- name: Add docker keyring (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    keyring: /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg
+    state: present
+
+- name: Add docker repo (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  ansible.builtin.apt_repository:
+     repo: deb https://download.docker.com/linux/ubuntu focal stable
+     state: present
+     filename: docker
+
+- name: install containerd, docker and docker-cli (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  apt:
+    update_cache: yes
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
     state: present
 
 - name: create docker folder

@@ -11,13 +11,15 @@
   command: "/bin/bash -c \"/sbin/ip route | grep '^default' | grep -Po '(?<=dev )(.+?)(?= )'\"" # noqa 301
   register: interface
 
-- name: add PEERDNS to interface config
+- name: add PEERDNS to interface config (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
   lineinfile:
     path: '/etc/sysconfig/network-scripts/ifcfg-{{ interface.stdout }}'
     regex: ^PEERDNS=
     line: PEERDNS=no
 
-- name: add DNS1 to interface config
+- name: add DNS1 to interface config (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
   lineinfile:
     path: '/etc/sysconfig/network-scripts/ifcfg-{{ interface.stdout }}'
     regex: ^DNS1=

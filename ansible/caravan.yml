@@ -8,7 +8,7 @@
         name: "hc_stack_install"
 
 - name: Setup AWS only resources
-  hosts: centos_aws
+  hosts: aws
   become: yes
   tasks:
     - name: "Include hc_stack_aws"
@@ -16,7 +16,7 @@
         name: "hc_stack_aws"
 
 - name: Setup AZURE only resources
-  hosts: centos_azure
+  hosts: azure
   become: yes
   tasks:
     - name: "Include hc_stack_azure"
@@ -24,7 +24,7 @@
         name: "hc_stack_azure"
 
 - name: Setup GCP only resources
-  hosts: centos_gcp
+  hosts: gcp
   become: yes
   tasks:
     - name: "Include hc_stack_gcp"

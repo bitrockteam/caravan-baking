@@ -1,6 +1,3 @@
-variable "build_image_name" {
-  type = string
-}
 variable "build_machine_type" {
   type    = string
   default = "n1-standard-1"
@@ -130,19 +127,6 @@ variable "bastion_private_key_file" {
   default = null
 }
 
-variable "pkg_list" {
-  type = list(string)
-  default = [
-    "wget",
-    "unzip",
-    "jq",
-    "dnsmasq",
-    "openjdk-8-jdk",
-    "java-1.8.0-openjdk",
-    "bind-utils",
-    "tcpdump"
-  ]
-}
 variable "proxy" {
   type    = string
   default = null
@@ -173,4 +157,9 @@ variable "hc_bin_versions" {
 variable "install_nomad" {
   type    = bool
   default = true
+}
+
+variable "linux_distro" {
+  type    = string
+  default = "centos7"
 }
