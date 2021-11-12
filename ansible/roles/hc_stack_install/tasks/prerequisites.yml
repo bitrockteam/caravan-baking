@@ -22,7 +22,7 @@
   when: ansible_facts['os_family'] == "Debian"
   apt:
     name: ufw
-    state: absent 
+    state: absent
 
 - name: update system packages (Debian)
   when: ansible_facts['os_family'] == "Debian"
