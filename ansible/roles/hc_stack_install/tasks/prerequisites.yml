@@ -1,4 +1,9 @@
 ---
+- name: enable dummy network module
+  community.general.modprobe:
+    name: dummy
+    state: present
+
 - name: update system packages (RedHat)
   when: ansible_facts['os_family'] == "RedHat"
   yum:
