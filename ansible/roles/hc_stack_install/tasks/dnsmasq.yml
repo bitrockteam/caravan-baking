@@ -46,3 +46,8 @@
     mode: '644'
     owner: root
     group: root
+
+- name: update hostname (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  ansible.builtin.command:
+    cmd: hostnamectl set-hostname "{{ ansible_hostname }}.{{ ansible_domain }}"

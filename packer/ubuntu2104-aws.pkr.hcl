@@ -95,11 +95,12 @@ build {
     ami_description = "Caravan Ubuntu2104 - Enterprise"
   }
 
+
   provisioner "shell" {
     inline = [
       "curl https://bootstrap.pypa.io/pip/3.5/get-pip.py -o get-pip.py",
       "python3 get-pip.py",
-      "python3 -m pip install --user ansible==2.10.7"
+      "python3 -m pip install --user ansible==4.8.0"
     ]
   }
 
@@ -107,12 +108,12 @@ build {
     playbook_file    = "../ansible/caravan.yml"
     playbook_dir     = "../ansible/"
     galaxy_file      = "../ansible/requirements.yml"
-    inventory_groups = ["ubuntu_aws"]
+    inventory_groups = ["aws"]
     command          = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 /home/ubuntu/.local/bin/ansible-playbook"
     galaxy_command   = "/home/ubuntu/.local/bin/ansible-galaxy"
     override = {
       enterprise = {
-        inventory_groups = ["ubuntu_aws", "enterprise"]
+        inventory_groups = ["aws", "enterprise"]
       }
     }
     extra_arguments = [

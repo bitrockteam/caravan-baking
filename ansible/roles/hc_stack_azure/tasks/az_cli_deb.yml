@@ -1,0 +1,16 @@
+---
+- name: import Microsoft key (Debian)
+  ansible.builtin.apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc 
+    keyring: /etc/apt/trusted.gpg.d/azure-keyring.gpg
+
+- name: Add microsoft repo (Debian)
+  ansible.builtin.apt_repository:
+     repo: deb https://packages.microsoft.com/repos/azure-cli hirsute
+     state: present
+     filename: azure-cli
+
+- name: install azure cli (Debian)
+  apt:
+    name: azure-cli
+    update_cache: yes

@@ -107,12 +107,12 @@ build {
     playbook_file    = "../ansible/caravan.yml"
     playbook_dir     = "../ansible/"
     galaxy_file      = "../ansible/requirements.yml"
-    inventory_groups = ["centos_aws"]
+    inventory_groups = ["aws"]
     command          = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 /home/centos/.local/bin/ansible-playbook"
     galaxy_command   = "/home/centos/.local/bin/ansible-galaxy"
     override = {
       enterprise = {
-        inventory_groups = ["centos_aws", "enterprise"]
+        inventory_groups = ["aws", "enterprise"]
       }
     }
     extra_arguments = [

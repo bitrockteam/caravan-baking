@@ -7,8 +7,15 @@
 - name: run script
   command: "bash /tmp/add-monitoring-agent-repo.sh" # noqa 301
 
-- name: install stackdriver-agent
+- name: install stackdriver-agent (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
   yum:
+    name: stackdriver-agent
+    state: present
+
+- name: install stackdriver-agent (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  apt:
     name: stackdriver-agent
     state: present
 
