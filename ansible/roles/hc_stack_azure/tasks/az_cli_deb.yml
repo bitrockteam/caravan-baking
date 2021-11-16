@@ -1,6 +1,6 @@
 ---
 - name: import Microsoft key (Debian)
-  ansible.builtin.apt_key
+  ansible.builtin.apt_key:
     url: https://packages.microsoft.com/keys/microsoft.asc
     keyring: /etc/apt/trusted.gpg.d/azure-keyring.gpg
 
