@@ -22,6 +22,7 @@
     mode: '755'
 
 - name: get jaeger
+  retries: 5
   unarchive:
     src: https://github.com/jaegertracing/jaeger/releases/download/v{{ jaeger_version }}/jaeger-{{ jaeger_version }}-linux-amd64.tar.gz
     dest: /tmp/
