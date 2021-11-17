@@ -63,17 +63,33 @@ variable "install_nomad" {
   default = true
 }
 
+variable "ssh_username" {
+  type    = string
+  default = "ubuntu"
+}
+
+variable "linux_family" {
+  type    = string
+  default = "ubuntu"
+}
+
+variable "linux_family_version" {
+  type    = string
+  default = "2104"
+}
+
 locals {
   image_family               = "${var.image_name}-os"
   image_family_enterprise    = "${var.image_name}-ent"
   full_image_name            = "${local.image_family}-{{timestamp}}"
   full_image_name_enterprise = "${local.image_family_enterprise}-{{timestamp}}"
-  ssh_username               = "centos"
+  ssh_username               = var.ssh_username
   image_labels               = merge({ for k, v in yamldecode(file(var.apps_bin_versions)) : k => replace(v, ".", "_") if length(regexall(".*_version", k)) > 0 }, { for k, v in yamldecode(file(var.hc_bin_versions)) : k => replace(v, ".", "_") if length(regexall(".*_version", k)) > 0 })
   tags                       = var.install_nomad ? local.image_labels : merge(local.image_labels, { "nomad_version" : "none" })
+  linux_distro               = "${var.linux_family}${var.linux_family_version}"
 }
 
-source "googlecompute" "centos_7" {
+source "googlecompute" "caravan" {
   project_id   = var.project_id
   account_file = var.account_file
   region       = var.region
@@ -82,7 +98,7 @@ source "googlecompute" "centos_7" {
   subnetwork   = var.subnetwork_name
   machine_type = var.machine_type
 
-  source_image_family = "centos-7"
+  source_image_family = "${var.linux_family}-${var.linux_family_version}"
 
   disk_size = 20
   disk_type = "pd-ssd"
@@ -96,37 +112,38 @@ source "googlecompute" "centos_7" {
 build {
   name = "caravan"
 
-  source "source.googlecompute.centos_7" {
+  source "source.googlecompute.caravan" {
     name              = "opensource"
     instance_name     = local.full_image_name
     image_name        = local.full_image_name
     image_family      = local.image_family
-    image_description = "Caravan Centos7"
+    image_description = "Caravan ${local.linux_distro}"
   }
 
-  source "source.googlecompute.centos_7" {
+  source "source.googlecompute.caravan" {
     name              = "enterprise"
     instance_name     = local.full_image_name_enterprise
     image_name        = local.full_image_name_enterprise
     image_family      = local.image_family_enterprise
-    image_description = "Caravan Centos7 - Enterprise"
+    image_description = "Caravan ${local.linux_distro} - Enterprise"
   }
 
   provisioner "shell" {
     inline = [
       "curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py",
+      "if [ -x /usr/bin/python3 ]; then alias python='/usr/bin/python3'; fi",
       "python get-pip.py",
       "python -m pip install --user ansible==4.8.0"
     ]
   }
 
   provisioner "ansible-local" {
-    playbook_file    = "../ansible/centos.yml"
+    playbook_file    = "../ansible/caravan.yml"
     playbook_dir     = "../ansible/"
     galaxy_file      = "../ansible/requirements.yml"
     inventory_groups = ["gcp"]
-    command          = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 /home/centos/.local/bin/ansible-playbook"
-    galaxy_command   = "/home/centos/.local/bin/ansible-galaxy"
+    command          = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 /home/${var.ssh_username}/.local/bin/ansible-playbook"
+    galaxy_command   = "/home/${var.ssh_username}/.local/bin/ansible-galaxy"
     override = {
       enterprise = {
         inventory_groups = ["gcp", "enterprise"]
@@ -138,7 +155,7 @@ build {
   }
 
   provisioner "shell" {
-    script = "scripts/centos-cleanup.sh"
+    script = "scripts/${var.linux_family}-cleanup.sh"
   }
 
   provisioner "shell" {

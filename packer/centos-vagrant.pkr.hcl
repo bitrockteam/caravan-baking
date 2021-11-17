@@ -8,16 +8,6 @@ variable "provider" {
   default = "virtualbox"
 }
 
-variable "image_name" {
-  type    = string
-  default = "caravan-centos-image"
-}
-
-variable "install_nomad" {
-  type    = bool
-  default = true
-}
-
 locals {
   full_image_name            = "${var.image_name}-os-{{timestamp}}"
   full_image_name_enterprise = "${var.image_name}-ent-{{timestamp}}"
@@ -51,7 +41,7 @@ build {
   }
 
   provisioner "ansible-local" {
-    playbook_file  = "../ansible/centos.yml"
+    playbook_file  = "../ansible/caravan.yml"
     playbook_dir   = "../ansible/"
     galaxy_file    = "../ansible/requirements.yml"
     command        = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 /home/centos/.local/bin/ansible-playbook"

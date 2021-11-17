@@ -39,14 +39,14 @@ variable "build_on_aws" {
   default = false
 }
 variable "aws_access_key" {
-  type      = string
-  sensitive = true
-  default   = ""
+  type = string
+  #sensitive = true
+  default = ""
 }
 variable "aws_secret_key" {
-  type      = string
-  sensitive = true
-  default   = ""
+  type = string
+  #sensitive = true
+  default = ""
 }
 variable "aws_region" {
   type    = string
@@ -89,9 +89,9 @@ variable "azure_client_id" {
   default = null
 }
 variable "azure_client_secret" {
-  type      = string
-  sensitive = true
-  default   = null
+  type = string
+  #sensitive = true
+  default = null
 }
 variable "azure_target_resource_group" {
   type    = string
@@ -159,7 +159,17 @@ variable "install_nomad" {
   default = true
 }
 
-variable "linux_distro" {
+variable "linux_family" {
   type    = string
-  default = "centos7"
+  default = "ubuntu"
+}
+
+variable "linux_family_version" {
+  type    = string
+  default = "2104"
+}
+
+variable "ssh_username" {
+  type    = string
+  default = "ubuntu"
 }
