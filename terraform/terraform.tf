@@ -3,7 +3,7 @@ terraform {
 }
 
 locals {
-  linux_distro = "${var.linux_family}${var.linux_family_version}"
+  linux_distro = "${var.linux_family}-${var.linux_family_version}"
   common_vars = {
     PKR_VAR_install_nomad        = var.install_nomad
     PKR_VAR_linux_family         = var.linux_family
@@ -12,7 +12,6 @@ locals {
     PKR_VAR_image_name           = "caravan-${local.linux_distro}"
     PKR_VAR_ssh_username         = var.ssh_username
   }
-  build_image_name = "caravan-${local.linux_distro}"
 }
 
 resource "null_resource" "run_packer_google" {
