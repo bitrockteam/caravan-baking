@@ -23,6 +23,7 @@
 
 - name: get jaeger
   get_url:
+    timeout: 30
     url: https://github.com/jaegertracing/jaeger/releases/download/v{{ jaeger_version }}/jaeger-{{ jaeger_version }}-linux-amd64.tar.gz
     dest: /tmp/
 
