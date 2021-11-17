@@ -39,14 +39,14 @@ variable "build_on_aws" {
   default = false
 }
 variable "aws_access_key" {
-  type = string
-  #sensitive = true
-  default = ""
+  type      = string
+  sensitive = true
+  default   = ""
 }
 variable "aws_secret_key" {
-  type = string
-  #sensitive = true
-  default = ""
+  type      = string
+  sensitive = true
+  default   = ""
 }
 variable "aws_region" {
   type    = string
@@ -89,9 +89,9 @@ variable "azure_client_id" {
   default = null
 }
 variable "azure_client_secret" {
-  type = string
-  #sensitive = true
-  default = null
+  type      = string
+  sensitive = true
+  default   = null
 }
 variable "azure_target_resource_group" {
   type    = string
