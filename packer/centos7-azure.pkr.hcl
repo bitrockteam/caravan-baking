@@ -101,7 +101,7 @@ build {
     inline = [
       "curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py",
       "python get-pip.py",
-      "python -m pip install --user ansible==2.10.7"
+      "python -m pip install --user ansible==4.8.0"
     ]
   }
 
@@ -109,12 +109,12 @@ build {
     playbook_file    = "../ansible/centos.yml"
     playbook_dir     = "../ansible/"
     galaxy_file      = "../ansible/requirements.yml"
-    inventory_groups = ["centos_azure"]
+    inventory_groups = ["azure"]
     command          = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 /home/centos/.local/bin/ansible-playbook"
     galaxy_command   = "/home/centos/.local/bin/ansible-galaxy"
     override = {
       enterprise = {
-        inventory_groups = ["centos_azure", "enterprise"]
+        inventory_groups = ["azure", "enterprise"]
       }
     }
     extra_arguments = [
