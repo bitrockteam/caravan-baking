@@ -91,7 +91,7 @@ locals {
   ssh_username               = var.ssh_username
   image_labels               = merge({ for k, v in yamldecode(file(var.apps_bin_versions)) : k => replace(v, ".", "_") if length(regexall(".*_version", k)) > 0 }, { for k, v in yamldecode(file(var.hc_bin_versions)) : k => replace(v, ".", "_") if length(regexall(".*_version", k)) > 0 })
   tags                       = var.install_nomad ? local.image_labels : merge(local.image_labels, { "nomad_version" : "none" })
-  linux_distro               = "${var.linux_family}-${var.linux_family_version}"
+  linux_distro               = "${var.linux_os}-${var.linux_os_version}"
 }
 
 source "googlecompute" "caravan" {
