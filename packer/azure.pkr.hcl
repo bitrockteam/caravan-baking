@@ -49,14 +49,19 @@ variable "ssh_username" {
   default = "ubuntu"
 }
 
-variable "linux_family" {
+variable "linux_os" {
   type    = string
   default = "centos"
 }
 
-variable "linux_family_version" {
+variable "linux_os_version" {
   type    = string
   default = "7"
+}
+
+variable "linux_os_family" {
+  type    = string
+  default = "redhat"
 }
 
 variable "image_sku_map" {
@@ -78,8 +83,8 @@ locals {
   ssh_username               = var.ssh_username
   version_tags               = { for k, v in yamldecode(file(var.hc_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 }
   tags                       = var.install_nomad ? local.version_tags : merge(local.version_tags, { "nomad_version" : "none" })
-  image_sku                  = var.image_sku_map[var.linux_family]
-  image_publisher            = var.image_publisher_map[var.linux_family]
+  image_sku                  = var.image_sku_map[var.linux_os]
+  image_publisher            = var.image_publisher_map[var.linux_os]
 }
 
 source "azure-arm" "caravan" {
@@ -122,12 +127,10 @@ build {
   }
 
   provisioner "shell" {
-    inline = [
-      "curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py",
-      "if [ -x /usr/bin/python3 ]; then alias python='/usr/bin/python3'; fi",
-      "python get-pip.py",
-      "python -m pip install --user ansible==4.8.0"
+    environment_vars = [
+      "ANSIBLE_VERSION=4.8.0",
     ]
+    script = "scripts/${var.linux_os_family}-bootstrap-ansible.sh"
   }
 
   provisioner "ansible-local" {
@@ -148,7 +151,7 @@ build {
   }
 
   provisioner "shell" {
-    script = "scripts/${var.linux_family}-cleanup.sh"
+    script = "scripts/${var.linux_os_family}-cleanup.sh"
   }
 
   provisioner "shell" {
