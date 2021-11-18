@@ -159,14 +159,19 @@ variable "install_nomad" {
   default = true
 }
 
-variable "linux_family" {
+variable "linux_os_family" {
   type    = string
-  default = "ubuntu"
+  default = "debian"
 }
 
-variable "linux_family_version" {
+variable "linux_os_version" {
   type    = string
   default = "2104"
+}
+
+variable "linux_os" {
+  type    = string
+  default = "ubuntu"
 }
 
 variable "ssh_username" {

@@ -68,12 +68,17 @@ variable "ssh_username" {
   default = "ubuntu"
 }
 
-variable "linux_family" {
+variable "linux_os" {
   type    = string
   default = "ubuntu"
 }
 
-variable "linux_family_version" {
+variable "linux_os_family" {
+  type    = string
+  default = "debian"
+}
+
+variable "linux_os_version" {
   type    = string
   default = "2104"
 }
@@ -86,7 +91,7 @@ locals {
   ssh_username               = var.ssh_username
   image_labels               = merge({ for k, v in yamldecode(file(var.apps_bin_versions)) : k => replace(v, ".", "_") if length(regexall(".*_version", k)) > 0 }, { for k, v in yamldecode(file(var.hc_bin_versions)) : k => replace(v, ".", "_") if length(regexall(".*_version", k)) > 0 })
   tags                       = var.install_nomad ? local.image_labels : merge(local.image_labels, { "nomad_version" : "none" })
-  linux_distro               = "${var.linux_family}${var.linux_family_version}"
+  linux_distro               = "${var.linux_family}-${var.linux_family_version}"
 }
 
 source "googlecompute" "caravan" {
@@ -98,7 +103,7 @@ source "googlecompute" "caravan" {
   subnetwork   = var.subnetwork_name
   machine_type = var.machine_type
 
-  source_image_family = "${var.linux_family}-${var.linux_family_version}"
+  source_image_family = local.linux_distro
 
   disk_size = 20
   disk_type = "pd-ssd"
@@ -129,12 +134,10 @@ build {
   }
 
   provisioner "shell" {
-    inline = [
-      "curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py",
-      "if [ -x /usr/bin/python3 ]; then alias python='/usr/bin/python3'; fi",
-      "python get-pip.py",
-      "python -m pip install --user ansible==4.8.0"
+    environment_vars = [
+      "ANSIBLE_VERSION=4.8.0",
     ]
+    script = "scripts/${var.linux_os_family}-bootstrap-ansible.sh"
   }
 
   provisioner "ansible-local" {
@@ -155,7 +158,7 @@ build {
   }
 
   provisioner "shell" {
-    script = "scripts/${var.linux_family}-cleanup.sh"
+    script = "scripts/${var.linux_os_family}-cleanup.sh"
   }
 
   provisioner "shell" {
