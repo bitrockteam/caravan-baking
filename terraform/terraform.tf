@@ -3,14 +3,14 @@ terraform {
 }
 
 locals {
-  linux_distro = "${var.linux_family}-${var.linux_family_version}"
+  linux_distro = "${var.linux_os}-${var.linux_os_version}"
   common_vars = {
-    PKR_VAR_install_nomad        = var.install_nomad
-    PKR_VAR_linux_family         = var.linux_family
-    PKR_VAR_linux_family_version = var.linux_family_version
-    PKR_VAR_linux_distro         = local.linux_distro
-    PKR_VAR_image_name           = "caravan-${local.linux_distro}"
-    PKR_VAR_ssh_username         = var.ssh_username
+    PKR_VAR_install_nomad    = var.install_nomad
+    PKR_VAR_linux_os         = var.linux_os
+    PKR_VAR_linux_os_version = var.linux_os_version
+    PKR_VAR_linux_os_family  = var.linux_os_family
+    PKR_VAR_image_name       = "caravan-${local.linux_distro}"
+    PKR_VAR_ssh_username     = var.ssh_username
   }
 }
 
