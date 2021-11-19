@@ -15,9 +15,9 @@ variable "region" {
   default = "eu-central-1"
 }
 
-variable "image_name" {
+variable "image_prefix" {
   type    = string
-  default = "caravan-centos-image"
+  default = "caravan"
 }
 
 variable "instance_type" {
@@ -70,12 +70,12 @@ variable "aws_product_code_map" {
 }
 
 locals {
-  full_image_name            = "${var.image_name}-os-{{timestamp}}"
-  full_image_name_enterprise = "${var.image_name}-ent-{{timestamp}}"
+  linux_distro               = "${var.linux_os}-${var.linux_os_version}"
+  full_image_name            = "${var.image_prefix}-os-${local.linux_distro}-{{timestamp}}"
+  full_image_name_enterprise = "${var.image_prefix}-ent-${local.linux_distro}-{{timestamp}}"
   ssh_username               = var.ssh_username
   version_tags               = merge({ for k, v in yamldecode(file(var.apps_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 }, { for k, v in yamldecode(file(var.hc_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 })
   tags                       = var.install_nomad ? local.version_tags : merge(local.version_tags, { "nomad_version" : "none" })
-  linux_distro               = "${var.linux_os}-${var.linux_os_version}"
   aws_product_code           = var.aws_product_code_map[var.linux_os]
 }
 

@@ -13,9 +13,9 @@ variable "zone" {
   default = ""
 }
 
-variable "image_name" {
+variable "image_prefix" {
   type    = string
-  default = "caravan-centos-image"
+  default = "caravan"
 }
 
 variable "project_id" {
@@ -95,15 +95,15 @@ variable "ubuntu_lts_map" {
 }
 
 locals {
-  image_family               = "${var.image_name}-os"
-  image_family_enterprise    = "${var.image_name}-ent"
+  linux_os_version_gcp       = lookup(var.ubuntu_lts_map, var.linux_os_version, var.linux_os_version)
+  linux_distro               = "${var.linux_os}-${local.linux_os_version_gcp}"
+  image_family               = "${var.image_prefix}-os-${local.linux_distro}"
+  image_family_enterprise    = "${var.image_prefix}-ent-${local.linux_distro}"
   full_image_name            = "${local.image_family}-{{timestamp}}"
   full_image_name_enterprise = "${local.image_family_enterprise}-{{timestamp}}"
   ssh_username               = var.ssh_username
   image_labels               = merge({ for k, v in yamldecode(file(var.apps_bin_versions)) : k => replace(v, ".", "_") if length(regexall(".*_version", k)) > 0 }, { for k, v in yamldecode(file(var.hc_bin_versions)) : k => replace(v, ".", "_") if length(regexall(".*_version", k)) > 0 })
   tags                       = var.install_nomad ? local.image_labels : merge(local.image_labels, { "nomad_version" : "none" })
-  linux_os_version_gcp     = lookup(var.ubuntu_lts_map, var.linux_os_version, var.linux_os_version)
-  linux_distro               = "${var.linux_os}-${local.linux_os_version_gcp}"
 }
 
 source "googlecompute" "caravan" {

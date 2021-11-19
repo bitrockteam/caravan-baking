@@ -14,9 +14,9 @@ variable "client_secret" {
   default   = ""
 }
 
-variable "image_name" {
+variable "image_prefix" {
   type    = string
-  default = "caravan-centos-image"
+  default = "caravan"
 }
 
 variable "target_resource_group" {
@@ -78,8 +78,9 @@ variable "image_publisher_map" {
   }
 }
 locals {
-  full_image_name            = "${var.image_name}-os-{{timestamp}}"
-  full_image_name_enterprise = "${var.image_name}-ent-{{timestamp}}"
+  linux_distro               = "${var.linux_os}-${local.linux_os_version}"
+  full_image_name            = "${var.image_prefix}-os-${local.linux_distro}-{{timestamp}}"
+  full_image_name_enterprise = "${var.image_prefix}-ent-${local.linux_distro}-{{timestamp}}"
   ssh_username               = var.ssh_username
   version_tags               = { for k, v in yamldecode(file(var.hc_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 }
   tags                       = var.install_nomad ? local.version_tags : merge(local.version_tags, { "nomad_version" : "none" })

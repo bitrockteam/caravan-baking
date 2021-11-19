@@ -9,7 +9,7 @@ locals {
     PKR_VAR_linux_os         = var.linux_os
     PKR_VAR_linux_os_version = var.linux_os_version
     PKR_VAR_linux_os_family  = var.linux_os_family
-    PKR_VAR_image_name       = "caravan-${local.linux_distro}"
+    PKR_VAR_image_prefix     = "caravan"
     PKR_VAR_ssh_username     = var.ssh_username
   }
 }
