@@ -1,18 +1,56 @@
 ---
-- name: update system packages
+- name: enable dummy network module
+  community.general.modprobe:
+    name: dummy
+    state: present
+
+- name: update system packages (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
   yum:
     update_only: yes
     state: latest # noqa 403
     exclude: epel-release,grub2*,shim*,mokutil
 
 - name: install epel-release
-  yum:
+  when: ansible_facts['os_family'] == "RedHat"
+  package:
     name: epel-release
     state: present
 
+- name: exclude system packages from update (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  dpkg_selections:
+     name: grub2
+     selection: hold
+
+- name: remove ufw firewall (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  apt:
+    name: ufw
+    state: absent
+
+- name: update system packages (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  apt:
+    only_upgrade: yes
+    update_cache: yes
+    state: latest # noqa 403
+
 - name: install extra packages
-  yum:
+  package:
     name: '{{ extra_packages }}'
+    state: present
+
+- name: install extra packages (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  package:
+    name: '{{ extra_packages_debian }}'
+    state: present
+
+- name: install extra packages (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
+  package:
+    name: '{{ extra_packages_redhat }}'
     state: present
 
 - name: create certsreaders group

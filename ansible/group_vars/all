@@ -4,10 +4,17 @@ extra_packages:
   - unzip
   - jq
   - dnsmasq
-  #  - openjdk-8-jdk
+  - tcpdump
+
+extra_packages_redhat:
   - java-1.8.0-openjdk
   - bind-utils
-  - tcpdump
+
+extra_packages_debian:
+  - openjdk-8-jdk
+  - dnsutils
+  - network-manager
+  - firewalld
 
 install_terraform: true
 install_vault: true

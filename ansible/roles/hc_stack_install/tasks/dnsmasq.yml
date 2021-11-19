@@ -11,17 +11,26 @@
   command: "/bin/bash -c \"/sbin/ip route | grep '^default' | grep -Po '(?<=dev )(.+?)(?= )'\"" # noqa 301
   register: interface
 
-- name: add PEERDNS to interface config
+- name: add PEERDNS to interface config (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
   lineinfile:
     path: '/etc/sysconfig/network-scripts/ifcfg-{{ interface.stdout }}'
     regex: ^PEERDNS=
     line: PEERDNS=no
 
-- name: add DNS1 to interface config
+- name: add DNS1 to interface config (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
   lineinfile:
     path: '/etc/sysconfig/network-scripts/ifcfg-{{ interface.stdout }}'
     regex: ^DNS1=
     line: DNS1=127.0.0.1
+
+- name: disable resolved (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  ansible.builtin.systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: no
 
 - name: enable and start dnsmasq
   systemd:
@@ -37,3 +46,8 @@
     mode: '644'
     owner: root
     group: root
+
+- name: update hostname (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  ansible.builtin.command:
+    cmd: hostnamectl set-hostname "{{ ansible_hostname }}.{{ ansible_domain }}"

@@ -1,11 +1,16 @@
 galaxy_info:
   author: DevOps Team
   description: install Caravan cluster components
+  role_name: hc_stack_install
+  namespace: caravan_baking
   company: Bitrock SRL
   license: MPL-2.0
   min_ansible_version: 2.1
   platforms:
-  - name: Centos
+  - name: Ubuntu
+    versions:
+    - 2104
+  - name: CentOS
     versions:
     - 7
   galaxy_tags: []

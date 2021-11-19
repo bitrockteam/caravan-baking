@@ -1,15 +1,38 @@
 ---
-- name: install envoy
+- name: install envoy (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
   yum:
     name: https://rpm.dl.getenvoy.io/public/rpm/any-distro/any-version/x86_64/getenvoy-envoy-{{ envoy_version }}.x86_64.rpm
     state: present
 
-- name: rm envoy binary
+- name: Add envoy keyring (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  ansible.builtin.apt_key:
+    url: https://deb.dl.getenvoy.io/public/gpg.8115BA8E629CC074.key
+    keyring: /etc/apt/trusted.gpg.d/getenvoy-keyring.gpg
+
+- name: Add envoy repo (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  ansible.builtin.apt_repository:
+     repo: deb https://deb.dl.getenvoy.io/public/deb/ubuntu focal main
+     state: present
+     filename: getenvoy
+
+- name: install envoy (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  apt:
+    name: getenvoy-envoy
+    update_cache: yes
+    state: present
+
+- name: rm envoy binary (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
   ansible.builtin.file:
     path: /usr/bin/envoy
     state: absent
 
-- name: copy envoy binary
+- name: copy envoy binary (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
   copy:
     src: /opt/getenvoy/bin/envoy
     dest: /usr/bin/envoy

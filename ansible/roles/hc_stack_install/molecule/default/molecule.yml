@@ -4,8 +4,10 @@ dependency:
 driver:
   name: vagrant
 platforms:
-  - name: instance
+  - name: centos
     box: bento/centos-7.9
+  - name: ubuntu
+    box: bento/ubuntu-21.04
 provisioner:
   name: ansible
   playbook:

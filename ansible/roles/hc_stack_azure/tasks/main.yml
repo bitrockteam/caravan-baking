@@ -1,7 +1,12 @@
 ---
 # tasks file for hc_stack_aws
-- name: install az-cli
-  include: az_cli.yml
+- name: install az-cli (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
+  include: az_cli_rh.yml
+
+- name: install az-cli (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  include: az_cli_deb.yml
 
 - name: enable docker-login
   include: docker_login.yml

@@ -1,6 +1,13 @@
 ---
-- name: install cloud-init
+- name: install cloud-init (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
   yum:
+    name: cloud-init
+    state: present
+
+- name: install cloud-init (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  apt:
     name: cloud-init
     state: present
 

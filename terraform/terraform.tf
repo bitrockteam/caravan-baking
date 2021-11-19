@@ -3,26 +3,31 @@ terraform {
 }
 
 locals {
+  linux_distro = "${var.linux_os}-${var.linux_os_version}"
   common_vars = {
-    PKR_VAR_install_nomad = var.install_nomad
+    PKR_VAR_install_nomad    = var.install_nomad
+    PKR_VAR_linux_os         = var.linux_os
+    PKR_VAR_linux_os_version = var.linux_os_version
+    PKR_VAR_linux_os_family  = var.linux_os_family
+    PKR_VAR_image_prefix     = "caravan"
+    PKR_VAR_ssh_username     = var.ssh_username
   }
 }
 
 resource "null_resource" "run_packer_google" {
   count = (var.build_on_google && !var.skip_packer_build) ? 1 : 0
   triggers = {
-    "changes-in-playbook" : filemd5("${path.module}/../ansible/centos.yml")
+    "changes-in-playbook" : filemd5("${path.module}/../ansible/caravan.yml")
     "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")
     "changes-in-install-defaults" : filemd5("${path.module}/../ansible/roles/hc_stack_install/defaults/main.yml")
     "changes-in-apps-defaults" : filemd5("${path.module}/../ansible/roles/hc_stack_apps/defaults/main.yml")
-    "changes-in-groupvars-gcp" : filemd5("${path.module}/../ansible/group_vars/centos_gcp")
-    "changes-in-packer" : filemd5("${path.module}/../packer/centos-gcp.pkr.hcl")
+    "changes-in-groupvars-gcp" : filemd5("${path.module}/../ansible/group_vars/gcp")
+    "changes-in-packer" : filemd5("${path.module}/../packer/gcp.pkr.hcl")
   }
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
-    command     = "packer build -force -only=${join(",", var.builds)} centos-gcp.pkr.hcl"
+    command     = "packer build -force -only=${join(",", var.builds)} gcp.pkr.hcl"
     environment = merge({
-      PKR_VAR_image_name      = var.build_image_name
       PKR_VAR_machine_type    = var.build_machine_type
       PKR_VAR_region          = var.build_region
       PKR_VAR_zone            = var.build_zone
@@ -38,21 +43,20 @@ resource "null_resource" "run_packer_google" {
 resource "null_resource" "run_packer_aws" {
   count = (var.build_on_aws && !var.skip_packer_build) ? 1 : 0
   triggers = {
-    "changes-in-playbook" : filemd5("${path.module}/../ansible/centos.yml")
+    "changes-in-playbook" : filemd5("${path.module}/../ansible/caravan.yml")
     "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")
     "changes-in-install-defaults" : filemd5("${path.module}/../ansible/roles/hc_stack_install/defaults/main.yml")
     "changes-in-apps-defaults" : filemd5("${path.module}/../ansible/roles/hc_stack_apps/defaults/main.yml")
-    "changes-in-groupvars-aws" : filemd5("${path.module}/../ansible/group_vars/centos_aws")
-    "changes-in-packer" : filemd5("${path.module}/../packer/centos-aws.pkr.hcl")
+    "changes-in-groupvars-aws" : filemd5("${path.module}/../ansible/group_vars/aws")
+    "changes-in-packer" : filemd5("${path.module}/../packer/aws.pkr.hcl")
   }
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
-    command     = "env && packer build -force -only=${join(",", var.builds)} centos-aws.pkr.hcl"
+    command     = "env && packer build -force -only=${join(",", var.builds)} aws.pkr.hcl"
     environment = merge({
       PKR_VAR_access_key    = var.aws_access_key
       PKR_VAR_secret_key    = var.aws_secret_key
       PKR_VAR_region        = var.aws_region
-      PKR_VAR_image_name    = var.build_image_name
       PKR_VAR_instance_type = var.aws_instance_type
     }, local.common_vars)
   }
@@ -61,21 +65,20 @@ resource "null_resource" "run_packer_aws" {
 resource "null_resource" "run_packer_azure" {
   count = (var.build_on_azure && !var.skip_packer_build) ? 1 : 0
   triggers = {
-    "changes-in-playbook" : filemd5("${path.module}/../ansible/centos.yml")
+    "changes-in-playbook" : filemd5("${path.module}/../ansible/caravan.yml")
     "changes-in-groupvars-all" : filemd5("${path.module}/../ansible/group_vars/all")
     "changes-in-install-defaults" : filemd5("${path.module}/../ansible/roles/hc_stack_install/defaults/main.yml")
     "changes-in-apps-defaults" : filemd5("${path.module}/../ansible/roles/hc_stack_apps/defaults/main.yml")
-    "changes-in-groupvars-azure" : filemd5("${path.module}/../ansible/group_vars/centos_azure")
-    "changes-in-packer" : filemd5("${path.module}/../packer/centos-azure.pkr.hcl")
+    "changes-in-groupvars-azure" : filemd5("${path.module}/../ansible/group_vars/azure")
+    "changes-in-packer" : filemd5("${path.module}/../packer/azure.pkr.hcl")
   }
   provisioner "local-exec" {
     working_dir = "${path.module}/../packer"
-    command     = "packer build -force -only=${join(",", var.builds)} centos-azure.pkr.hcl"
+    command     = "packer build -force -only=${join(",", var.builds)} azure.pkr.hcl"
     environment = merge({
       PKR_VAR_subscription_id       = var.azure_subscription_id
       PKR_VAR_client_id             = var.azure_client_id
       PKR_VAR_client_secret         = var.azure_client_secret
-      PKR_VAR_image_name            = var.build_image_name
       PKR_VAR_target_resource_group = var.azure_target_resource_group
       // select accordingly to the hypervisor gen
       PKR_VAR_vm_size   = "Standard_B2s"

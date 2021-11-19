@@ -1,11 +1,27 @@
 ---
-- name: install elasticsearch, filebeat, logstash
+- name: install elasticsearch, filebeat, logstash (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
   yum:
     name:
       - https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elasticsearch_version }}-x86_64.rpm
       - https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{ elasticsearch_version }}-x86_64.rpm
       - https://artifacts.elastic.co/downloads/logstash/logstash-{{ elasticsearch_version }}-x86_64.rpm
     state: present
+
+- name: install elasticsearch (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  apt:
+    deb: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elasticsearch_version }}-amd64.deb
+
+- name: install logstash (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  apt:
+    deb: https://artifacts.elastic.co/downloads/logstash/logstash-{{ elasticsearch_version }}-amd64.deb
+
+- name: install filebeat (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  apt:
+    deb: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{ elasticsearch_version }}-amd64.deb
 
 - name: add elasticsearch config
   copy:

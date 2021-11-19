@@ -1,8 +1,14 @@
 ---
-- name: install grafana
+- name: install grafana (Redhat)
+  when: ansible_facts['os_family'] == "RedHat"
   yum:
-    name: https://dl.grafana.com/oss/release/grafana-{{ grafana_version }}.x86_64.rpm
+    name: https://dl.grafana.com/oss/release/grafana-{{ grafana_version }}-1.x86_64.rpm
     state: present
+
+- name: install grafana (Debian)
+  when: ansible_facts['os_family'] == "Debian"
+  apt:
+    deb: https://dl.grafana.com/oss/release/grafana_{{ grafana_version }}_amd64.deb
 
 - name: create grafana folder
   file:
