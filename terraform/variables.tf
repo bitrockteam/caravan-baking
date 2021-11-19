@@ -161,20 +161,20 @@ variable "install_nomad" {
 
 variable "linux_os_family" {
   type    = string
-  default = "debian"
+  default = "redhat"
 }
 
 variable "linux_os_version" {
   type    = string
-  default = "2104"
+  default = "7"
 }
 
 variable "linux_os" {
   type    = string
-  default = "ubuntu"
+  default = "centos"
 }
 
 variable "ssh_username" {
   type    = string
-  default = "ubuntu"
+  default = "centos"
 }
