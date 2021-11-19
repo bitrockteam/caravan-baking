@@ -50,7 +50,7 @@ google_account_file     = "YOUR-JSON-KEY"
 google_network_name     = "caravan-gcp-vpc"
 google_subnetwork_name  = "caravan-gcp-subnet"
 linux_os                = "ubuntu"
-linux_os_version        = "2104"
+linux_os_version        = "2004"
 linux_os_family         = "debian"
 ssh_username            = "ubuntu"
 EOF
@@ -70,10 +70,10 @@ azure_subscription_id       = "YOUR-SUBSCRIPTION-ID"
 azure_target_resource_group = "YOUR-RESOURCE-GROUP"
 azure_client_id             = "YOUR-AZURE-CLIENT-ID"
 azure_client_secret         = "YOUR-AZURE-CLIENT-SECRET"
-linux_os                    = "ubuntu"
-linux_os_version            = "2104"
-linux_os_family             = "debian"
-ssh_username                = "ubuntu"
+linux_os                    = "centos"
+linux_os_version            = "7"
+linux_os_family             = "redhat"
+ssh_username                = "centos"
 EOF
 
 terraform apply -var-file azure.tfvars
