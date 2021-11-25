@@ -34,7 +34,7 @@ terraform_version: 1.0.4
 vault_version: 1.9.0
 consul_version: 1.10.4
 consul_esm_version: 0.5.0
-nomad_version: 1.2.1
+nomad_version: 1.2.2
 envoy_version: 1.18.2.p0.gd362e79-1p75.g76c310e
 cni_version: 0.9.1
 containerd_version: 1.4.9-3.1
