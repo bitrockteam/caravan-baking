@@ -78,7 +78,7 @@ variable "image_publisher_map" {
   }
 }
 locals {
-  linux_distro               = "${var.linux_os}-${local.linux_os_version}"
+  linux_distro               = "${var.linux_os}-${var.linux_os_version}"
   full_image_name            = "${var.image_prefix}-os-${local.linux_distro}-{{timestamp}}"
   full_image_name_enterprise = "${var.image_prefix}-ent-${local.linux_distro}-{{timestamp}}"
   ssh_username               = var.ssh_username
