@@ -77,6 +77,14 @@ variable "image_publisher_map" {
     "centos" = "OpenLogic"
   }
 }
+
+variable "image_offer_map" {
+  type = map(string)
+  default = {
+    "centos" = "CentOS"
+  }
+}
+
 locals {
   linux_distro               = "${var.linux_os}-${var.linux_os_version}"
   full_image_name            = "${var.image_prefix}-os-${local.linux_distro}-{{timestamp}}"
@@ -86,6 +94,7 @@ locals {
   tags                       = var.install_nomad ? local.version_tags : merge(local.version_tags, { "nomad_version" : "none" })
   image_sku                  = var.image_sku_map[var.linux_os]
   image_publisher            = var.image_publisher_map[var.linux_os]
+  image_offer                = var.image_offer_map[var.linux_os]
 }
 
 source "azure-arm" "caravan" {
@@ -94,6 +103,7 @@ source "azure-arm" "caravan" {
   client_secret   = var.client_secret
 
   image_publisher = local.image_publisher
+  image_offer     = local.image_offer
   image_sku       = local.image_sku
 
   build_resource_group_name = var.target_resource_group
