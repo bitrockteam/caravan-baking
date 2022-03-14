@@ -13,6 +13,9 @@ jobs:
       fail-fast: false
       matrix:
         cloud: [ "aws", "gcp", "azure" ]
+        os: [ {"name": "ubuntu", "version": "2004", "family": "debian", "ssh_user": "ubuntu"},
+              {"name": "centos", "version": "7", "family": "redhat", "ssh_user": "centos"}
+        ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -69,7 +72,10 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: cd terraform && terraform apply -auto-approve
         env:
-          TF_VAR_build_image_name: 'caravan-centos-image'
+          TF_VAR_linux_os: ${{ matrix.os.name }}
+          TF_VAR_linux_os_version: ${{ matrix.os.version }}
+          TF_VAR_linux_os_family: ${{ matrix.os.family }}
+          TF_VAR_ssh_username: ${{ matrix.os.ssh_user }}
           TF_VAR_build_on_aws: ${{ matrix.cloud == 'aws' }}
           TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}

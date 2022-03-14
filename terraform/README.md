@@ -29,7 +29,6 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_build_image_name"></a> [build\_image\_name](#input\_build\_image\_name) | n/a | `string` | n/a | yes |
 | <a name="input_apps_bin_versions"></a> [apps\_bin\_versions](#input\_apps\_bin\_versions) | n/a | `string` | `"../ansible/roles/hc_stack_apps/defaults/main.yml"` | no |
 | <a name="input_aws_access_key"></a> [aws\_access\_key](#input\_aws\_access\_key) | n/a | `string` | `""` | no |
 | <a name="input_aws_instance_type"></a> [aws\_instance\_type](#input\_aws\_instance\_type) | n/a | `string` | `"t3.small"` | no |
@@ -59,16 +58,19 @@ No modules.
 | <a name="input_google_subnetwork_name"></a> [google\_subnetwork\_name](#input\_google\_subnetwork\_name) | n/a | `string` | `"default"` | no |
 | <a name="input_hc_bin_versions"></a> [hc\_bin\_versions](#input\_hc\_bin\_versions) | n/a | `string` | `"../ansible/roles/hc_stack_install/defaults/main.yml"` | no |
 | <a name="input_install_nomad"></a> [install\_nomad](#input\_install\_nomad) | n/a | `bool` | `true` | no |
+| <a name="input_linux_os"></a> [linux\_os](#input\_linux\_os) | n/a | `string` | `"centos"` | no |
+| <a name="input_linux_os_family"></a> [linux\_os\_family](#input\_linux\_os\_family) | n/a | `string` | `"redhat"` | no |
+| <a name="input_linux_os_version"></a> [linux\_os\_version](#input\_linux\_os\_version) | n/a | `string` | `"7"` | no |
 | <a name="input_nameservers"></a> [nameservers](#input\_nameservers) | n/a | `list(string)` | <pre>[<br>  "169.254.169.254"<br>]</pre> | no |
 | <a name="input_oci_artifacts_bucket"></a> [oci\_artifacts\_bucket](#input\_oci\_artifacts\_bucket) | n/a | `string` | `"artifacts"` | no |
 | <a name="input_oci_compartment_ocid"></a> [oci\_compartment\_ocid](#input\_oci\_compartment\_ocid) | n/a | `string` | `null` | no |
 | <a name="input_oci_profile"></a> [oci\_profile](#input\_oci\_profile) | n/a | `string` | `"POCIMAGE"` | no |
 | <a name="input_oci_subnet_ocid"></a> [oci\_subnet\_ocid](#input\_oci\_subnet\_ocid) | n/a | `string` | `null` | no |
-| <a name="input_pkg_list"></a> [pkg\_list](#input\_pkg\_list) | n/a | `list(string)` | <pre>[<br>  "wget",<br>  "unzip",<br>  "jq",<br>  "dnsmasq",<br>  "openjdk-8-jdk",<br>  "java-1.8.0-openjdk",<br>  "bind-utils",<br>  "tcpdump"<br>]</pre> | no |
 | <a name="input_preload_artifacts"></a> [preload\_artifacts](#input\_preload\_artifacts) | n/a | `string` | `null` | no |
 | <a name="input_preload_artifacts_base_url"></a> [preload\_artifacts\_base\_url](#input\_preload\_artifacts\_base\_url) | n/a | `string` | `null` | no |
 | <a name="input_proxy"></a> [proxy](#input\_proxy) | n/a | `string` | `null` | no |
 | <a name="input_skip_packer_build"></a> [skip\_packer\_build](#input\_skip\_packer\_build) | n/a | `bool` | `false` | no |
+| <a name="input_ssh_username"></a> [ssh\_username](#input\_ssh\_username) | n/a | `string` | `"centos"` | no |
 
 ## Outputs
 
