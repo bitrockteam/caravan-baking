@@ -47,6 +47,7 @@ jobs:
         shell: bash
         env:
           CLOUD: ${{ matrix.cloud }}
+          OS_VERSION: ${{ matrix.os.name }}-${{ matrix.os.version }}
         run: |
           cat > terraform/backend.tf << EOF
           terraform {
@@ -54,7 +55,7 @@ jobs:
               hostname     = "app.terraform.io"
               organization = "bitrock"
               workspaces {
-                name = "caravan-baking-${CLOUD}"
+                name = "caravan-baking-${CLOUD}-${OS_VERSION}"
               }
             }
           }
