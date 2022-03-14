@@ -9,6 +9,7 @@ jobs:
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
+    concurrency: ${{ matrix.cloud }}
     strategy:
       fail-fast: false
       matrix:
