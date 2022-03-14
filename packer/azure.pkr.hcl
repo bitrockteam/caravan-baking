@@ -46,7 +46,7 @@ variable "install_nomad" {
 
 variable "ssh_username" {
   type    = string
-  default = "ubuntu"
+  default = "centos"
 }
 
 variable "linux_os" {
@@ -67,7 +67,8 @@ variable "linux_os_family" {
 variable "image_sku_map" {
   type = map(string)
   default = {
-    "centos" = "7_9-gen2"
+    "centos-7" = "7_9-gen2"
+    "ubuntu-2004" = "20_04-lts-gen2"
   }
 }
 
@@ -75,13 +76,15 @@ variable "image_publisher_map" {
   type = map(string)
   default = {
     "centos" = "OpenLogic"
+    "ubuntu" = "Canonical"
   }
 }
 
 variable "image_offer_map" {
   type = map(string)
   default = {
-    "centos" = "CentOS"
+    "centos-7" = "CentOS"
+    "ubuntu-2004" = "0001-com-ubuntu-server-focal"
   }
 }
 
@@ -92,9 +95,9 @@ locals {
   ssh_username               = var.ssh_username
   version_tags               = { for k, v in yamldecode(file(var.hc_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 }
   tags                       = var.install_nomad ? local.version_tags : merge(local.version_tags, { "nomad_version" : "none" })
-  image_sku                  = var.image_sku_map[var.linux_os]
+  image_sku                  = var.image_sku_map["${var.linux_os}-${var.linux_os_version}"]
   image_publisher            = var.image_publisher_map[var.linux_os]
-  image_offer                = var.image_offer_map[var.linux_os]
+  image_offer                = var.image_offer_map["${var.linux_os}-${var.linux_os_version}"]
 }
 
 source "azure-arm" "caravan" {
