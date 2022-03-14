@@ -16,7 +16,6 @@ jobs:
         os: [ {"name": "ubuntu", "version": "2004", "family": "debian", "ssh_user": "ubuntu"},
               {"name": "centos", "version": "7", "family": "redhat", "ssh_user": "centos"}
         ]
-        max-parallel: 3
     steps:
       - name: Checkout
         uses: actions/checkout@v2
