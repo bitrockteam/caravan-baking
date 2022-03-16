@@ -10,7 +10,7 @@
 - name: copy ebsnvme-id
   copy:
     src: ebsnvme-id
-    dest: /sbin
+    dest: /usr/sbin/
     owner: root
     group: root
     mode: +x
@@ -18,7 +18,7 @@
 - name: copy ec2nvme-nsid
   copy:
     src: ec2nvme-nsid
-    dest: /sbin/
+    dest: /usr/sbin/
     owner: root
     group: root
     mode: +x
