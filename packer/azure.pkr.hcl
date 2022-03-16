@@ -69,6 +69,7 @@ variable "image_sku_map" {
   default = {
     "centos-7" = "7_9-gen2"
     "ubuntu-2004" = "20_04-lts-gen2"
+    "ubuntu-2104" = "21_04-lts-gen2"
   }
 }
 
@@ -85,6 +86,7 @@ variable "image_offer_map" {
   default = {
     "centos-7" = "CentOS"
     "ubuntu-2004" = "0001-com-ubuntu-server-focal"
+    "ubuntu-2104" = "0001-com-ubuntu-server-hirsute"
   }
 }
 
