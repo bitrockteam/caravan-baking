@@ -59,14 +59,22 @@ variable "linux_os_version" {
   type    = string
   default = "2104"
 }
-
-variable "aws_product_code_map" {
+  
+variable "source_ami_filter_map" {
   type = map(string)
   default = {
-    "ubuntu" = "97hj1xofcw6i97ku4fsxqayy4",
-    "centos" = "cvugziknvmxgqna9noibqnnsy",
-    "rocky"  = "cotnnspjrsi38lfn8qo4ibnnm"
+    "ubuntu-2004" = "ubuntu/images/*ubuntu-focal-16.04-amd64-server-*",
+    "ubuntu-2104" = "ubuntu/images/*ubuntu-hirsute-16.04-amd64-server-*",
+    "centos-7" = "CentOS Linux 7 x86_64 HVM EBS ENA *"
   }
+}
+
+variable "source_ami_owner_map" {
+  type = map(string)
+  default = {
+    "ubuntu" = "099720109477",
+    "centos" = "679593333241"
+  }  
 }
 
 locals {
@@ -76,7 +84,8 @@ locals {
   ssh_username               = var.ssh_username
   version_tags               = merge({ for k, v in yamldecode(file(var.apps_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 }, { for k, v in yamldecode(file(var.hc_bin_versions)) : k => v if length(regexall(".*_version", k)) > 0 })
   tags                       = var.install_nomad ? local.version_tags : merge(local.version_tags, { "nomad_version" : "none" })
-  aws_product_code           = var.aws_product_code_map[var.linux_os]
+  source_ami_filter_name     = var.source_ami_filter_map["${var.linux_os}-${var.linux_os_version}"]
+  source_ami_owner           = var.source_ami_owner_map[var.linux_os]
 }
 
 source "amazon-ebs" "caravan" {
@@ -94,10 +103,11 @@ source "amazon-ebs" "caravan" {
 
   source_ami_filter {
     filters = {
+      name                = local.source_ami_filter_name
+      root-device-type    = "ebs"
       virtualization-type = "hvm"
-      product-code        = local.aws_product_code
     }
-    owners      = ["aws-marketplace"]
+    owners      = [local.source_ami_owner]
     most_recent = true
   }
 
