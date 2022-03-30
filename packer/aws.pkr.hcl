@@ -164,9 +164,4 @@ build {
     script = "scripts/${var.linux_os_family}-cleanup.sh"
   }
 
-  provisioner "shell" {
-    inline            = ["sudo reboot"]
-    expect_disconnect = true
-  }
-
 }
