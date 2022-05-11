@@ -6,7 +6,11 @@ apt clean
 }'
 sudo bash -c '{
 # clean up logs
-cloud-init clean 
+cloud-init clean  && \
 find /var/log -type f -exec truncate -s 0 {} \; && \
 rm -rf /etc/vault.d/watched
 }'
+
+sudo find / -name "authorized_keys" -exec rm -f {} \;
+sudo truncate -s 0 /etc/machine-id
+sudo truncate -s 0 /var/lib/dbus/machine-id
