@@ -13,4 +13,9 @@ sudo bash -c '{
 truncate -c -s 0 /var/log/yum.log && \
 find /var/log -type f -exec truncate -s 0 {} \; && \
 rm -rf /var/log/anaconda* /var/lib/yum/* /var/lib/random-seed /root/install.log /root/install.log.syslog /root/anaconda-ks.cfg /etc/vault.d/watched
+find /root/.*history /home/*/.*history -exec rm -f {} \;
+find / -name "authorized_keys" –exec rm –f {} \;
 }'
+
+sudo truncate -s 0 /etc/machine-id
+sudo truncate -s 0 /var/lib/dbus/machine-id
