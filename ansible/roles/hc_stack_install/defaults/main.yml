@@ -31,14 +31,14 @@ nomad_enterprise: no
 vault_enterprise: no
 
 terraform_version: 1.1.7
-vault_version: 1.9.3
-consul_version: 1.10.8
+vault_version: 1.10.2
+consul_version: 1.11.5
 consul_esm_version: 0.6.0
 nomad_version: 1.2.6
 envoy_version: 1.18.2.p0.gd362e79-1p75.g76c310e
 cni_version: 1.1.1
-containerd_version: 1.5.10-3.1
-docker_ce_version: 20.10.13-3
+containerd_version: 1.6.4-3.1
+docker_ce_version: 20.10.15-3
 docker_scan_version: 0.17.0-3
 
 dummy_ip: 192.168.0.1

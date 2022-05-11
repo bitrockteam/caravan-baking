@@ -8,8 +8,8 @@ In this table are summarized the currently tested OS setups for the diffrent clo
 |--|--|--|--|--|--|--|
 |redhat	|centos| 7                           | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: |
 |redhat	|centos| 8                           | :x:                | :x:                | :x:                | :x: |
-|debian |ubuntu| 2004                        | :x:                | :heavy_check_mark: | :x:                | :x: |
-|debian |ubuntu| 2104                        | :heavy_check_mark: | :heavy_check_mark: | :x:                | :x: |
+|debian |ubuntu| 2004                        | :heavy_check_mark: | :heavy_check_mark: | :x:                | :x: |
+|debian |ubuntu| 2204                        | :heavy_check_mark: | :heavy_check_mark: | :x:                | :x: |
 
 ## Requirements
 
@@ -29,7 +29,7 @@ aws_secret_key    = "YOUR-SECRET-KEY"
 aws_region        = "eu-central-1"
 aws_instance_type = "t3.small"
 linux_os          = "ubuntu"
-linux_os_version  = "2104"
+linux_os_version  = "2204"
 linux_os_family   = "debian"
 ssh_username      = "ubuntu"
 EOF

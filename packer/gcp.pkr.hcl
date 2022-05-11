@@ -80,7 +80,7 @@ variable "linux_os_family" {
 
 variable "linux_os_version" {
   type    = string
-  default = "2104"
+  default = "2204"
 }
 
 # add LTS suffix ubuntu GCP images
@@ -90,7 +90,7 @@ variable "ubuntu_lts_map" {
     "1604" = "1604-lts"
     "1804" = "1804-lts"
     "2004" = "2004-lts"
-    "2104" = "2104"
+    "2204" = "2204-lts"
   }
 }
 

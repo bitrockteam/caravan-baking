@@ -57,14 +57,14 @@ variable "linux_os_family" {
 
 variable "linux_os_version" {
   type    = string
-  default = "2104"
+  default = "2204"
 }
   
 variable "source_ami_filter_map" {
   type = map(string)
   default = {
     "ubuntu-2004" = "ubuntu/images/*ubuntu-focal-20.04-amd64-server-*",
-    "ubuntu-2104" = "ubuntu/images/*ubuntu-hirsute-21.04-amd64-server-*",
+    "ubuntu-2204" = "ubuntu/images/*ubuntu-jammy-22.04-amd64-server-*",
     "centos-7" = "CentOS Linux 7 x86_64 HVM EBS ENA *"
   }
 }
