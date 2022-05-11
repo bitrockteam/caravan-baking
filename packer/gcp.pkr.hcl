@@ -121,6 +121,7 @@ source "googlecompute" "caravan" {
   disk_type = "pd-ssd"
 
   ssh_username = local.ssh_username
+  temporary_key_pair_type = "ed25519"
 
   tags         = ["ssh-allowed-node", "packer-builder"]
   image_labels = local.tags

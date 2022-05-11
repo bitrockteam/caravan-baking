@@ -97,6 +97,7 @@ source "amazon-ebs" "caravan" {
   ami_regions = [var.region]
 
   ssh_username = local.ssh_username
+  temporary_key_pair_type = "ed25519"
   tags = merge({
     Owner = "packer-builder-caravan"
   }, local.tags)
