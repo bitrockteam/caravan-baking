@@ -1,5 +1,7 @@
 #! /bin/bash
 
+cloud-init status --wait
+
 curl -s https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
 
 if [ -x /usr/bin/python3 ]; then
