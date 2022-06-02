@@ -24,13 +24,13 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 1.1.9
+          terraform_version: 1.2.2
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       - name: Setup Packer
         uses: hashicorp-contrib/setup-packer@v1
         with:
-          packer-version: 1.8.0
+          packer-version: 1.8.1
 
       - name: Set up GCP Cloud SDK
         if: ${{ matrix.cloud == 'gcp' }}
