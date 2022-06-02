@@ -81,8 +81,7 @@ resource "null_resource" "run_packer_azure" {
       PKR_VAR_client_secret         = var.azure_client_secret
       PKR_VAR_target_resource_group = var.azure_target_resource_group
       // select accordingly to the hypervisor gen
-      PKR_VAR_vm_size   = "Standard_B2s"
-      PKR_VAR_image_sku = "7_9-gen2"
+      PKR_VAR_vm_size = "Standard_D2s_v4"
     }, local.common_vars)
   }
 }
