@@ -1,11 +1,7 @@
 ---
-- name: Upgrade and Reboot RHEL & Debian family Linux distros
+- name: Upgrade RHEL & Debian family Linux distros
   hosts: all
   become: yes
-  vars:
-    reboot_connect_timeout: 5
-    reboot_post_reboot_delay: 15
-    reboot_timeout: 600
   tasks:
     # Upgrade RHEL family OS packages
     - name: Upgrade RHEL Family OS packages
@@ -28,13 +24,6 @@
       apt:
         upgrade: dist
       when: ansible_os_family == "Debian"
-
-    # Reboot after upgrade
-    - name: Reboot host
-      reboot:
-        connect_timeout: "{{ reboot_connect_timeout }}"
-        post_reboot_delay: "{{ reboot_post_reboot_delay }}"
-        reboot_timeout: "{{ reboot_timeout }}"
 
 - name: Setup baseline
   hosts: all
