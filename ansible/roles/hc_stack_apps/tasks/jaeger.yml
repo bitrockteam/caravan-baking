@@ -26,6 +26,7 @@
     timeout: 60
     url: https://github.com/jaegertracing/jaeger/releases/download/v{{ jaeger_version }}/jaeger-{{ jaeger_version }}-linux-amd64.tar.gz
     dest: /tmp/
+    mode: '644'
 
 - name: unarchive jaeger
   unarchive:
@@ -73,6 +74,7 @@
   get_url:
     url: https://github.com/jaegertracing/jaeger-client-cpp/releases/download/{{ jaeger_cpp_version }}/libjaegertracing_plugin.linux_amd64.so
     dest: /usr/local/lib/libjaegertracing_plugin.so
+    mode: '644'
     owner: root
     group: root
 
