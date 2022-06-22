@@ -7,10 +7,10 @@
 - name: Add microsoft repo (Debian)
   ansible.builtin.apt_repository:
     repo: "deb https://packages.microsoft.com/repos/azure-cli/ {{ ansible_lsb['codename'] }} main"
-     state: present
-     filename: azure-cli
-     codename: "{{ ansible_lsb['codename'] }}"
-     update_cache: true
+    state: present
+    filename: azure-cli
+    codename: "{{ ansible_lsb['codename'] }}"
+    update_cache: true
 
 - name: install azure cli (Debian)
   apt:
