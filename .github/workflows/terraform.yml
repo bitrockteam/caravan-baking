@@ -59,9 +59,6 @@ jobs:
         uses: ansible/ansible-lint-action@v6.2.1
         with:
           targets: "ansible/roles/*/"
-          # https://github.com/ansible/ansible-lint-action/issues/59
-          override-deps: |
-             rich>=9.5.1,<11.0.0
   release:
     name: "Release"
     runs-on: ubuntu-20.04
