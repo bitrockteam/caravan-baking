@@ -17,7 +17,7 @@
 - name: install stackdriver-agent (Debian)
   when: ansible_facts['os_family'] == "Debian"
   register: agent_check_deb
-  ignore_errors: yes
+  ignore_errors: true
   apt:
     name: stackdriver-agent
     state: present

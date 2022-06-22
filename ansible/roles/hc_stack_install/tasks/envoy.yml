@@ -14,9 +14,9 @@
 - name: Add envoy repo (Debian)
   when: ansible_facts['os_family'] == "Debian"
   ansible.builtin.apt_repository:
-     repo: deb https://deb.dl.getenvoy.io/public/deb/ubuntu focal main
-     state: present
-     filename: getenvoy
+    repo: deb https://deb.dl.getenvoy.io/public/deb/ubuntu focal main
+    state: present
+    filename: getenvoy
 
 - name: install envoy (Debian)
   when: ansible_facts['os_family'] == "Debian"

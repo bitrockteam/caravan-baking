@@ -22,9 +22,9 @@
 - name: Add docker repo (Debian)
   when: ansible_facts['os_family'] == "Debian"
   ansible.builtin.apt_repository:
-     repo: deb https://download.docker.com/linux/ubuntu focal stable
-     state: present
-     filename: docker
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+    filename: docker
 
 - name: install containerd, docker and docker-cli (Debian)
   when: ansible_facts['os_family'] == "Debian"

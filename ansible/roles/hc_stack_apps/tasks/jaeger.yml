@@ -3,7 +3,7 @@
   user:
     name: jaeger
     shell: /bin/false
-    create_home: no
+    create_home: false
 
 - name: create /etc/jaeger
   file:

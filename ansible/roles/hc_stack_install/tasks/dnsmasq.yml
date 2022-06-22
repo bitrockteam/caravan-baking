@@ -30,7 +30,7 @@
   ansible.builtin.systemd:
     name: systemd-resolved
     state: stopped
-    enabled: no
+    enabled: false
 
 - name: enable and start dnsmasq
   systemd:
