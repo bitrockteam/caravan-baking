@@ -18,7 +18,7 @@
 - name: enable docker-login service
   systemd:
     name: docker-login
-    enabled: yes
+    enabled: true
 
 - name: periodically restart docker-login.service
   cron:

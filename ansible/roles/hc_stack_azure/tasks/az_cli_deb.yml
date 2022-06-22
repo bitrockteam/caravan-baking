@@ -10,10 +10,10 @@
      state: present
      filename: azure-cli
      codename: "{{ ansible_lsb['codename'] }}"
-     update_cache: yes
+     update_cache: true
 
 - name: install azure cli (Debian)
   apt:
     name: azure-cli
     force_apt_get: yes
-    update_cache: yes
+    update_cache: true

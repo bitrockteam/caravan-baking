@@ -37,7 +37,7 @@
   copy:
     src: /tmp/jaeger-{{ jaeger_version }}-linux-amd64/jaeger-agent
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: jaeger
     group: jaeger
     mode: +x
@@ -46,7 +46,7 @@
   copy:
     src: /tmp/jaeger-{{ jaeger_version }}-linux-amd64/jaeger-collector
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: jaeger
     group: jaeger
     mode: +x
@@ -55,7 +55,7 @@
   copy:
     src: /tmp/jaeger-{{ jaeger_version }}-linux-amd64/jaeger-query
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: jaeger
     group: jaeger
     mode: +x
@@ -64,7 +64,7 @@
   copy:
     src: /tmp/jaeger-{{ jaeger_version }}-linux-amd64/jaeger-all-in-one
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: jaeger
     group: jaeger
     mode: +x

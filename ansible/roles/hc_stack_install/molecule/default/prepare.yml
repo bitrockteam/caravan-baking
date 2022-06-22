@@ -8,4 +8,4 @@
       systemd:
         name: firewalld
         state: started
-      become: yes
+      become: true

@@ -21,11 +21,11 @@
 - name: get grafana piechart panel
   unarchive:
     src: https://grafana.com/api/plugins/grafana-piechart-panel/versions/latest/download
-    remote_src: yes
+    remote_src: true
     dest: /var/lib/grafana/plugins
 
 - name: get grafana natel discrete panel
   unarchive:
     src: https://grafana.com/api/plugins/natel-discrete-panel/versions/latest/download
-    remote_src: yes
+    remote_src: true
     dest: /var/lib/grafana/plugins

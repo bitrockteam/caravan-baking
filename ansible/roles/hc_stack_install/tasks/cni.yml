@@ -11,7 +11,7 @@
   unarchive:
     src: https://github.com/containernetworking/plugins/releases/download/v{{ cni_version }}/cni-plugins-linux-amd64-v{{ cni_version }}.tgz
     dest: /opt/cni/bin/
-    remote_src: yes
+    remote_src: true
 
 - name: copy bridge.conf
   copy:

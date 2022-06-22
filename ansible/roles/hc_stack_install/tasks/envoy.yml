@@ -22,7 +22,7 @@
   when: ansible_facts['os_family'] == "Debian"
   apt:
     name: getenvoy-envoy
-    update_cache: yes
+    update_cache: true
     state: present
 
 - name: rm envoy binary (RedHat)
@@ -36,7 +36,7 @@
   copy:
     src: /opt/getenvoy/bin/envoy
     dest: /usr/bin/envoy
-    remote_src: yes
+    remote_src: true
     owner: root
     group: root
     mode: a+x

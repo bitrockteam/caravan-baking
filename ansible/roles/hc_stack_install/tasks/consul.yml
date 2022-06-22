@@ -4,7 +4,7 @@
   unarchive:
     src: '{{ consul_remote_archive_location }}'
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: root
     group: root
     mode: '755'
@@ -45,14 +45,14 @@
 - name: enable consul
   systemd:
     name: consul
-    enabled: yes
+    enabled: true
 
 # TODO: support local files
 - name: install consul from remote
   unarchive:
     src: https://releases.hashicorp.com/consul-esm/{{ consul_esm_version }}/consul-esm_{{ consul_esm_version }}_linux_amd64.zip
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: root
     group: root
     mode: '755'
@@ -84,11 +84,11 @@
 - name: start and enable consul-watcher.path
   systemd:
     name: consul-watcher.path
-    enabled: yes
+    enabled: true
     state: started
 
 - name: start and enable consul-watcher.service
   systemd:
     name: consul-watcher.service
-    enabled: yes
+    enabled: true
     state: started

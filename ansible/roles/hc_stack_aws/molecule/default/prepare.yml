@@ -7,4 +7,4 @@
         name: "hc_stack_install"
         tasks_from: prerequisites
         apply:
-          become: yes
+          become: true

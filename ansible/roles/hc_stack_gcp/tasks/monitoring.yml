@@ -21,10 +21,10 @@
   apt:
     name: stackdriver-agent
     state: present
-    update_cache: yes
+    update_cache: true
 
 - name: enable stackdriver-agent
   when: ( not agent_check_deb is failed and agent_check_rh is skipped ) or ( not agent_check_rh is failed and agent_check_deb is skipped )
   systemd:
     name: stackdriver-agent
-    enabled: yes
+    enabled: true
