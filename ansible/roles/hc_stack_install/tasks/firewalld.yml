@@ -29,5 +29,5 @@
   when: firewalld_check.rc == 0 and ansible_facts.services['firewalld.service'].state == "running"
 
 - name: Fix cycle in startup (Debian)
-  command: sed -i 's/After=polkit.service/After=polkit.service\nAfter=cloud-init.service/' /etc/systemd/system/multi-user.target.wants/firewalld.service
+  command: "sed -i 's/After=polkit.service/After=polkit.service\nAfter=cloud-init.service/' /etc/systemd/system/multi-user.target.wants/firewalld.service"
   when: ansible_facts['os_family'] == "Debian"
