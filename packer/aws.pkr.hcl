@@ -97,6 +97,7 @@ source "amazon-ebs" "caravan" {
   ami_regions = [var.region]
 
   ssh_username = local.ssh_username
+  ssh_interface = "public_ip"
   temporary_key_pair_type = "ed25519"
   tags = merge({
     Owner = "packer-builder-caravan"
