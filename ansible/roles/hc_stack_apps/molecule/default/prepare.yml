@@ -7,10 +7,10 @@
         name: "hc_stack_install"
         tasks_from: prerequisites
         apply:
-          become: yes
+          become: true
     - name: "Include hc_stack_install/docker"
       include_role:
         name: "hc_stack_install"
         tasks_from: docker
         apply:
-          become: yes
+          become: true

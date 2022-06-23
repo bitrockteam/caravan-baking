@@ -3,7 +3,7 @@
   user:
     name: prometheus
     shell: /bin/false
-    create_home: no
+    create_home: false
 
 - name: create /etc/prometheus
   file:
@@ -25,14 +25,14 @@
   unarchive:
     src: https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz
     dest: /tmp/
-    remote_src: yes
+    remote_src: true
     mode: '755'
 
 - name: copy prometheus
   copy:
     src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/prometheus
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: prometheus
     group: prometheus
     mode: +x
@@ -41,7 +41,7 @@
   copy:
     src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/promtool
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: prometheus
     group: prometheus
     mode: +x
@@ -50,7 +50,7 @@
   copy:
     src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/consoles
     dest: /etc/prometheus/
-    remote_src: yes
+    remote_src: true
     owner: prometheus
     group: prometheus
     mode: '755'
@@ -59,7 +59,7 @@
   copy:
     src: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/console_libraries
     dest: /etc/prometheus/
-    remote_src: yes
+    remote_src: true
     owner: prometheus
     group: prometheus
     mode: '755'

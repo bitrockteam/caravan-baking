@@ -2,7 +2,7 @@
 - name: get aws-cli latest
   unarchive:
     src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
-    remote_src: yes
+    remote_src: true
     dest: /tmp/
 
 - name: install aws-cli

@@ -28,4 +28,4 @@
 - name: enable dummy-nic service
   systemd:
     name: dummy-nic
-    enabled: yes
+    enabled: true

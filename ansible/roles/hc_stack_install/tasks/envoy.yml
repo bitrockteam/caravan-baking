@@ -14,15 +14,15 @@
 - name: Add envoy repo (Debian)
   when: ansible_facts['os_family'] == "Debian"
   ansible.builtin.apt_repository:
-     repo: deb https://deb.dl.getenvoy.io/public/deb/ubuntu focal main
-     state: present
-     filename: getenvoy
+    repo: deb https://deb.dl.getenvoy.io/public/deb/ubuntu focal main
+    state: present
+    filename: getenvoy
 
 - name: install envoy (Debian)
   when: ansible_facts['os_family'] == "Debian"
   apt:
     name: getenvoy-envoy
-    update_cache: yes
+    update_cache: true
     state: present
 
 - name: rm envoy binary (RedHat)
@@ -36,7 +36,7 @@
   copy:
     src: /opt/getenvoy/bin/envoy
     dest: /usr/bin/envoy
-    remote_src: yes
+    remote_src: true
     owner: root
     group: root
     mode: a+x

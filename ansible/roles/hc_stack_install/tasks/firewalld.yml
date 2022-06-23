@@ -2,7 +2,7 @@
 - name: check firewall-cmd
   command: "which firewall-cmd" # noqa 301
   register: firewalld_check
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: Populate service facts
   ansible.builtin.service_facts:
@@ -27,3 +27,9 @@
 - name: firewall-cmd --get-active-zones
   command: firewall-cmd --get-active-zones
   when: firewalld_check.rc == 0 and ansible_facts.services['firewalld.service'].state == "running"
+
+- name: Fix cycle in startup (Debian)
+  lineinfile:
+    dest: "/etc/systemd/system/multi-user.target.wants/firewalld.service"
+    insertafter: 'After=polkit.service'
+    line: 'After=cloud-init.service'

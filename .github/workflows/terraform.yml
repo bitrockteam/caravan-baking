@@ -56,12 +56,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Lint Ansible Playbook
-        uses: ansible/ansible-lint-action@main
+        uses: ansible/ansible-lint-action@v6.2.1
         with:
-          targets: "ansible/roles/*/"
-          # https://github.com/ansible/ansible-lint-action/issues/59
-          override-deps: |
-             rich>=9.5.1,<11.0.0
+          path: "ansible/roles/"
   release:
     name: "Release"
     runs-on: ubuntu-20.04

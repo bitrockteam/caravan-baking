@@ -7,7 +7,7 @@
 - name: update system packages (RedHat)
   when: ansible_facts['os_family'] == "RedHat"
   yum:
-    update_only: yes
+    update_only: true
     state: latest # noqa 403
     exclude: epel-release,grub2*,shim*,mokutil
 
@@ -20,8 +20,8 @@
 - name: exclude system packages from update (Debian)
   when: ansible_facts['os_family'] == "Debian"
   dpkg_selections:
-     name: grub2
-     selection: hold
+    name: grub2
+    selection: hold
 
 - name: remove ufw firewall (Debian)
   when: ansible_facts['os_family'] == "Debian"
@@ -32,8 +32,8 @@
 - name: update system packages (Debian)
   when: ansible_facts['os_family'] == "Debian"
   apt:
-    only_upgrade: yes
-    update_cache: yes
+    only_upgrade: true
+    update_cache: true
     state: latest # noqa 403
 
 - name: install extra packages

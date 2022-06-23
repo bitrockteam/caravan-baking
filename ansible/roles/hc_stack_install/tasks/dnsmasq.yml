@@ -30,12 +30,12 @@
   ansible.builtin.systemd:
     name: systemd-resolved
     state: stopped
-    enabled: no
+    enabled: false
 
 - name: enable and start dnsmasq
   systemd:
     name: dnsmasq
-    enabled: yes
+    enabled: true
     state: started
 
 - name: update resolv.conf

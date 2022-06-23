@@ -3,6 +3,7 @@
   get_url:
     url: https://dl.google.com/cloudagents/add-monitoring-agent-repo.sh
     dest: /tmp/add-monitoring-agent-repo.sh
+    mode: '644'
 
 - name: run script
   command: "bash /tmp/add-monitoring-agent-repo.sh" # noqa 301
@@ -17,14 +18,14 @@
 - name: install stackdriver-agent (Debian)
   when: ansible_facts['os_family'] == "Debian"
   register: agent_check_deb
-  ignore_errors: yes
+  ignore_errors: true
   apt:
     name: stackdriver-agent
     state: present
-    update_cache: yes
+    update_cache: true
 
 - name: enable stackdriver-agent
   when: ( not agent_check_deb is failed and agent_check_rh is skipped ) or ( not agent_check_rh is failed and agent_check_deb is skipped )
   systemd:
     name: stackdriver-agent
-    enabled: yes
+    enabled: true

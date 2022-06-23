@@ -1,7 +1,7 @@
 ---
 - name: Converge
   hosts: all
-  become: yes
+  become: true
   tasks:
     - name: "Include hc_stack_azure"
       include_role:

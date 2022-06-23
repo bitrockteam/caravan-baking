@@ -7,7 +7,7 @@ galaxy_info:
   platforms:
     - name: Centos
       versions:
-        - 7
+        - "7"
   galaxy_tags: []
 dependencies:
   - "cloudalchemy.node_exporter"

@@ -4,7 +4,7 @@
   unarchive:
     src: '{{ nomad_remote_archive_location }}'
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: root
     group: root
     mode: '755'
@@ -38,7 +38,7 @@
 - name: enable nomad
   systemd:
     name: nomad
-    enabled: yes
+    enabled: true
 
 - name: copy nomad-watcher.service
   copy:

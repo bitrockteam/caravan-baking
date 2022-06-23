@@ -14,4 +14,4 @@
 - name: enable cloud-init
   systemd:
     name: cloud-init
-    enabled: yes
+    enabled: true

@@ -22,14 +22,14 @@
 - name: Add docker repo (Debian)
   when: ansible_facts['os_family'] == "Debian"
   ansible.builtin.apt_repository:
-     repo: deb https://download.docker.com/linux/ubuntu focal stable
-     state: present
-     filename: docker
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+    filename: docker
 
 - name: install containerd, docker and docker-cli (Debian)
   when: ansible_facts['os_family'] == "Debian"
   apt:
-    update_cache: yes
+    update_cache: true
     name:
       - docker-ce
       - docker-ce-cli
@@ -56,7 +56,7 @@
   systemd:
     name: docker
     state: started
-    enabled: yes
+    enabled: true
 
 - name: pull envoy image
   command: "docker pull envoyproxy/envoy:v1.16.2" # noqa 301

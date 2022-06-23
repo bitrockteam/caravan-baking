@@ -4,7 +4,7 @@
   unarchive:
     src: '{{ vault_remote_archive_location }}'
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: root
     group: root
     mode: '755'
@@ -61,12 +61,12 @@
 - name: enable vault
   systemd:
     name: vault
-    enabled: yes
+    enabled: true
 
 - name: enable vault-agent
   systemd:
     name: vault-agent
-    enabled: yes
+    enabled: true
 
 - name: copy vault-agent-watcher.service
   copy:
@@ -87,9 +87,9 @@
 - name: start and enable vault-agent-watcher.path
   systemd:
     name: vault-agent-watcher.path
-    enabled: yes
+    enabled: true
 
 - name: start and enable vault-agent-watcher.service
   systemd:
     name: vault-agent-watcher.service
-    enabled: yes
+    enabled: true

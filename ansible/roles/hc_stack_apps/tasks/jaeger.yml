@@ -3,7 +3,7 @@
   user:
     name: jaeger
     shell: /bin/false
-    create_home: no
+    create_home: false
 
 - name: create /etc/jaeger
   file:
@@ -26,6 +26,7 @@
     timeout: 60
     url: https://github.com/jaegertracing/jaeger/releases/download/v{{ jaeger_version }}/jaeger-{{ jaeger_version }}-linux-amd64.tar.gz
     dest: /tmp/
+    mode: '644'
 
 - name: unarchive jaeger
   unarchive:
@@ -37,7 +38,7 @@
   copy:
     src: /tmp/jaeger-{{ jaeger_version }}-linux-amd64/jaeger-agent
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: jaeger
     group: jaeger
     mode: +x
@@ -46,7 +47,7 @@
   copy:
     src: /tmp/jaeger-{{ jaeger_version }}-linux-amd64/jaeger-collector
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: jaeger
     group: jaeger
     mode: +x
@@ -55,7 +56,7 @@
   copy:
     src: /tmp/jaeger-{{ jaeger_version }}-linux-amd64/jaeger-query
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: jaeger
     group: jaeger
     mode: +x
@@ -64,7 +65,7 @@
   copy:
     src: /tmp/jaeger-{{ jaeger_version }}-linux-amd64/jaeger-all-in-one
     dest: /usr/local/bin/
-    remote_src: yes
+    remote_src: true
     owner: jaeger
     group: jaeger
     mode: +x
@@ -73,6 +74,7 @@
   get_url:
     url: https://github.com/jaegertracing/jaeger-client-cpp/releases/download/{{ jaeger_cpp_version }}/libjaegertracing_plugin.linux_amd64.so
     dest: /usr/local/lib/libjaegertracing_plugin.so
+    mode: '644'
     owner: root
     group: root
 
