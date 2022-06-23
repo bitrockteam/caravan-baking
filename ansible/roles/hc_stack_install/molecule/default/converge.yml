@@ -7,4 +7,3 @@
         name: "hc_stack_install"
         apply:
           become: true
-
