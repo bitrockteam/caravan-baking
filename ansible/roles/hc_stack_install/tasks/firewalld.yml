@@ -28,8 +28,37 @@
   command: firewall-cmd --get-active-zones
   when: firewalld_check.rc == 0 and ansible_facts.services['firewalld.service'].state == "running"
 
-- name: Fix cycle in startup (Debian)
+- name: Fix cycle in startup - 1 (Debian)
   lineinfile:
     dest: "/etc/systemd/system/multi-user.target.wants/firewalld.service"
-    insertafter: 'After=polkit.service'
-    line: 'After=cloud-init.service'
+    line: 'Before=network-pre.target'
+    state: absent
+
+- name: Fix cycle in startup - 2 (Debian)
+  lineinfile:
+    dest: "/etc/systemd/system/multi-user.target.wants/firewalld.service"
+    line: 'Wants=network-pre.target'
+    state: absent
+
+- name: Fix cycle in startup - 3 (Debian)
+  lineinfile:
+    dest: "/etc/systemd/system/multi-user.target.wants/firewalld.service"
+    line: 'After=dbus.service'
+    state: absent
+
+- name: Fix cycle in startup - 4 (Debian)
+  lineinfile:
+    dest: "/etc/systemd/system/multi-user.target.wants/firewalld.service"
+    line: 'After=polkit.service'
+    state: absent
+
+- name: Fix cycle in startup - 5 (Debian)
+  lineinfile:
+    dest: "/etc/systemd/system/multi-user.target.wants/firewalld.service"
+    insertafter: 'Description=firewalld - dynamic firewall daemon'
+    line: 'After=network.service'
+    state: present
+
+
+
+
