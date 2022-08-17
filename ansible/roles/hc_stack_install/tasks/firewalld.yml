@@ -63,7 +63,3 @@
     insertafter: 'Description=firewalld - dynamic firewall daemon'
     line: 'After=network.service'
     state: present
-
-
-
-

@@ -20,7 +20,7 @@
 
 - name: install envoy (RedHat)
   when: ansible_facts['os_family'] == "RedHat"
-  apt:
+  ansible.builtin.yum:
     name: getenvoy-envoy
     update_cache: true
     state: present
