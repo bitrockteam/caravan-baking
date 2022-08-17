@@ -11,12 +11,11 @@
     name: tetrate-getenvoy-rpm-stable
     file: tetrate-getenvoy-rpm-stable
     baseurl: https://rpm.dl.getenvoy.io/public/rpm/el/7/$basearch
-    repo_gpgcheck: yes
-    enabled: yes
+    repo_gpgcheck: true
+    enabled: true
     gpgkey: https://rpm.dl.getenvoy.io/public/gpg.CF716AF503183491.key
-    gpgcheck: yes
+    gpgcheck: true
     metadata_expire: 300
-    autorefresh: yes
 
 - name: install envoy (RedHat)
   when: ansible_facts['os_family'] == "RedHat"
