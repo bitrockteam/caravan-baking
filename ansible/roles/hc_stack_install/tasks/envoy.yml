@@ -9,6 +9,7 @@
   when: ansible_facts['os_family'] == "RedHat"
   ansible.builtin.yum_repository:
     name: tetrate-getenvoy-rpm-stable
+    description:  GeteEnvoy RPM Packages
     file: tetrate-getenvoy-rpm-stable
     baseurl: https://rpm.dl.getenvoy.io/public/rpm/el/7/$basearch
     repo_gpgcheck: true
