@@ -1,8 +1,28 @@
 ---
+- name: Add envoy keyring (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
+  ansible.builtin.rpm_key:
+    state: present
+    key: https://rpm.dl.getenvoy.io/public/gpg.CF716AF503183491.key
+
+- name: Add envoy repo (RedHat)
+  when: ansible_facts['os_family'] == "RedHat"
+  ansible.builtin.yum_repository:
+    name: tetrate-getenvoy-rpm-stable
+    file: tetrate-getenvoy-rpm-stable
+    baseurl: https://rpm.dl.getenvoy.io/public/rpm/el/7/$basearch
+    repo_gpgcheck: yes
+    enabled: yes
+    gpgkey: https://rpm.dl.getenvoy.io/public/gpg.CF716AF503183491.key
+    gpgcheck: yes
+    metadata_expire: 300
+    autorefresh: yes
+
 - name: install envoy (RedHat)
   when: ansible_facts['os_family'] == "RedHat"
-  yum:
-    name: https://rpm.dl.getenvoy.io/public/rpm/any-distro/any-version/x86_64/getenvoy-envoy-{{ envoy_version }}.x86_64.rpm
+  apt:
+    name: getenvoy-envoy
+    update_cache: true
     state: present
 
 - name: Add envoy keyring (Debian)
@@ -14,7 +34,7 @@
 - name: Add envoy repo (Debian)
   when: ansible_facts['os_family'] == "Debian"
   ansible.builtin.apt_repository:
-    repo: deb https://deb.dl.getenvoy.io/public/deb/ubuntu focal main
+    repo: deb https://deb.dl.getenvoy.io/public/deb/ubuntu {{ ansible_lsb['codename'] }} main
     state: present
     filename: getenvoy
 
