@@ -32,7 +32,7 @@
     state: directory
     owner: vault
     group: certsreaders
-    mode: '750'
+    mode: '770'
 
 - name: copy consul.sh
   copy:
