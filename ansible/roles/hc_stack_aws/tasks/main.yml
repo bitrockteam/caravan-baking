@@ -8,3 +8,6 @@
 
 - name: add nvme udev https://gist.github.com/jalaziz/c22c8464cb602bc2b8d0a339b013a9c4
   include: nvme_udev.yml
+
+- name: install SSM agent
+  include: ssm_agent.yml

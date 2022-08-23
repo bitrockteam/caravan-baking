@@ -1,0 +1,13 @@
+---
+- name: install ssm agent
+  when: ansible_facts['os_family'] == "RedHat"
+  yum:
+    name:
+      - https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+    state: present
+
+- name: enable ssm agent service
+  when: ansible_facts['os_family'] == "RedHat"
+  systemd:
+    name: amazon-ssm-agent
+    enabled: true
