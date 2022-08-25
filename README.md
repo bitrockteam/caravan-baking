@@ -8,8 +8,8 @@ In this table are summarized the currently tested OS setups for the diffrent clo
 |--|--|--|--|--|--|--|
 |redhat	|centos| 7                           | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: |
 |redhat	|centos| 8                           | :x:                | :x:                | :x:                | :x: |
-|debian |ubuntu| 2004                        | :heavy_check_mark: | :heavy_check_mark: | :x:                | :x: |
-|debian |ubuntu| 2204                        | :heavy_check_mark: | :heavy_check_mark: | :x:                | :x: |
+|debian |ubuntu| 2004                        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: |
+|debian |ubuntu| 2204                        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: |
 
 ## Requirements
 
