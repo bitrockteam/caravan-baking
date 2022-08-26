@@ -96,7 +96,7 @@ variable "ubuntu_lts_map" {
 
 locals {
   linux_os_version_gcp       = lookup(var.ubuntu_lts_map, var.linux_os_version, var.linux_os_version)
-  linux_distro               = "${var.linux_os}-${local.linux_os_version_gcp}"
+  linux_distro               = "${var.linux_os}-${var.linux_os_version}"
   image_family               = "${var.image_prefix}-os-${local.linux_distro}"
   image_family_enterprise    = "${var.image_prefix}-ent-${local.linux_distro}"
   full_image_name            = "${local.image_family}-{{timestamp}}"
@@ -115,7 +115,7 @@ source "googlecompute" "caravan" {
   subnetwork   = var.subnetwork_name
   machine_type = var.machine_type
 
-  source_image_family = local.linux_distro
+  source_image_family = "${var.linux_os}-${local.linux_os_version_gcp}"
 
   disk_size = 20
   disk_type = "pd-ssd"
