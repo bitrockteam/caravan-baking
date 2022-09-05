@@ -11,6 +11,7 @@ extra_packages:
 extra_packages_redhat:
   - java-1.8.0-openjdk
   - bind-utils
+  - nc
 
 extra_packages_debian:
   - openjdk-8-jdk
