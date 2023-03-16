@@ -32,15 +32,15 @@ consul_enterprise: false
 nomad_enterprise: false
 vault_enterprise: false
 
-terraform_version: 1.2.7
-vault_version: 1.11.2
-consul_version: 1.13.1
-consul_esm_version: 0.6.1
-nomad_version: 1.3.3
-cni_version: 1.1.1
-containerd_version: 1.6.7-3.1
-docker_ce_version: 20.10.17-3
-docker_scan_version: 0.17.0-3
+terraform_version: 1.4.2
+vault_version: 1.13.0
+consul_version: 1.15.1
+consul_esm_version: 0.7.1
+nomad_version: 1.5.1
+cni_version: 1.2.0
+containerd_version: 1.6.18-3.1
+docker_ce_version: 23.0.1-1
+docker_scan_version: 0.23.0-1
 
 dummy_ip: 192.168.0.1
 
